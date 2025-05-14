@@ -9,5 +9,6 @@ namespace Sports_DB
     internal class Storagemanager
     {
         private SQLConnet conn;
+
     }
 }
