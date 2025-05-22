@@ -12,10 +12,12 @@ namespace Sports_DB.model
         {
             Console.WriteLine("welcome to my sports database");
             Console.WriteLine("Menu: ");
-            Console.WriteLine("1. View all records in brand");
+            Console.WriteLine("1. View all records in sports table");
             Console.WriteLine("2. Update a Sports name by Sports_ID");
             Console.WriteLine("3. Insert a new Sport");
             Console.WriteLine("4. Delete a Sport by Sport_Name");
+            Console.WriteLine("5. Exit");
+            Console.WriteLine("6. View all records in Coaches table");
             Console.WriteLine("Select an option");
             return Console.ReadLine();
         }

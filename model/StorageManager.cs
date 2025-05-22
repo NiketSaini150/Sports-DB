@@ -11,9 +11,9 @@ namespace Sports_DB.model;
 internal class Storagemanager
 {
     private SqlConnection conn;
-    
+
     public Storagemanager(string connectionString)
-     { 
+    {
         try
         {
             conn = new SqlConnection(connectionString);
@@ -66,15 +66,36 @@ internal class Storagemanager
                 }
             }
         }
+
         return Coaches;
     }
-    public int UpdateSportsName(int SportsID, string SportsName)
-    {
-        using (SqlCommand cmd = new SqlCommand($"update SportsName SET Sports_Name = @SportsName WHERE SPORTS_ID = @SportsID", conn))
+
+        public List<Coach_Type> GetALLCoachType()
         {
-            cmd.Parameters.AddWithValue("SportName", SportsName);
-            cmd.Parameters.AddWithValue("SportsID", SportsID);
-            return cmd.ExecuteNonQuery();
+            List<Coach_Type> Coach_type = new List<Coach_Type>();
+            string sqlString = "SELECT * FROM dbo.Tbl_Coaches";
+            using (SqlCommand cmd = new SqlCommand(sqlString, conn))
+            {
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        int Coach_Type_ID = Convert.ToInt32(reader["Coach_Type_ID"]);
+                        string Coach_Type_name = reader["Coach_Type_Name"].ToString();
+                        ;
+                        Coach_type.Add(new Coach_Type(Coach_Type_ID, Coach_Type_name));
+                    }
+                }
+            }
+            return Coach_type;
         }
-    }
-}
+        public int UpdateSportsName(int SportsID, string SportsName)
+        {
+            using (SqlCommand cmd = new SqlCommand($"update SportsName SET Sports_Name = @SportsName WHERE SPORTS_ID = @SportsID", conn))
+            {
+                cmd.Parameters.AddWithValue("SportName", SportsName);
+                cmd.Parameters.AddWithValue("SportsID", SportsID);
+                return cmd.ExecuteNonQuery();
+            }
+        }
+}   
