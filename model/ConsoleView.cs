@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sports_DB
+namespace Sports_DB.model
 {
     public class Consoleview
     {
@@ -22,19 +22,20 @@ namespace Sports_DB
 
         public void displayCoach(List<Coaches> coaches)
         {
-            foreach (Coaches coach in coaches) {
+            foreach (Coaches coach in coaches)
+            {
                 Console.WriteLine($"{coach.Coach_ID},{coach.Coach_Type_ID},{coach.First_name},{coach.Last_name},{coach.Experience_ID}");
             }
         }
-        public void DisplaySport (List <Sport> sports)
+        public void DisplaySport(List<Sport> sports)
         {
             foreach (Sport sport in sports)
             {
                 Console.WriteLine($"{sport.SportsID}, {sport.SportsName}");
             }
-            
+
         }
-        public void DisplayMessage (string message)
+        public void DisplayMessage(string message)
         {
             Console.WriteLine(message);
         }
