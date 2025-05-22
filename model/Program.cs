@@ -1,10 +1,12 @@
 ﻿using System.Data;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Sports_DB.model
 {
     internal class Program
     {
         private static Storagemanager storagemanager;
+        private static Consoleview view;
         static void Main(string[] args)
         {
 
@@ -12,8 +14,9 @@ namespace Sports_DB.model
             storagemanager  = new Storagemanager(connectionString);
 
             storagemanager = new Storagemanager(connectionString);
-            Consoleview view= new Consoleview ();   
+            view = new Consoleview ();   
             string choice = view.DisplayMenu();
+            
 
             switch (choice) 
             {
@@ -23,14 +26,11 @@ namespace Sports_DB.model
                         view.DisplaySport(sports);
                     }
                     break;
-                default:
-                    Console.WriteLine("invalid option. please try again");
-                    break;
-
+                
                 case "2":
                     UpdateSportsName();
                     break;
-
+/*
                 case "3":
                     InsertNewSport();
                     break;
@@ -38,15 +38,35 @@ namespace Sports_DB.model
                 case "4":
                     DeleteSportByName();
                     break;
+
                 case "5":
                     exit = true;
+                    break;
+*/
+                 case "6":
+                    {
+                        List<Coaches> coach = storagemanager.GetALLCoach();
+                        view.displayCoach(coach);
+                    }
                     break;
                 default:
                     Console.WriteLine("Invalid option. Please try again");
                     break;
             }
 
-            
+        }
+    
+
+        private static void UpdateSportsName()
+        {
+
+        
+            view.DisplayMessage("Enter the sports_id to update: ");
+            int sportsId = view.GetIntInput();
+            view.DisplayMessage("Enter the new sport name: ");
+            string SportsName = view.GetInput();
+            int rowsAffected = storagemanager.UpdateSportsName(sportsId, SportsName);
+            view.DisplayMessage($"rows affected: {rowsAffected}");
         }
     }
 }

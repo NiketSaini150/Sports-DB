@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
@@ -56,13 +57,24 @@ internal class Storagemanager
             {
                 while (reader.Read())
                 {
-                    int CoachID = Convert.ToInt32(reader["sports_ID"]);
-                    string Coachname = reader["Sports_Name"].ToString();
-                    Coaches.Add(new Coaches(CoachID, Coachname));
+                    int CoachID = Convert.ToInt32(reader["Coach_ID"]);
+                    string Firstname = reader["First_Name"].ToString();
+                    string Lastname = reader["Last_Name"].ToString();
+                    int Experience = Convert.ToInt32(reader["Experience"]);
+                    int CoachTypeId = Convert.ToInt32(reader["Coach_Type_ID"]);
+                    Coaches.Add(new Coaches(CoachID, Firstname, Lastname, Experience, CoachTypeId));
                 }
             }
         }
         return Coaches;
-
+    }
+    public int UpdateSportsName(int SportsID, string SportsName)
+    {
+        using (SqlCommand cmd = new SqlCommand($"update SportsName SET Sports_Name = @SportsName WHERE SPORTS_ID = @SportsID", conn))
+        {
+            cmd.Parameters.AddWithValue("SportName", SportsName);
+            cmd.Parameters.AddWithValue("SportsID", SportsID);
+            return cmd.ExecuteNonQuery();
+        }
     }
 }
