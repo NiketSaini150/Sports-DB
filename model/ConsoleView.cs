@@ -18,6 +18,7 @@ namespace Sports_DB.model
             Console.WriteLine("4. Delete a Sport by Sport_Name");
             Console.WriteLine("5. Exit");
             Console.WriteLine("6. View all records in Coaches table");
+            Console.WriteLine("7. View all records in Coach type table");
             Console.WriteLine("Select an option");
             return Console.ReadLine();
         }
@@ -27,6 +28,13 @@ namespace Sports_DB.model
             foreach (Coaches coach in coaches)
             {
                 Console.WriteLine($"{coach.Coach_ID},{coach.Coach_Type_ID},{coach.First_name},{coach.Last_name},{coach.Experience_ID}");
+            }
+        }
+        public void displayCoachType(List<Coach_Type> coach_type)
+        {
+            foreach (Coach_Type Coach_type in coach_type)
+            {
+                Console.WriteLine($"{Coach_type.Coach_Type_Id},{Coach_type.Coach_Type_Name}");
             }
         }
         public void DisplaySport(List<Sport> sports)
