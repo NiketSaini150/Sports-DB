@@ -1,19 +1,20 @@
 ﻿using System.Data;
+using Sports_DB.model;
 
-namespace Sports_DB.model
+namespace Sports_DB.Repositories
 {
     internal class Program
     {
         private static Storagemanager storagemanager;
         private static Consoleview view;
         static void Main(string[] args)
-         {
+        {
 
             string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\niket\\OneDrive - Avondale College\\Sports DB\\SportsPLSWORK.mdf\";Integrated Security=True;Connect Timeout=30";
-            storagemanager  = new Storagemanager(connectionString);
+            storagemanager = new Storagemanager(connectionString);
 
             storagemanager = new Storagemanager(connectionString);
-            view = new Consoleview ();   
+            view = new Consoleview();
             string choice = view.DisplayMenu();
 
 
@@ -68,12 +69,12 @@ namespace Sports_DB.model
             storagemanager.closeconnecton();
 
         }
-    
+
 
         private static void UpdateSportsName()
         {
 
-        
+
             view.DisplayMessage("Enter the sports_id to update: ");
             int sportsId = view.GetIntInput();
             view.DisplayMessage("Enter the new sport name: ");
@@ -96,11 +97,10 @@ namespace Sports_DB.model
         {
             view.DisplayMessage("Enter the sport name to delete: ");
             string SportName = view.GetInput();
-           // int sportId = 0;
+            // int sportId = 0;
             //Sport sport2 = new Sport(sportId, SportName);
-            int rowsaffected = storagemanager.DeleteSportByName (SportName);
+            int rowsaffected = storagemanager.DeleteSportByName(SportName);
             view.DisplayMessage($"Rows affected: {rowsaffected} ");
         }
     }
 }
-     
