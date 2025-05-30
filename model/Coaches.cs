@@ -9,7 +9,7 @@ namespace Sports_DB.model
     public class Coaches
     {
         public int Coach_ID { get; set; }
-        public int Experience_ID { get; set; }
+        public int Experience { get; set; }
         public int Coach_Type_ID { get; set; }
         public string First_name { get; set; }
         public string Last_name { get; set; }
@@ -19,7 +19,7 @@ namespace Sports_DB.model
         public Coaches(int Coach_Id, string First_Name, string Last_Name, int experience, int Coach_type_ID)
         {
             Coach_ID = Coach_Id;
-            Experience_ID = experience;
+            Experience = experience;
             Coach_Type_ID = Coach_type_ID;
             First_name = First_Name;
             Last_name = Last_Name;

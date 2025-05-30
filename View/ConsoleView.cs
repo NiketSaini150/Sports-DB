@@ -8,35 +8,53 @@ namespace Sports_DB.model
 {
     public class Consoleview
     {
-        public string DisplayMenu()
+        public string ShowMenu()
         {
-            Console.WriteLine("welcome to my sports database");
-            Console.WriteLine("Menu: ");
-            Console.WriteLine("1. View all records in sports table");
-            Console.WriteLine("2. Update a Sports name by Sports_ID");
-            Console.WriteLine("3. Insert a new Sport");
-            Console.WriteLine("4. Delete a Sport by Sport_Name");
+
+            Console.Clear();
+            Console.WriteLine("== Main Menu ==");
+            Console.WriteLine("1. Table Sports");
+            Console.WriteLine("2. Table Coaches");
+            Console.WriteLine("3. Table Player ");
+            Console.WriteLine("4. Table Coach Type");
+            Console.WriteLine("5. Table Trainings");
+            Console.WriteLine("Input your choice: ");
+            return Console.ReadLine().ToUpper();
+
+        }
+
+        public string ShowSportsMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("== Sports Menu ==");
+            Console.WriteLine("A. List all Records in Table Sports ");
+            Console.WriteLine("B. Insert a new Sport");
+            Console.WriteLine("C. Delete a Sport by Sport Name");
+            Console.WriteLine("D. Update a Sport name by Sports_ID");
+            Console.WriteLine("E. Return to Main Menu");
+            Console.WriteLine("Input your choice: ");
+
+
+
+
+
             Console.WriteLine("5. Exit");
             Console.WriteLine("6. View all records in Coaches table");
             Console.WriteLine("7. View all records in Coach type table");
             Console.WriteLine("Select an option");
-            return Console.ReadLine();
+            return Console.ReadLine().ToUpper();
+
         }
 
-        public void displayCoach(List<Coaches> coaches)
+        public string ShowCoachMenu()
         {
-            foreach (Coaches coach in coaches)
-            {
-                Console.WriteLine($"{coach.Coach_ID},{coach.Coach_Type_ID},{coach.First_name},{coach.Last_name},{coach.Experience_ID}");
-            }
+            Console.Clear();
+            Console.WriteLine("A.Insert a new Coach");
+            return Console.ReadLine().ToUpper();
         }
-        public void displayCoachType(List<Coach_Type> coach_type)
-        {
-            foreach (Coach_Type Coach_type in coach_type)
-            {
-                Console.WriteLine($"{Coach_type.Coach_Type_Id},{Coach_type.Coach_Type_Name}");
-            }
-        }
+
+
+
         public void DisplaySport(List<Sport> sports)
         {
             foreach (Sport sport in sports)
@@ -44,6 +62,21 @@ namespace Sports_DB.model
                 Console.WriteLine($"{sport.SportsID}, {sport.SportsName}");
             }
 
+        }
+
+        public void displayCoach(List<Coaches> coaches)
+        {
+            foreach (Coaches coach in coaches)
+            {
+                Console.WriteLine($"{coach.Coach_ID},{coach.Coach_Type_ID},{coach.First_name},{coach.Last_name},{coach.Experience}");
+            }
+        }
+        public void displayCoachType(List<Coach_Type> coach_type)
+        {
+            foreach (Coach_Type Coach_type in coach_type)
+            {
+                Console.WriteLine($"{Coach_type.Coach_Type_ID},{Coach_type.Coach_Type_Name}");
+            }
         }
         public void DisplayMessage(string message)
         {
