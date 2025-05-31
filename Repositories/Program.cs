@@ -197,19 +197,49 @@ namespace Sports_DB.Repositories
         {
             view.DisplayMessage("Enter the sport name to delete: ");
             string SportName = view.GetInput();
-            // int sportId = 0;
-            //Sport sport2 = new Sport(sportId, SportName);
+             int sportId = 0;
+            Sport sport2 = new Sport(sportId, SportName);
             int rowsaffected = storagemanager.DeleteSportByName(SportName);
             view.DisplayMessage($"Rows affected: {rowsaffected} ");
         }
 
         private static void InsertNewCoach()
         {
+            view.DisplayMessage ($"Enter New Coach ID : ");
+            string coachname = view.GetInput();
+            int coachid = 0;
 
+            view.DisplayMessage($"Enter New First Name: ");
+            string FirstName = view.GetInput();
+
+            view.DisplayMessage("Enter New Last Name: ");
+           string LastName = view.GetInput();
+
+            view.DisplayMessage("Enter New Coach Experience: ");
+            int Experience = view.GetIntInput();
+
+            view.DisplayMessage("Enter New Coach Type ID: ");
+            int CoachTypeID = view.GetIntInput();
+
+
+            Coaches coaches2 = new Coaches(coachid, FirstName, LastName, Experience, CoachTypeID);
+            int rowsaffected2 = storagemanager.InsertNewCoach(coaches2);
+            view.DisplayMessage($" New Coach inserted with ID: {rowsaffected2}");
         }
 
         private static void DeleteCoachByName()
         {
+            view.DisplayMessage($"Enter the coach First Name you want to Delete");
+            string FirstName = view.GetInput();
+
+            view.DisplayMessage("Enter the coach Last Name you want to Delete");
+            string LastName = view.GetInput();
+
+            view.DisplayMessage("Enter the Coach Experience you want to Delete");
+            int Experience = view.GetIntInput();
+
+            view.DisplayMessage("Enter The Coach Type Id you want to be Delete");
+            int CoachTypeID = view.GetIntInput();
 
         }
 

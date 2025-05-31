@@ -120,7 +120,14 @@ internal class Storagemanager
         }
     }
 
-   
+   public int InsertNewCoach(Coaches coaches)
+    {
+        using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Coaches", conn))
+        { 
+            cmd.Parameters.AddWithValue("@", coaches.First_name);
+            return cmd.ExecuteNonQuery();
+        }
+    }
     public void closeconnecton()
     {
         if (conn != null && conn.State == ConnectionState.Open)
