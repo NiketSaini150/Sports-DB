@@ -11,18 +11,18 @@ namespace Sports_DB.model
         public int Coach_ID { get; set; }
         public int Experience { get; set; }
         public int Coach_Type_ID { get; set; }
-        public string First_name { get; set; }
-        public string Last_name { get; set; }
+        public string First_Name { get; set; }
+        public string Last_Name { get; set; }
 
 
 
-        public Coaches(int Coach_Id, string First_Name, string Last_Name, int experience, int Coach_type_ID)
+        public Coaches(int Coach_Id, string First_name, string Last_name, int experience, int Coach_type_ID)
         {
             Coach_ID = Coach_Id;
             Experience = experience;
             Coach_Type_ID = Coach_type_ID;
-            First_name = First_Name;
-            Last_name = Last_Name;
+            First_Name = First_name;
+            Last_Name = Last_name;
 
 
 

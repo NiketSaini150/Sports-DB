@@ -122,10 +122,28 @@ internal class Storagemanager
 
    public int InsertNewCoach(Coaches coaches)
     {
-        using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Coaches", conn))
+        using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Coaches (First_Name, Experience, Coach_Type_ID)" +
+            $"Values (@First_Name, Last_Name, Experience,Coach_Type_ID);" +
+            $"SELECT SCOPE_IDENTITY();", conn))
         { 
-            cmd.Parameters.AddWithValue("@", coaches.First_name);
+
+            cmd.Parameters.AddWithValue("@First_Name", coaches.First_Name);
             return cmd.ExecuteNonQuery();
+
+            cmd.Parameters.AddWithValue("@Last_Name", coaches.Last_Name);
+            return cmd.ExecuteNonQuery();
+
+            cmd.Parameters.AddWithValue("@Coach_ID", coaches.Coach_ID);
+            return cmd.ExecuteNonQuery();
+
+            cmd.Parameters.AddWithValue("@Coach_Type_ID", coaches.Coach_Type_ID);
+            return cmd.ExecuteNonQuery();
+
+            cmd.Parameters.AddWithValue("@Experience", coaches.Experience);
+            return cmd.ExecuteNonQuery();
+
+            return Convert.ToInt32(cmd.ExecuteScalar());    
+
         }
     }
     public void closeconnecton()

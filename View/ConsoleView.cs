@@ -78,7 +78,7 @@ namespace Sports_DB.model
         {
             foreach (Coaches coach in coaches)
             {
-                Console.WriteLine($"{coach.Coach_ID},{coach.Coach_Type_ID},{coach.First_name},{coach.Last_name},{coach.Experience}");
+                Console.WriteLine($"{coach.Coach_ID},{coach.Coach_Type_ID},{coach.First_Name},{coach.Last_Name},{coach.Experience}");
             }
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();

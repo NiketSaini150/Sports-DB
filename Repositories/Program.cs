@@ -154,14 +154,14 @@ namespace Sports_DB.Repositories
                      }
                 }
 
-                static void Menu()
+                static void TrainingsMenu()
                 {
-                     bool PlayerSubMenu = true;
+                     bool TrainingsSubMenu = true;
 
-                     while (PlayerSubMenu)
+                     while (TrainingsSubMenu)
                      {
-                           string SubPlayer = view.ShowPlayerMenu();
-                        switch (SubPlayer)
+                           string SubTraining = view.ShowTrainingsMenu();
+                        switch (SubTraining)
                         {
                             case "A":
                             //  InsertNewPlayer();
