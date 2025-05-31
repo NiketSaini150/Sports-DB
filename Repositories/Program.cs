@@ -118,6 +118,22 @@ namespace Sports_DB.Repositories
                             break;
                     }
                 }
+                static void CoachMenu()
+                {
+                    bool CoachSubMenu = true;
+
+                    while (CoachSubMenu)
+                    {
+                        string Subcoach = view.ShowCoachMenu();
+                        switch (Subcoach)
+                        {
+                            case "A":
+                                InsertNewCoach();
+                                Console.ReadKey();
+                                break;
+                        }
+                    }
+                }
             }
             /*
                     case "":
