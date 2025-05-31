@@ -54,6 +54,13 @@ namespace Sports_DB.model
             return Console.ReadLine().ToUpper();
         }
 
+        public string ShowTrainingsMenu()
+        {
+            Console.WriteLine("A. Insert ");
+            return Console.ReadLine().ToUpper();
+        }
+        
+
 
         public void DisplaySport(List<Sport> sports)
         {

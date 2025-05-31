@@ -143,7 +143,7 @@ namespace Sports_DB.Repositories
 
                      while (CoachTypeSubMenu)
                      {
-                         string SubCoach = view.();
+                         string SubCoach = view.ShowCoachTypeMenu();
                         switch (SubCoach)
                         {
                             case "A":
