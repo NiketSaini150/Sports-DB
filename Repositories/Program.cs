@@ -50,36 +50,9 @@ namespace Sports_DB.Repositories
             }
             storagemanager.closeconnecton();
 
-            static void CoachMenu()
-            {
-                bool CoachSubMenu = true;
-                while (CoachSubMenu)
-                {
-                    string subCoaches = view.ShowCoachMenu();
-                    switch(subCoaches)
-                    {
-                        case "A":
-                            InsertNewCoach();
-                            Console.ReadKey();
-                            break;
-                        case "B":
-                           
-                            break;
-
-                        case "C":
-                            DeleteCoachByName();
-                            Console.ReadKey();
-                            break;
-
-                        case "D":
-                            UpdateCoachesName();
-                            Console.ReadKey();
-                            break;
-                    }
-                }
-            }
+           
              static void SportsMenu()
-             {
+            {
                 bool SportsSubMenu = true;
 
                 while (SportsSubMenu)
@@ -107,7 +80,7 @@ namespace Sports_DB.Repositories
                             Console.ReadKey();
                             break;
 
-                        
+
                         case "E":
                             SportsSubMenu = false; // back to the main menu
                             break;
@@ -116,6 +89,38 @@ namespace Sports_DB.Repositories
                             view.DisplayMessage("Invalid choice. Press any key to try again: ");
                             Console.ReadKey();
                             break;
+                    }
+                }
+             }
+                static void CoachMenu()
+                {
+                    bool CoachSubMenu = true;
+                    while (CoachSubMenu)
+                    {
+                        string subCoaches = view.ShowCoachMenu();
+                        switch (subCoaches)
+                        {
+                            case "A":
+                                InsertNewCoach();
+                                Console.ReadKey();
+                                break;
+
+                            case "B":
+                                DeleteCoachByName();
+                                Console.ReadKey();
+                                break;
+
+
+                            case "C":
+                                UpdateCoachesName();
+                                Console.ReadKey();
+                                break;
+
+                            case "D":
+                                CoachSubMenu = false;
+                                break;
+                                
+                        }
                     }
                 }
 
@@ -135,7 +140,7 @@ namespace Sports_DB.Repositories
                         }
                     }
                 }
-             }
+             
 
                 static void CoachTypeMenu()
                 {

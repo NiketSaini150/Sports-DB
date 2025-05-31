@@ -38,8 +38,11 @@ namespace Sports_DB.model
 
         public string ShowCoachMenu()
         {
-            Console.WriteLine("A.Insert a new Coach");
-            Console.WriteLine("");
+            Console.WriteLine("A. Insert a new Coach");
+            Console.WriteLine("B. Delete a Coach by Coach Name");
+            Console.WriteLine("C. Update a Coach by Coach ID");
+            Console.WriteLine("D. Return to Main Menu ");
+            Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
         }
         public string ShowPlayerMenu()
