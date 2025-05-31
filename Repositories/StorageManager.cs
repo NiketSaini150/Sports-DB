@@ -93,6 +93,14 @@ internal class Storagemanager
           return Coach_type;
       }
   */
+    public int InsertNewSport(Sport Sportstemp)
+    {
+        using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Sports (Sports_Name) VALUES (@SportName); SELECT SCOPE_IDENTITY();", conn))
+        {
+            cmd.Parameters.AddWithValue("@SportName", Sportstemp.SportsName);
+            return Convert.ToInt32(cmd.ExecuteScalar());
+        }
+    }
     public int UpdateSportsName(int SportsID, string SportsName)
         {
             using (SqlCommand cmd = new SqlCommand($"update SportsName SET Sports_Name = @SportsName WHERE SPORTS_ID = @SportsID", conn))
@@ -103,14 +111,6 @@ internal class Storagemanager
             }
         }
 
-    public int InsertNewSport(Sport Sportstemp)
-    {
-        using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Sports (Sports_Name) VALUES (@SportName); SELECT SCOPE_IDENTITY();", conn))
-        {
-            cmd.Parameters.AddWithValue("@SportName", Sportstemp.SportsName);
-            return Convert.ToInt32(cmd.ExecuteScalar());
-        }
-    }
     public int DeleteSportByName(string SportsName)
     {
         using (SqlCommand cmd = new SqlCommand($"DELETE FROM dbo.Tbl_Sports", conn)) 
@@ -121,7 +121,7 @@ internal class Storagemanager
     }
 
    public int InsertNewCoach(Coaches coaches)
-    {
+   {
         using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Coaches (First_Name, Experience, Coach_Type_ID)" +
             $"Values (@First_Name, Last_Name, Experience,Coach_Type_ID);" +
             $"SELECT SCOPE_IDENTITY();", conn))
@@ -144,6 +144,28 @@ internal class Storagemanager
 
             return Convert.ToInt32(cmd.ExecuteScalar());    
 
+        }
+   }
+
+    public int UpdateCoach(Coaches coaches)
+    {
+        using (SqlCommand cmd = new SqlCommand())
+        {
+
+            return cmd.ExecuteNonQuery();
+
+            return Convert.ToInt32(cmd.ExecuteScalar());
+        }
+
+    }
+
+    public int DeleteCoach(Coaches coaches)
+    {
+        using (SqlCommand cmd = new SqlCommand())
+        {
+            return cmd.ExecuteNonQuery();
+
+            return Convert.ToInt32(cmd.ExecuteScalar());
         }
     }
     public void closeconnecton()

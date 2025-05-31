@@ -225,7 +225,15 @@ namespace Sports_DB.Repositories
 
         }
 
-
+        private static void InsertNewSport()
+        {
+            view.DisplayMessage("Enter the new Sport name: ");
+            string SportName = view.GetInput();
+            int sportId = 0;
+            Sport sport1 = new Sport(sportId, SportName);
+            int generated_ID = storagemanager.InsertNewSport(sport1);
+            view.DisplayMessage($"New sport inserted with ID: {generated_ID} ");
+        }
         private static void UpdateSportsName()
         {
 
@@ -237,16 +245,6 @@ namespace Sports_DB.Repositories
 
             int rowsAffected = storagemanager.UpdateSportsName(sportsId, SportsName);
             view.DisplayMessage($"rows affected: {rowsAffected}");
-        }
-
-        private static void InsertNewSport()
-        {
-            view.DisplayMessage("Enter the new Sport name: ");
-            string SportName = view.GetInput();
-            int sportId = 0;
-            Sport sport1 = new Sport(sportId, SportName);
-            int generated_ID = storagemanager.InsertNewSport(sport1);
-            view.DisplayMessage($"New sport inserted with ID: {generated_ID} ");
         }
 
         private static void DeleteSportByName()
@@ -283,6 +281,10 @@ namespace Sports_DB.Repositories
             view.DisplayMessage($" New Coach inserted with ID: {rowsaffected2}");
         }
 
+        private static void UpdateCoach()
+        {
+
+        }
         private static void DeleteCoachByName()
         {
             view.DisplayMessage($"Enter the coach First Name you want to Delete");
@@ -299,7 +301,18 @@ namespace Sports_DB.Repositories
 
         }
 
-        private static void UpdateCoachesName()
+       
+
+        private static void InsertPlayer()
+        {
+
+        }
+
+        private static void DeletePlayer()
+        {
+
+        }
+        private static void UpdatePlayer()
         {
 
         }
