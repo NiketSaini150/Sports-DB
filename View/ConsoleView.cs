@@ -33,25 +33,26 @@ namespace Sports_DB.model
             Console.WriteLine("E. Return to Main Menu");
             Console.WriteLine("Input your choice: ");
 
-
-
-
-            /*
-            Console.WriteLine("6. View all records in Coaches table");
-            Console.WriteLine("7. View all records in Coach type table");
-            Console.WriteLine("Select an option");
-            */
             return Console.ReadLine().ToUpper();
-
         }
 
         public string ShowCoachMenu()
         {
-           
             Console.WriteLine("A.Insert a new Coach");
+            Console.WriteLine("");
+            return Console.ReadLine().ToUpper();
+        }
+        public string ShowPlayerMenu()
+        {
+            Console.WriteLine("A. Insert a new Player");
             return Console.ReadLine().ToUpper();
         }
 
+        public string ShowCoachTypeMenu()
+        {
+            Console.WriteLine("A. Insert New Coach Type");
+            return Console.ReadLine().ToUpper();
+        }
 
 
         public void DisplaySport(List<Sport> sports)

@@ -27,7 +27,7 @@ namespace Sports_DB.Repositories
                         break;
 
                     case "2":
-                         CoachMenu();
+                        CoachMenu();
                         break;
 
                     case "3":
@@ -59,11 +59,11 @@ namespace Sports_DB.Repositories
                     switch(subCoaches)
                     {
                         case "A":
-
-                            break;
-                        case "B":
                             InsertNewCoach();
                             Console.ReadKey();
+                            break;
+                        case "B":
+                           
                             break;
 
                         case "C":
@@ -79,7 +79,7 @@ namespace Sports_DB.Repositories
                 }
             }
              static void SportsMenu()
-            {
+             {
                 bool SportsSubMenu = true;
 
                 while (SportsSubMenu)
@@ -118,23 +118,58 @@ namespace Sports_DB.Repositories
                             break;
                     }
                 }
-                static void CoachMenu()
-                {
-                    bool CoachSubMenu = true;
 
-                    while (CoachSubMenu)
+                static void PlayerMenu()
+                {
+                    bool PlayerSubMenu = true;
+
+                    while (PlayerSubMenu)
                     {
-                        string Subcoach = view.ShowCoachMenu();
-                        switch (Subcoach)
+                        string SubPlayer = view.ShowPlayerMenu();
+                        switch (SubPlayer)
                         {
                             case "A":
-                                InsertNewCoach();
+                              //  InsertNewPlayer();
                                 Console.ReadKey();
                                 break;
                         }
                     }
                 }
-            }
+             }
+
+                static void CoachTypeMenu()
+                {
+                      bool CoachTypeSubMenu = true;
+
+                     while (CoachTypeSubMenu)
+                     {
+                         string SubCoach = view.();
+                        switch (SubCoach)
+                        {
+                            case "A":
+                            //  InsertNewCoachType();
+                            Console.ReadKey();
+                            break;
+                        }
+                     }
+                }
+
+                static void Menu()
+                {
+                     bool PlayerSubMenu = true;
+
+                     while (PlayerSubMenu)
+                     {
+                           string SubPlayer = view.ShowPlayerMenu();
+                        switch (SubPlayer)
+                        {
+                            case "A":
+                            //  InsertNewPlayer();
+                            Console.ReadKey();
+                            break;
+                    }
+                        }
+                }
             /*
                     case "":
                         {
