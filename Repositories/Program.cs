@@ -31,15 +31,19 @@ namespace Sports_DB.Repositories
                         break;
 
                     case "3":
-
+                        PlayerMenu();
                          break;
 
                     case "4":
-
+                        CoachTypeMenu();
                          break;
                            
 
                     case "5":
+                        TrainingsMenu();
+                        break;
+
+                    case "6":
                         Exit = true;
                         break;
 
@@ -106,13 +110,13 @@ namespace Sports_DB.Repositories
                                 break;
 
                             case "B":
-                                DeleteCoachByName();
+                              //  DeleteCoachByName();
                                 Console.ReadKey();
                                 break;
 
 
                             case "C":
-                                UpdateCoachesName();
+                               // UpdateCoachesName();
                                 Console.ReadKey();
                                 break;
 
@@ -285,7 +289,7 @@ namespace Sports_DB.Repositories
         {
 
         }
-        private static void DeleteCoachByName()
+        private static void DeleteCoach()
         {
             view.DisplayMessage($"Enter the coach First Name you want to Delete");
             string FirstName = view.GetInput();

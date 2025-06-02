@@ -147,7 +147,7 @@ internal class Storagemanager
         }
    }
 
-    public int UpdateCoach(Coaches coaches)
+    public int UpdateCoach(Coaches coaches2)
     {
         using (SqlCommand cmd = new SqlCommand())
         {
@@ -159,7 +159,7 @@ internal class Storagemanager
 
     }
 
-    public int DeleteCoach(Coaches coaches)
+    public int DeleteCoach(Coaches coaches3)
     {
         using (SqlCommand cmd = new SqlCommand())
         {
