@@ -141,6 +141,9 @@ namespace Sports_DB.Repositories
                               //  InsertNewPlayer();
                                 Console.ReadKey();
                                 break;
+                        case "D":
+                            PlayerSubMenu = false;
+                            break;
                         }
                     }
                 }
