@@ -22,7 +22,7 @@ namespace Sports_DB.Repositories
             Console.WriteLine("Username: ");
             string username = Console.ReadLine();
 
-            Console.WriteLine( "{Password: ");
+            Console.WriteLine( "Password: ");
             string password = Console.ReadLine();
 
             User loggedinuser = storage.Login(username, password);
