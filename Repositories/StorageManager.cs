@@ -49,50 +49,7 @@ internal class Storagemanager
         return sports;
 
     }
-    /*
-  public List<Coaches> GetALLCoach()
-  {
-      List<Coaches> Coaches = new List<Coaches>();
-      string sqlString = "SELECT * FROM dbo.Tbl_Coaches";
-      using (SqlCommand cmd = new SqlCommand(sqlString, conn))
-      {
-          using (SqlDataReader reader = cmd.ExecuteReader())
-          {
-              while (reader.Read())
-              {
-                  int CoachID = Convert.ToInt32(reader["Coach_ID"]);
-                  string Firstname = reader["First_Name"].ToString();
-                  string Lastname = reader["Last_Name"].ToString();
-                  int Experience = Convert.ToInt32(reader["Experience"]);
-                  int CoachTypeId = Convert.ToInt32(reader["Coach_Type_ID"]);
-                  Coaches.Add(new Coaches(CoachID, Firstname, Lastname, Experience, CoachTypeId));
-              }
-          }
-      }
-
-      return Coaches;
-  }
-
-      public List<Coach_Type> GetALLCoachType()
-      {
-          List<Coach_Type> Coach_type = new List<Coach_Type>();
-          string sqlString = "SELECT * FROM dbo.Tbl_Coach_Type";
-          using (SqlCommand cmd = new SqlCommand(sqlString, conn))
-          {
-              using (SqlDataReader reader = cmd.ExecuteReader())
-              {
-                  while (reader.Read())
-                  {
-                      int Coach_Type_ID = Convert.ToInt32(reader["Coach_Type_ID"]);
-                      string Coach_Type_name = reader["Coach_Type_Name"].ToString();
-                      ;
-                      Coach_type.Add(new Coach_Type(Coach_Type_ID, Coach_Type_name));
-                  }
-              }
-          }
-          return Coach_type;
-      }
-  */
+  
     public int InsertNewSport(Sport Sportstemp)
     {
         using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Sports (Sports_Name) VALUES (@SportName); SELECT SCOPE_IDENTITY();", conn))
@@ -103,7 +60,7 @@ internal class Storagemanager
     }
     public int UpdateSportsName(int SportsID, string SportsName)
     {
-        using (SqlCommand cmd = new SqlCommand($"update SportsName SET Sports_Name = @SportsName WHERE SPORTS_ID = @SportsID", conn))
+        using (SqlCommand cmd = new SqlCommand($"update Tbl_Sports SET Sports_Name = @SportsName WHERE SPORTS_ID = @SportsID", conn))
         {
             cmd.Parameters.AddWithValue("SportName", SportsName);
             cmd.Parameters.AddWithValue("SportsID", SportsID);
@@ -113,36 +70,27 @@ internal class Storagemanager
 
     public int DeleteSportByName(string SportsName)
     {
-        using (SqlCommand cmd = new SqlCommand($"DELETE FROM dbo.Tbl_Sports", conn))
+        using (SqlCommand cmd = new SqlCommand($"DELETE FROM dbo.Tbl_Sports WHERE Sports_Name =@SportsName", conn))
         {
-            cmd.Parameters.AddWithValue("@SportName", SportsName);
+            cmd.Parameters.AddWithValue("@SportsName", SportsName);
             return cmd.ExecuteNonQuery();
         }
     }
 
     public int InsertNewCoach(Coaches coaches)
     {
-        using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Coaches (First_Name, Experience, Coach_Type_ID)" +
-            $"Values (@First_Name, Last_Name, Experience,Coach_Type_ID);" +
+        using (SqlCommand cmd = new SqlCommand($"INSERT INTO Tbl_Coaches (First_Name,Last_Name, Experience, Coach_Type_ID)" +
+            $"Values (@First_Name, @Last_Name, @Experience,@Coach_Type_ID);" +
             $"SELECT SCOPE_IDENTITY();", conn))
         {
 
             cmd.Parameters.AddWithValue("@First_Name", coaches.First_Name);
-            return cmd.ExecuteNonQuery();
-
             cmd.Parameters.AddWithValue("@Last_Name", coaches.Last_Name);
-            return cmd.ExecuteNonQuery();
-
-            cmd.Parameters.AddWithValue("@Coach_ID", coaches.Coach_ID);
-            return cmd.ExecuteNonQuery();
-
             cmd.Parameters.AddWithValue("@Coach_Type_ID", coaches.Coach_Type_ID);
-            return cmd.ExecuteNonQuery();
-
             cmd.Parameters.AddWithValue("@Experience", coaches.Experience);
-            return cmd.ExecuteNonQuery();
 
-            return Convert.ToInt32(cmd.ExecuteScalar());
+            object result = cmd.ExecuteScalar(); //gets the generated ID
+            return Convert.ToInt32(result);
 
         }
     }
@@ -179,7 +127,7 @@ internal class Storagemanager
 
     }
 
-    public User Login(string username, string password)
+    public User Login(string username, string passwordHash)
     {
         string sql = "SELECT * FROM dbo.Tbl_Users WHERE Username = @Username";
         using (SqlCommand cmd = new SqlCommand(sql, conn))
@@ -191,7 +139,7 @@ internal class Storagemanager
                 {
                     string StoredPassword = reader["PasswordHash"].ToString();
 
-                    if (StoredPassword == password)
+                    if (StoredPassword == passwordHash)
                     {
                         int userId = Convert.ToInt32(reader["User_ID"]);
                         string role = reader["Role"].ToString();

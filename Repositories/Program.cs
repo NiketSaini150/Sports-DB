@@ -33,8 +33,9 @@ namespace Sports_DB.Repositories
 
                 switch (loggedinuser.Role)
                 {
-                    case "Coach":
-                        CoachMenu(loggedinuser);
+                    case "Club":
+                        Console.WriteLine("FUll ACCESS TO CLUB");
+                        ClubMenu(loggedinuser);
                         break;
 
                     case "Player":
@@ -50,47 +51,49 @@ namespace Sports_DB.Repositories
             {
                 Console.WriteLine("login failed\nCheck username and password.");
             }
-
-
-            bool Exit = false;
-            while (!Exit)
+            static void ClubMenu(User Manager)
             {
-                string choice = view.ShowMenu();
 
-                switch (choice)
+                bool Exit = false;
+                while (!Exit)
                 {
-                    case "1":
-                        SportsMenu();
-                        break;
+                    string choice = view.ShowMenu();
 
-                    case "2":
-                       
-                        break;
+                    switch (choice)
+                    {
+                        case "1":
+                            SportsMenu();
+                            break;
 
-                    case "3":
-                        
-                         break;
+                        case "2":
+                            CoachMenu();
+                            break;
 
-                    case "4":
-                        CoachTypeMenu();
-                         break;
-                           
+                        case "3":
+                            
+                            break;
 
-                    case "5":
-                        TrainingsMenu();
-                        break;
+                        case "4":
+                            CoachTypeMenu();
+                            break;
 
-                    case "6":
-                        Exit = true;
-                        break;
 
-                    default:
-                        Console.WriteLine("Invalid option. Please try again");
-                        break;
+                        case "5":
+                            TrainingsMenu();
+                            break;
+
+                        case "6":
+                            Exit = true;
+                            break;
+
+                        default:
+                            Console.WriteLine("Invalid option. Please try again");
+                            break;
+                    }
                 }
-            }
-            storagemanager.closeconnecton();
 
+                storagemanager.closeconnecton();
+            }
            
              static void SportsMenu()
             {
@@ -126,14 +129,11 @@ namespace Sports_DB.Repositories
                             SportsSubMenu = false; // back to the main menu
                             break;
 
-                        default:
-                            view.DisplayMessage("Invalid choice. Press any key to try again: ");
-                            Console.ReadKey();
-                            break;
+                        
                     }
                 }
              }
-                static void CoachMenu(User coach)
+                static void CoachMenu()
                 {
                     bool CoachSubMenu = true;
                     while (CoachSubMenu)
@@ -219,54 +219,8 @@ namespace Sports_DB.Repositories
                     }
                         }
                 }
-            static void role()
-            {
-                view.DisplayMessage("Coach Menu");
-                
-            }
-            /*
-                    case "":
-                        {
-                            List<Sport> sports = storagemanager.GetALLSports();
-                            view.DisplaySport(sports);
-                        }
-                        break;
-
-                    case "2":
-                        UpdateSportsName();
-                        break;
-
-                    case "3":
-                        InsertNewSport();
-                        break;
-
-                    case "4":
-                        DeleteSportByName();
-                        break;
-
-
-                    /*
-
-
-
-                                    case "5":
-                                        exit = true;
-                                        break;
-
-                                     case "6":
-                                        {
-                                            List<Coaches> coach = storagemanager.GetALLCoach();
-                                            view.displayCoach(coach);
-                                        }
-                                        break;
-
-                                    case "7":
-                                        {
-                                            List<Coach_Type> coach_Type = storagemanager.GetALLCoachType();
-                                            view.displayCoachType(coach_Type);
-                                        }
-                                        break;
-                    */
+      
+        
 
 
 
@@ -308,10 +262,6 @@ namespace Sports_DB.Repositories
 
         private static void InsertNewCoach()
         {
-            view.DisplayMessage ($"Enter New Coach ID : ");
-            string coachname = view.GetInput();
-            int coachid = 0;
-
             view.DisplayMessage($"Enter New First Name: ");
             string FirstName = view.GetInput();
 
@@ -325,9 +275,9 @@ namespace Sports_DB.Repositories
             int CoachTypeID = view.GetIntInput();
 
 
-            Coaches coaches2 = new Coaches(coachid, FirstName, LastName, Experience, CoachTypeID);
-            int rowsaffected2 = storagemanager.InsertNewCoach(coaches2);
-            view.DisplayMessage($" New Coach inserted with ID: {rowsaffected2}");
+            Coaches coaches2 = new Coaches(0, FirstName, LastName, Experience, CoachTypeID);
+            int generatedID2 = storagemanager.InsertNewCoach(coaches2);
+            view.DisplayMessage($" New Coach inserted with ID: {generatedID2}");
         }
 
         private static void UpdateCoach()

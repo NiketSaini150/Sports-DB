@@ -20,7 +20,7 @@ namespace Sports_DB.model
             Console.WriteLine("5. Table Trainings");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
-
+            Console.Clear();
         }
 
         public string ShowSportsMenu()
