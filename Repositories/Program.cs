@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using Sports_DB.model;
 
@@ -15,14 +16,42 @@ namespace Sports_DB.Repositories
             storagemanager = new Storagemanager(connectionString);
             view = new Consoleview();
 
-          //  role() = view.ShowMenu();
-           // switch (role())
-          //  {
+        
+            Storagemanager storage = new Storagemanager(connectionString);
 
-         //   }
-                            {
+            Console.WriteLine("Username: ");
+            string username = Console.ReadLine();
 
+            Console.WriteLine( "{Password: ");
+            string password = Console.ReadLine();
+
+            User loggedinuser = storage.Login(username, password);
+
+            if (loggedinuser != null)
+            {
+                Console.WriteLine($"Login successful role: {loggedinuser} ");
+
+                switch (loggedinuser.Role)
+                {
+                    case "Coach":
+                        CoachMenu(loggedinuser);
+                        break;
+
+                    case "Player":
+                        PlayerMenu(loggedinuser);
+                        break;
+
+                    default:
+                        Console.WriteLine("Unknown role");
+                        break;
+                }
             }
+            else
+            {
+                Console.WriteLine("login failed\nCheck username and password.");
+            }
+
+
             bool Exit = false;
             while (!Exit)
             {
@@ -35,11 +64,11 @@ namespace Sports_DB.Repositories
                         break;
 
                     case "2":
-                        CoachMenu();
+                       
                         break;
 
                     case "3":
-                        PlayerMenu();
+                        
                          break;
 
                     case "4":
@@ -104,7 +133,7 @@ namespace Sports_DB.Repositories
                     }
                 }
              }
-                static void CoachMenu()
+                static void CoachMenu(User coach)
                 {
                     bool CoachSubMenu = true;
                     while (CoachSubMenu)
@@ -136,7 +165,7 @@ namespace Sports_DB.Repositories
                     }
                 }
 
-                static void PlayerMenu()
+                static void PlayerMenu(User player)
                 {
                     bool PlayerSubMenu = true;
 

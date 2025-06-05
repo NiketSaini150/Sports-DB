@@ -178,45 +178,45 @@ internal class Storagemanager
         }
 
     }
-    /*
-        public User Login (string username, string password)
+
+    public User Login(string username, string password)
+    {
+        string sql = "SELECT * FROM dbo.Tbl_Users WHERE Username = @Username";
+        using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
-            string sql = "SELECT * FROM dbo.Tbl_Users WHERE username = @ Username";
-            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            cmd.Parameters.AddWithValue("@Username", username);
+            using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                cmd.Parameters[0].Value = username;
-                using (SqlDataReader reader = cmd.ExecuteReader())
+                if (reader.Read())
                 {
-                    if (reader.Read())
+                    string StoredPassword = reader["PasswordHash"].ToString();
+
+                    if (StoredPassword == password)
                     {
-                        string stored = reader["pasweord"].ToString();
-                        if (stored == password) 
-                        {
-                            int userId = Convert.ToInt32(reader["User_ID"]);
-                            string role = reader["Role"].ToString();
+                        int userId = Convert.ToInt32(reader["User_ID"]);
+                        string role = reader["Role"].ToString();
+                        int coachId = reader["coach_ID"] != DBNull.Value ? Convert.ToInt32(reader["Coach_ID"]) : 0;
+                        int playerId = reader["Player_ID"] != DBNull.Value ? Convert.ToInt32(reader["Player_ID"]) : 0;
 
-                            int coahId = reader["Coach_ID"] as int 0;
-                            int playerId = reader["Player_ID"];
-                            return new User(userId, coahId, playerId);
-                        }
-
-
+                        return new User(userId, role, coachId, playerId);
                     }
                 }
             }
-            return null;
-
-    */
-
-    public void closeconnecton()
-    {
-        if (conn != null && conn.State == ConnectionState.Open)
-        {
-            conn.Close();
-            Console.WriteLine("Connection closed");
         }
+
+        return null;
     }
 
- 
-}   
+        public void closeconnecton()
+        {
+            if (conn != null && conn.State == ConnectionState.Open)
+            {
+                conn.Close();
+                Console.WriteLine("Connection closed");
+            }
+        }
+
+
+    
+}
 
