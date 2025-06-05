@@ -145,15 +145,15 @@ namespace Sports_DB.Repositories
                                 InsertNewCoach();
                                 Console.ReadKey();
                                 break;
-
+                            
                             case "B":
-                              //  DeleteCoachByName();
+                                DeleteCoach();
                                 Console.ReadKey();
                                 break;
 
 
                             case "C":
-                               // UpdateCoachesName();
+                                UpdateCoach();
                                 Console.ReadKey();
                                 break;
 
@@ -283,6 +283,7 @@ namespace Sports_DB.Repositories
         private static void UpdateCoach()
         {
 
+            
         }
         private static void DeleteCoach()
         {

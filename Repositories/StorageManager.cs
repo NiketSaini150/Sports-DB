@@ -101,7 +101,7 @@ internal class Storagemanager
         {
 
             return cmd.ExecuteNonQuery();
-
+            
             return Convert.ToInt32(cmd.ExecuteScalar());
         }
 
@@ -109,7 +109,7 @@ internal class Storagemanager
 
     public int DeleteCoach(Coaches coaches3)
     {
-        using (SqlCommand cmd = new SqlCommand())
+        using (SqlCommand cmd = new SqlCommand($"DELETE FROM dbo.Tbl_Coaches WHERE First_Name =@First_Name,", conn))
         {
             return cmd.ExecuteNonQuery();
 
