@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Security.Principal;
 using Sports_DB.model;
 
 namespace Sports_DB.Repositories
@@ -14,7 +15,14 @@ namespace Sports_DB.Repositories
             storagemanager = new Storagemanager(connectionString);
             view = new Consoleview();
 
+          //  role() = view.ShowMenu();
+           // switch (role())
+          //  {
 
+         //   }
+                            {
+
+            }
             bool Exit = false;
             while (!Exit)
             {
@@ -182,6 +190,11 @@ namespace Sports_DB.Repositories
                     }
                         }
                 }
+            static void role()
+            {
+                view.DisplayMessage("Coach Menu");
+                
+            }
             /*
                     case "":
                         {

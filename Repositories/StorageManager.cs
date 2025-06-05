@@ -102,30 +102,30 @@ internal class Storagemanager
         }
     }
     public int UpdateSportsName(int SportsID, string SportsName)
-        {
-            using (SqlCommand cmd = new SqlCommand($"update SportsName SET Sports_Name = @SportsName WHERE SPORTS_ID = @SportsID", conn))
-            {
-                cmd.Parameters.AddWithValue("SportName", SportsName);
-                cmd.Parameters.AddWithValue("SportsID", SportsID);
-                return cmd.ExecuteNonQuery();
-            }
-        }
-
-    public int DeleteSportByName(string SportsName)
     {
-        using (SqlCommand cmd = new SqlCommand($"DELETE FROM dbo.Tbl_Sports", conn)) 
+        using (SqlCommand cmd = new SqlCommand($"update SportsName SET Sports_Name = @SportsName WHERE SPORTS_ID = @SportsID", conn))
         {
-            cmd.Parameters.AddWithValue("@SportName",SportsName);
+            cmd.Parameters.AddWithValue("SportName", SportsName);
+            cmd.Parameters.AddWithValue("SportsID", SportsID);
             return cmd.ExecuteNonQuery();
         }
     }
 
-   public int InsertNewCoach(Coaches coaches)
-   {
+    public int DeleteSportByName(string SportsName)
+    {
+        using (SqlCommand cmd = new SqlCommand($"DELETE FROM dbo.Tbl_Sports", conn))
+        {
+            cmd.Parameters.AddWithValue("@SportName", SportsName);
+            return cmd.ExecuteNonQuery();
+        }
+    }
+
+    public int InsertNewCoach(Coaches coaches)
+    {
         using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Coaches (First_Name, Experience, Coach_Type_ID)" +
             $"Values (@First_Name, Last_Name, Experience,Coach_Type_ID);" +
             $"SELECT SCOPE_IDENTITY();", conn))
-        { 
+        {
 
             cmd.Parameters.AddWithValue("@First_Name", coaches.First_Name);
             return cmd.ExecuteNonQuery();
@@ -142,10 +142,10 @@ internal class Storagemanager
             cmd.Parameters.AddWithValue("@Experience", coaches.Experience);
             return cmd.ExecuteNonQuery();
 
-            return Convert.ToInt32(cmd.ExecuteScalar());    
+            return Convert.ToInt32(cmd.ExecuteScalar());
 
         }
-   }
+    }
 
     public int UpdateCoach(Coaches coaches2)
     {
@@ -168,6 +168,46 @@ internal class Storagemanager
             return Convert.ToInt32(cmd.ExecuteScalar());
         }
     }
+    public void role()
+    {
+        using (SqlCommand cmd = new SqlCommand($"Select );" +
+            $"SELECT SCOPE_IDENTITY();", conn))
+        {
+
+
+        }
+
+    }
+    /*
+        public User Login (string username, string password)
+        {
+            string sql = "SELECT * FROM dbo.Tbl_Users WHERE username = @ Username";
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.Parameters[0].Value = username;
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        string stored = reader["pasweord"].ToString();
+                        if (stored == password) 
+                        {
+                            int userId = Convert.ToInt32(reader["User_ID"]);
+                            string role = reader["Role"].ToString();
+
+                            int coahId = reader["Coach_ID"] as int 0;
+                            int playerId = reader["Player_ID"];
+                            return new User(userId, coahId, playerId);
+                        }
+
+
+                    }
+                }
+            }
+            return null;
+
+    */
+
     public void closeconnecton()
     {
         if (conn != null && conn.State == ConnectionState.Open)
@@ -176,4 +216,7 @@ internal class Storagemanager
             Console.WriteLine("Connection closed");
         }
     }
+
+ 
 }   
+
