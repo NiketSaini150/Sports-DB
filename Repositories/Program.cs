@@ -12,7 +12,7 @@ namespace Sports_DB.Repositories
         static void Main(string[] args)
         {
 
-            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\niket\\OneDrive - Avondale College\\Sports DB\\SportsPLSWORK.mdf\";Integrated Security=True;Connect Timeout=30";
+            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\ac150381\\OneDrive - Avondale College\\Sports DB\\SportsPLSWORK.mdf\";Integrated Security=True;Connect Timeout=30";
             storagemanager = new Storagemanager(connectionString);
             view = new Consoleview();
 
@@ -42,6 +42,10 @@ namespace Sports_DB.Repositories
                         PlayerMenu(loggedinuser);
                         break;
 
+                    case "Coach":
+                        CoachMenu(loggedinuser);
+                        break;
+
                     default:
                         Console.WriteLine("Unknown role");
                         break;
@@ -66,7 +70,7 @@ namespace Sports_DB.Repositories
                             break;
 
                         case "2":
-                            CoachMenu();
+                            //CoachMenu();
                             break;
 
                         case "3":
@@ -83,6 +87,10 @@ namespace Sports_DB.Repositories
                             break;
 
                         case "6":
+                            register();
+                            break;
+
+                        case "7":
                             Exit = true;
                             break;
 
@@ -133,7 +141,7 @@ namespace Sports_DB.Repositories
                     }
                 }
              }
-                static void CoachMenu()
+                static void CoachMenu(User Coach)
                 {
                     bool CoachSubMenu = true;
                     while (CoachSubMenu)
@@ -175,9 +183,14 @@ namespace Sports_DB.Repositories
                         switch (SubPlayer)
                         {
                             case "A":
-                              //  InsertNewPlayer();
+                                InsertPlayer();
                                 Console.ReadKey();
                                 break;
+                        case "B":
+                            UpdatePlayer();
+                            Console.ReadKey();
+                            break;
+
                         case "D":
                             PlayerSubMenu = false;
                             break;
@@ -220,11 +233,37 @@ namespace Sports_DB.Repositories
                         }
                 }
       
-        
+           
 
 
 
 
+
+        }
+
+        private static void register()
+        {
+            view.DisplayMessage("Enter a new username:");
+            string username = view.GetInput();
+
+            view.DisplayMessage("Enter a new passoword: ");
+            string password = view.GetInput();
+
+            view.DisplayMessage("Enter the coachid: ");
+            int coachid = view.GetIntInput();
+
+            view.DisplayMessage($"Enter the player id: ");
+            int playerid = view.GetIntInput();
+
+            
+
+
+            view.DisplayMessage("Enter a new role");
+            string role = view.GetInput();
+
+            User user1 = new User (0, role , coachid,playerid, username, password);
+            int generated_id = storagemanager.register(user1);
+            view.DisplayMessage($"New User inserted with ID: {generated_id}");
 
         }
 

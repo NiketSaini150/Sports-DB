@@ -50,6 +50,21 @@ internal class Storagemanager
 
     }
   
+    public int register(User user)
+    {
+        using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Sports (Sports_Name) VALUES (@SportName); SELECT SCOPE_IDENTITY();", conn))
+        {
+            cmd.Parameters.AddWithValue("@SportName", user.UserName);
+            cmd.Parameters.AddWithValue("@SportName", user.PasswordHash);
+            cmd.Parameters.AddWithValue("@SportName", user.Role);
+            cmd.Parameters.AddWithValue("@SportName", user.CoachID);
+            cmd.Parameters.AddWithValue("@SportName", user.PlayerID);
+
+
+            return Convert.ToInt32(cmd.ExecuteScalar());
+
+        }
+    }
     public int InsertNewSport(Sport Sportstemp)
     {
         using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Sports (Sports_Name) VALUES (@SportName); SELECT SCOPE_IDENTITY();", conn))
@@ -146,7 +161,7 @@ internal class Storagemanager
                         int coachId = reader["coach_ID"] != DBNull.Value ? Convert.ToInt32(reader["Coach_ID"]) : 0;
                         int playerId = reader["Player_ID"] != DBNull.Value ? Convert.ToInt32(reader["Player_ID"]) : 0;
 
-                        return new User(userId, role, coachId, playerId);
+                        return new User(userId, role, coachId, playerId,username,passwordHash);
                     }
                 }
             }
