@@ -18,6 +18,7 @@ namespace Sports_DB.model
             Console.WriteLine("3. Table Player ");
             Console.WriteLine("4. Table Coach Type");
             Console.WriteLine("5. Table Trainings");
+            Console.WriteLine("6. Register a new Club");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
             Console.Clear();
@@ -65,6 +66,7 @@ namespace Sports_DB.model
         public string ShowCoachTypeMenu()
         {
             Console.WriteLine("A. Insert New Coach Type");
+            Console.WriteLine("B. Update New Coach Type");
 
             return Console.ReadLine().ToUpper();
         }

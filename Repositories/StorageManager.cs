@@ -131,17 +131,8 @@ internal class Storagemanager
             return Convert.ToInt32(cmd.ExecuteScalar());
         }
     }
-    public void role()
-    {
-        using (SqlCommand cmd = new SqlCommand($"Select );" +
-            $"SELECT SCOPE_IDENTITY();", conn))
-        {
-
-
-        }
-
-    }
-
+ 
+   
     public User Login(string username, string passwordHash)
     {
         string sql = "SELECT * FROM dbo.Tbl_Users WHERE Username = @Username";
