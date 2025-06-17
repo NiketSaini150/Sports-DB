@@ -21,11 +21,13 @@ namespace Sports_DB.Repositories
             view = new Consoleview();
 
         
-           
-
-            int attempts = 10;
+            int attempts = 4;
+            bool Loggedout = false;
             User loggedinuser = null;
-            while (attempts > 0 && loggedinuser == null)
+
+
+
+            while (attempts > 0 && loggedinuser == null && !Loggedout)
             {
 
                 Console.WriteLine("Username: ");
@@ -34,25 +36,39 @@ namespace Sports_DB.Repositories
                 Console.WriteLine("Password: ");
                 string password = Console.ReadLine();
 
-                 loggedinuser = storagemanager.Login(username, password);
+                loggedinuser = storagemanager.Login(username, password);
 
                 if (loggedinuser == null)
                 {
                     attempts--;
-                    Console.Clear();
+
                     Console.WriteLine($"Login Failed. Attempts remaining: {attempts}");
+
+                    if (attempts <= 0)
+                    {
+                        Console.WriteLine($"Too many failed attempts, exiting program");
+                        return;
+                    }
+
+                    Console.WriteLine("Press any key to try again");
+                    Console.ReadKey();
+                    Console.Clear();
                 }
 
-                if (loggedinuser != null)
+
+                else
                 {
+
                     Console.Clear();
                     Console.WriteLine($"Login successful, role: {loggedinuser.Role} ");
+
 
                     switch (loggedinuser.Role)
                     {
                         case "Club":
-                            Console.WriteLine("FUll ACCESS TO CLUB");
                             ClubMenu(loggedinuser);
+
+
                             break;
 
                         case "Player":
@@ -67,63 +83,73 @@ namespace Sports_DB.Repositories
                             Console.WriteLine("Unknown role");
                             break;
                     }
+
+                    Console.WriteLine("logging out");
+                    Console.ReadKey();
+                    Loggedout = true;
+                    break;
+
                 }
-              
 
-            }
-            static void ClubMenu(User Manager)
-            {
 
-                bool Exit = false;
-                while (!Exit)
+
+
+
+
+
+                static void ClubMenu(User Manager)
                 {
-                    string choice = view.ShowMenu();
 
-                    switch (choice)
+                    bool Exit = false;
+                    while (!Exit)
                     {
-                        case "1":
-                            SportsMenu();
-                            break;
+                        string choice = view.ShowMenu();
 
-                        case "2":
-                            AdminCoachMenu();
-                            break;
+                        switch (choice)
+                        {
+                            case "1":
+                                SportsMenu();
+                                break;
 
-                        case "3":
-                            AdminPlayerMenu();
-                            break;
+                            case "2":
+                                AdminCoachMenu();
+                                break;
 
-                        case "4":
-                            CoachTypeMenu();
-                            break;
+                            case "3":
+                                AdminPlayerMenu();
+                                break;
+
+                            case "4":
+                                CoachTypeMenu();
+                                break;
 
 
-                        case "5":
-                            TrainingsMenu();
-                            break;
+                            case "5":
+                                TrainingsMenu();
+                                break;
 
-                        case "6":
-                            register();
-                            break;
+                            case "6":
+                                register();
+                                break;
 
-                        case "7":
-                            List<User> users = storagemanager.GetAllUser();
-                            view.DisplayUsers(users);
-                            break;
+                            case "7":
+                                List<User> users = storagemanager.GetAllUser();
+                                view.DisplayUsers(users);
+                                break;
 
-                        case "8":
-                            Exit = true;
-                            break; 
+                            case "8":
+                                Exit = true;
+                                break;
 
-                        default:
-                            Console.WriteLine("Invalid option. Please try again");
-                            break;
+                            default:
+                                Console.WriteLine("Invalid option. Please try again");
+                                break;
+                        }
                     }
+
+                    storagemanager.closeconnecton();
                 }
-
-                storagemanager.closeconnecton();
             }
-
             static void AdminPlayerMenu()
             {
                 bool AdminPlayer = true;
@@ -248,14 +274,14 @@ namespace Sports_DB.Repositories
                                 Console.ReadKey();
                                 break;
 
-                        case "D":
-                           List<Coaches> coaches = storagemanager.GetAllCoaches();
-                            view.displayCoach(coaches);
-                            break;
+                             case "D":
+                                 List<Coaches> coaches = storagemanager.GetAllCoaches();
+                                 view.displayCoach(coaches);
+                                 break;
 
-                        case "E":
-                                CoachSubMenu = false;
-                                break;
+                             case "E":
+                                 CoachSubMenu = false;
+                                 break;
                                 
                         }
                     }
@@ -330,11 +356,6 @@ namespace Sports_DB.Repositories
                     }
                         }
                 }
-      
-           
-
-
-
 
 
         }

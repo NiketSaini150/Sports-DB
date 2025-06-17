@@ -97,8 +97,9 @@ internal class Storagemanager
   
     public int register(User user)
     {
-        using (SqlCommand cmd = new SqlCommand($"INSERT INTO Tbl_Users(Username,PasswordHash, Role, Coach_ID,Player_ID)" +
-            "Values (@Username, @PasswordHash, @Role,@Coach_ID,@Player_ID; SELECT Cast(SCOPE_IDENTITY () AS int);", conn))
+        using (SqlCommand cmd = new SqlCommand($"INSERT INTO Tbl_Users (Username,PasswordHash, Role, Coach_ID, Player_ID)" +
+            "Values (@Username, @PasswordHash, @Role,@Coach_ID,@Player_ID);" +
+            " SELECT Cast(SCOPE_IDENTITY () AS int);", conn))
         {
             cmd.Parameters.AddWithValue("@Username", user.UserName);
             cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
@@ -156,16 +157,21 @@ internal class Storagemanager
         }
     }
 
-    public int UpdateCoach(Coaches coaches2)
+    public int UpdateCoach(Coaches coaches)
     {
-        using (SqlCommand cmd = new SqlCommand())
-        {
+        using (SqlCommand cmd = new SqlCommand("UPDATE Tbl_Coaches SET First_Name=@First_Name, Last_Name=@Last_Name,Experience=@Experience,Coach_Type_ID =@Coach_Type_ID;", conn))
+            {
 
+            cmd.Parameters.AddWithValue("@First_Name", coaches.First_Name);
+            cmd.Parameters.AddWithValue("@Last_Name", coaches.Last_Name);
+            cmd.Parameters.AddWithValue("@Coach_Type_ID", coaches.Coach_Type_ID);
+            cmd.Parameters.AddWithValue("@Experience", coaches.Experience);
+            cmd.Parameters.AddWithValue("@Coach_ID", coaches.Coach_ID);
             return cmd.ExecuteNonQuery();
-            
-            return Convert.ToInt32(cmd.ExecuteScalar());
+
         }
 
+         
     }
 
     public int DeleteCoachByID(int coachID)
@@ -187,6 +193,7 @@ internal class Storagemanager
         string sql = "SELECT * FROM dbo.Tbl_Users WHERE Username = @Username";
         using (SqlCommand cmd = new SqlCommand(sql, conn))
         {
+            
             cmd.Parameters.AddWithValue("@Username", username);
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
