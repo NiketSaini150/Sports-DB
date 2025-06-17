@@ -21,43 +21,55 @@ namespace Sports_DB.Repositories
             view = new Consoleview();
 
         
-            Storagemanager storage = new Storagemanager(connectionString);
+           
 
-            Console.WriteLine("Username: ");
-            string username = Console.ReadLine();
-
-            Console.WriteLine( "Password: ");
-            string password = Console.ReadLine();
-
-            User loggedinuser = storage.Login(username, password);
-
-            if (loggedinuser != null)
+            int attempts = 10;
+            User loggedinuser = null;
+            while (attempts > 0 && loggedinuser == null)
             {
-                Console.WriteLine($"Login successful role: {loggedinuser} ");
 
-                switch (loggedinuser.Role)
+                Console.WriteLine("Username: ");
+                string username = Console.ReadLine();
+
+                Console.WriteLine("Password: ");
+                string password = Console.ReadLine();
+
+                 loggedinuser = storagemanager.Login(username, password);
+
+                if (loggedinuser == null)
                 {
-                    case "Club":
-                        Console.WriteLine("FUll ACCESS TO CLUB");
-                        ClubMenu(loggedinuser);
-                        break;
-
-                    case "Player":
-                        PlayerMenu(loggedinuser);
-                        break;
-
-                    case "Coach":
-                        CoachMenu(loggedinuser);
-                        break;
-
-                    default:
-                        Console.WriteLine("Unknown role");
-                        break;
+                    attempts--;
+                    Console.Clear();
+                    Console.WriteLine($"Login Failed. Attempts remaining: {attempts}");
                 }
-            }
-            else
-            {
-                Console.WriteLine("login failed\nCheck username and password.");
+
+                if (loggedinuser != null)
+                {
+                    Console.Clear();
+                    Console.WriteLine($"Login successful, role: {loggedinuser.Role} ");
+
+                    switch (loggedinuser.Role)
+                    {
+                        case "Club":
+                            Console.WriteLine("FUll ACCESS TO CLUB");
+                            ClubMenu(loggedinuser);
+                            break;
+
+                        case "Player":
+                            PlayerMenu(loggedinuser);
+                            break;
+
+                        case "Coach":
+                            CoachMenu(loggedinuser);
+                            break;
+
+                        default:
+                            Console.WriteLine("Unknown role");
+                            break;
+                    }
+                }
+              
+
             }
             static void ClubMenu(User Manager)
             {
@@ -95,8 +107,13 @@ namespace Sports_DB.Repositories
                             break;
 
                         case "7":
-                            Exit = true;
+                            List<User> users = storagemanager.GetAllUser();
+                            view.DisplayUsers(users);
                             break;
+
+                        case "8":
+                            Exit = true;
+                            break; 
 
                         default:
                             Console.WriteLine("Invalid option. Please try again");
@@ -287,6 +304,9 @@ namespace Sports_DB.Repositories
                         case "B":
                             UpdateCoach();
                             break;
+                        case "C":
+                            CoachTypeSubMenu = false;
+                            break;
                         }
                      }
                 }
@@ -304,6 +324,9 @@ namespace Sports_DB.Repositories
                             //  InsertNewPlayer();
                             Console.ReadKey();
                             break;
+                            case "B":
+                            TrainingsSubMenu = false;
+                            break;
                     }
                         }
                 }
@@ -317,17 +340,19 @@ namespace Sports_DB.Repositories
         }
 
         private static void register()
+
         {
+
             view.DisplayMessage("Enter a new username:");
             string username = view.GetInput();
 
             view.DisplayMessage("Enter a new passoword: ");
             string password = view.GetInput();
 
-            view.DisplayMessage("Enter the coachid: ");
+            view.DisplayMessage("Enter the coachid (enter 0 if not a coach): ");
             int coachid = view.GetIntInput();
 
-            view.DisplayMessage($"Enter the player id: ");
+            view.DisplayMessage($"Enter the player id (enter 0 if not a player) : ");
             int playerid = view.GetIntInput();
 
             
@@ -337,9 +362,18 @@ namespace Sports_DB.Repositories
             string role = view.GetInput();
 
             User user1 = new User (0, role , coachid,playerid, username, password);
-            int generated_id = storagemanager.register(user1);
-            view.DisplayMessage($"New User inserted with ID: {generated_id}");
 
+            try
+            {
+                int generated_id = storagemanager.register(user1);
+                view.DisplayMessage($"New User inserted with ID: {generated_id}");
+            }
+
+            catch (Exception ex)
+            {
+                view.DisplayMessage($"error during registration: {ex.Message}");
+            }
+            Console.Clear();
         }
 
         private static void InsertNewSport()
@@ -401,17 +435,12 @@ namespace Sports_DB.Repositories
         }
         private static void DeleteCoach()
         {
-            view.DisplayMessage($"Enter the coach First Name you want to Delete");
-            string FirstName = view.GetInput();
+            view.DisplayMessage("Enter the coach ID to delete:");
+            int coachId = view.GetIntInput();
 
-            view.DisplayMessage("Enter the coach Last Name you want to Delete");
-            string LastName = view.GetInput();
+            int rowsAffected = storagemanager.DeleteCoachByID(coachId);
+            view.DisplayMessage($"Rows affected: {rowsAffected}");
 
-            view.DisplayMessage("Enter the Coach Experience you want to Delete");
-            int Experience = view.GetIntInput();
-
-            view.DisplayMessage("Enter The Coach Type Id you want to be Delete");
-            int CoachTypeID = view.GetIntInput();
 
         }
 

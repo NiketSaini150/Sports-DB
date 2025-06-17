@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Sports_DB.model
 {
-    internal class User
+    public class User
     {
         public int UserID { get; set; }
         public string Role { get; set; }

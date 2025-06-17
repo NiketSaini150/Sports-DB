@@ -11,7 +11,7 @@ namespace Sports_DB.model
         public string ShowMenu()
         {
 
-        
+        Console.Clear();
             Console.WriteLine("== Main Menu ==");
             Console.WriteLine("1. Table Sports");
             Console.WriteLine("2. Table Coaches");
@@ -19,9 +19,11 @@ namespace Sports_DB.model
             Console.WriteLine("4. Table Coach Type");
             Console.WriteLine("5. Table Trainings");
             Console.WriteLine("6. Register a new Club");
+            Console.WriteLine("7. View all users");
+            Console.WriteLine("8. Exit");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
-            Console.Clear();
+            
         }
 
         public string ShowSportsMenu()
@@ -78,7 +80,16 @@ namespace Sports_DB.model
             return Console.ReadLine().ToUpper();
         }
         
-
+        public void DisplayUsers(List<User> users)
+        {
+            foreach (User user in users)
+            {
+                Console.WriteLine($"Username:  {user.UserName}\n Role {user.Role}\n CoachID: {user.CoachID}\n PlayerID: {user.PlayerID}\n {user.PasswordHash}\n");
+            }
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
+            Console.Clear();
+        }
 
         public void DisplaySport(List<Sport> sports)
         {

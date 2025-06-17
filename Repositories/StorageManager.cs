@@ -52,6 +52,29 @@ internal class Storagemanager
          return coaches;
     }
 
+    public List<User> GetAllUser()
+    {
+        List<User> users = new List<User>();
+        using (SqlCommand cmd = new SqlCommand("SELECT * FROM Tbl_Users",conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int userID = Convert.ToInt32(reader["User_ID"]);
+                    string role = reader["Role"].ToString();
+                    int coachID = reader ["Coach_ID"] !=DBNull.Value ? Convert.ToInt32(reader["Coach_ID"]):0;
+                    int playerID = reader["Player_ID"]!=DBNull.Value ? Convert.ToInt32(reader["Player_ID"]):0;
+                    string username= reader["Username"].ToString();
+                    string password= reader["PasswordHash"].ToString();
+
+                    users.Add(new User(userID, role, coachID, playerID,username,password));
+                }
+            }
+        }
+        return users;
+    }
+
     public List<Sport> GetALLSports()
     {
         List<Sport> sports = new List<Sport>();
@@ -74,14 +97,14 @@ internal class Storagemanager
   
     public int register(User user)
     {
-        using (SqlCommand cmd = new SqlCommand($"INSERT INTO Tbl_Users(Username,PasswordHash, Role, Coach_ID,Player_ID);" +
-            $"Values (@First_Name, @Last_Name, @Experience,@Coach_Type_ID); SELECT SCOPE_IDENTITY() ;", conn))
+        using (SqlCommand cmd = new SqlCommand($"INSERT INTO Tbl_Users(Username,PasswordHash, Role, Coach_ID,Player_ID)" +
+            "Values (@Username, @PasswordHash, @Role,@Coach_ID,@Player_ID; SELECT Cast(SCOPE_IDENTITY () AS int);", conn))
         {
             cmd.Parameters.AddWithValue("@Username", user.UserName);
             cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
             cmd.Parameters.AddWithValue("@Role", user.Role);
-            cmd.Parameters.AddWithValue("@Coach_ID", user.CoachID);
-            cmd.Parameters.AddWithValue("@Player_ID", user.PlayerID);
+            cmd.Parameters.AddWithValue("@Coach_ID", user.CoachID== 0 ? DBNull.Value:(object)user.CoachID);
+            cmd.Parameters.AddWithValue("@Player_ID", user.PlayerID == 0 ? DBNull.Value:(Object)user.PlayerID);
             return Convert.ToInt32(cmd.ExecuteScalar());
 
             
@@ -145,13 +168,16 @@ internal class Storagemanager
 
     }
 
-    public int DeleteCoach(Coaches coaches3)
+    public int DeleteCoachByID(int coachID)
     {
-        using (SqlCommand cmd = new SqlCommand($"DELETE FROM dbo.Tbl_Coaches WHERE First_Name =@First_Name,", conn))
-        {
-            return cmd.ExecuteNonQuery();
+        using (SqlCommand cmd = new SqlCommand($"DELETE FROM dbo.Tbl_Coaches WHERE Coach_ID = @Coach_Id", conn))
 
-            return Convert.ToInt32(cmd.ExecuteScalar());
+        {
+            cmd.Parameters.AddWithValue("@Coach_ID", coachID);
+            int rowsAffected = cmd.ExecuteNonQuery();
+            return rowsAffected;
+           
+            
         }
     }
  
