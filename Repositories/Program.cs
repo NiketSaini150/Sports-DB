@@ -2,6 +2,7 @@
 using System.Data;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
+using System.Xml;
 using Sports_DB.model;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -14,7 +15,7 @@ namespace Sports_DB.Repositories
         static void Main(string[] args)
         {
 
-            string connectionString = " Data Source = (LocalDB)\\MSSQLLocalDB; AttachDbFilename = \"C:\\Users\\niket\\OneDrive - Avondale College\\Sports DB\\SportsPLSWORK.mdf\"; Integrated Security = True; Connect Timeout = 30; Encrypt = True";
+            string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\niket\\OneDrive - Avondale College\\Sports DB\\SportsPLSWORK.mdf\";Integrated Security=True;Connect Timeout=30";
 
             storagemanager = new Storagemanager(connectionString);
             view = new Consoleview();
@@ -73,11 +74,11 @@ namespace Sports_DB.Repositories
                             break;
 
                         case "2":
-                            //CoachMenu();
+                            AdminCoachMenu();
                             break;
 
                         case "3":
-                            //PlayerMenu();
+                            AdminPlayerMenu();
                             break;
 
                         case "4":
@@ -104,6 +105,63 @@ namespace Sports_DB.Repositories
                 }
 
                 storagemanager.closeconnecton();
+            }
+
+            static void AdminPlayerMenu()
+            {
+                bool AdminPlayer = true;
+
+                while (AdminPlayer)
+                {
+                    string adminplayer = view.ShowPlayerMenu();
+                    switch (adminplayer)
+                    {
+                        case "A":
+                            InsertPlayer();
+                            Console.ReadKey();
+                            break;
+                        case "B":
+                            UpdatePlayer();
+                            Console.ReadKey();
+                            break;
+
+                        case "D":
+                            AdminPlayer = false;
+                            break;
+                    }
+                }
+            }
+            static void AdminCoachMenu()
+            {
+                bool AdminCoach = true;
+                
+               while (AdminCoach)
+                {
+                    string admincoach = view.ShowCoachMenu();
+
+                    switch (admincoach)
+                    {
+                        case "A":
+                            InsertNewCoach();
+                            Console.ReadKey();
+                            break;
+
+                        case "B":
+                            DeleteCoach();
+                            Console.ReadKey();
+                            break;
+
+
+                        case "C":
+                            UpdateCoach();
+                            Console.ReadKey();
+                            break;
+
+                        case "D":
+                            AdminCoach = false;
+                            break;
+                    }
+                }
             }
            
              static void SportsMenu()

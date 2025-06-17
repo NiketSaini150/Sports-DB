@@ -52,16 +52,17 @@ internal class Storagemanager
   
     public int register(User user)
     {
-        using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Sports (Sports_Name) VALUES (@SportName); SELECT SCOPE_IDENTITY();", conn))
+        using (SqlCommand cmd = new SqlCommand($"INSERT INTO Tbl_Users(Username,PasswordHash, Role, Coach_ID,Player_ID);" +
+            $"Values (@First_Name, @Last_Name, @Experience,@Coach_Type_ID); SELECT SCOPE_IDENTITY() ;", conn))
         {
-            cmd.Parameters.AddWithValue("@SportName", user.UserName);
-            cmd.Parameters.AddWithValue("@SportName", user.PasswordHash);
-            cmd.Parameters.AddWithValue("@SportName", user.Role);
-            cmd.Parameters.AddWithValue("@SportName", user.CoachID);
-            cmd.Parameters.AddWithValue("@SportName", user.PlayerID);
-
-
+            cmd.Parameters.AddWithValue("@Username", user.UserName);
+            cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
+            cmd.Parameters.AddWithValue("@Role", user.Role);
+            cmd.Parameters.AddWithValue("@Coach_ID", user.CoachID);
+            cmd.Parameters.AddWithValue("@Player_ID", user.PlayerID);
             return Convert.ToInt32(cmd.ExecuteScalar());
+
+            
 
         }
     }
