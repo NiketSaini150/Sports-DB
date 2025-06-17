@@ -84,7 +84,7 @@ namespace Sports_DB.model
         {
             foreach (User user in users)
             {
-                Console.WriteLine($"Username:  {user.UserName}\n Role {user.Role}\n CoachID: {user.CoachID}\n PlayerID: {user.PlayerID}\n {user.PasswordHash}\n");
+                Console.WriteLine($"-----------------\nUsername:  {user.UserName}\n Password: {user.PasswordHash}\n Role {user.Role}\n CoachID: {user.CoachID}\n PlayerID: {user.PlayerID}\n ");
             }
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
