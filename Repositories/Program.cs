@@ -158,6 +158,11 @@ namespace Sports_DB.Repositories
                             break;
 
                         case "D":
+                            List<Coaches> coaches = storagemanager.GetAllCoaches();
+                            view.displayCoach(coaches);
+                            break;
+
+                        case "E":
                             AdminCoach = false;
                             break;
                     }
@@ -226,7 +231,12 @@ namespace Sports_DB.Repositories
                                 Console.ReadKey();
                                 break;
 
-                            case "D":
+                        case "D":
+                           List<Coaches> coaches = storagemanager.GetAllCoaches();
+                            view.displayCoach(coaches);
+                            break;
+
+                        case "E":
                                 CoachSubMenu = false;
                                 break;
                                 

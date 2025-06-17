@@ -30,6 +30,28 @@ internal class Storagemanager
         }
     }
 
+    public List<Coaches> GetAllCoaches()
+    {
+        List <Coaches> coaches = new List<Coaches>();
+        string sqlstring = "SELECT * FROM Tbl_Coaches ";
+         using (SqlCommand cmd = new SqlCommand(sqlstring, conn))
+            {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read()) 
+                {
+                    int CoachID = Convert.ToInt32(reader["Coach_ID"]);
+                    int Experience = Convert.ToInt32(reader["Experience"]);
+                    int Coach_Type_ID = Convert.ToInt32(reader["Coach_Type_ID"]);
+                    string First_Name = reader["First_Name"].ToString();
+                    string Last_Name = reader["Last_Name"].ToString();
+                    coaches.Add(new Coaches(CoachID, First_Name, Last_Name, Experience,Coach_Type_ID));
+                }
+            }
+         }
+         return coaches;
+    }
+
     public List<Sport> GetALLSports()
     {
         List<Sport> sports = new List<Sport>();
