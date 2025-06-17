@@ -156,7 +156,7 @@ namespace Sports_DB.Repositories
 
                 while (AdminPlayer)
                 {
-                    string adminplayer = view.ShowPlayerMenu();
+                    string adminplayer = view.ClubPlayerMenu();
                     switch (adminplayer)
                     {
                         case "A":
@@ -164,11 +164,19 @@ namespace Sports_DB.Repositories
                             Console.ReadKey();
                             break;
                         case "B":
+                            DeletePlayer();
+                            break;
+                        case "C":
                             UpdatePlayer();
                             Console.ReadKey();
                             break;
 
                         case "D":
+                            List<Player> plauers = storagemanager.GetALLPlayers();
+                            view.displayPlayer(plauers);
+                            break;
+
+                        case "E":
                             AdminPlayer = false;
                             break;
                     }
@@ -469,7 +477,30 @@ namespace Sports_DB.Repositories
 
         private static void InsertPlayer()
         {
+            view.DisplayMessage($"Enter New sports ID: ");
+            string SportsID = view.GetInput();
 
+            view.DisplayMessage($"Enter New First Name: ");
+            string FirstName = view.GetInput();
+
+            view.DisplayMessage("Enter New Last Name: ");
+            string LastName = view.GetInput();
+
+            view.DisplayMessage("Enter New Age: ");
+            int Age = view.GetIntInput();
+
+            view.DisplayMessage("Enter New Gender: ");
+            string Gender = view.GetInput();
+
+            view.DisplayMessage("Enter New player Experience: ");
+            int Experience = view.GetIntInput();
+
+            view.DisplayMessage("Enter New Injury Status: : ");
+            string InjuryStatus = view.GetInput();
+
+            Player player = new Player(0,0,FirstName,LastName,Age, Gender, InjuryStatus,Experience);
+            int generatedid = storagemanager.InsertPlayer(player);
+            view.DisplayMessage($"New Player inserted with id: {generatedid}");
         }
 
         private static void DeletePlayer()

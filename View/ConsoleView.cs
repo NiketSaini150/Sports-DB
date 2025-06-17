@@ -49,7 +49,20 @@ namespace Sports_DB.model
             Console.WriteLine("B. Delete a Coach by Coach Name");
             Console.WriteLine("C. Update a Coach by Coach ID");
             Console.WriteLine("D. List all records in Table Coach");
-            Console.WriteLine("E. Return to Main Menu ");
+            Console.WriteLine("E. Logout ");
+            Console.WriteLine("Input your choice: ");
+            return Console.ReadLine().ToUpper();
+        }
+
+        public string ClubPlayerMenu()
+        {
+            Console.Clear();
+            Console.WriteLine("== Player Menu ==");
+            Console.WriteLine("A. Insert a new Player");
+            Console.WriteLine("B. Delete a Player");
+            Console.WriteLine("C. Update a Player");
+            Console.WriteLine("D. View all players");
+            Console.WriteLine("e. Return to Main Menu");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
         }
@@ -60,7 +73,7 @@ namespace Sports_DB.model
             Console.WriteLine("A. Insert a new Player");
             Console.WriteLine("B. Delete a Player");
             Console.WriteLine("C. Update a Player");
-            Console.WriteLine("D. Return to Main Menu");
+            Console.WriteLine("D. Logout");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
 
@@ -95,7 +108,7 @@ namespace Sports_DB.model
         {
             foreach (Sport sport in sports)
             {
-                Console.WriteLine($"{sport.SportsID}, {sport.SportsName}");
+                Console.WriteLine($"----------------\nSports id: {sport.SportsID}\n Sports name: {sport.SportsName}");
             }
 
             Console.WriteLine("Press any key to continue");
@@ -103,6 +116,21 @@ namespace Sports_DB.model
             Console.Clear();
         }
 
+        public void displayPlayer(List<Player> players)
+        {
+            foreach (Player player in players)
+            {
+                Console.WriteLine($"--------------------------\n Player ID: {player.PlayersID}\n" +
+                    $" Sports ID: {player.SportsID}\n First Name: {player.FirstName}\n" +
+                    $" Last Name: {player.LastName}\n Age: {player.Age}\n" +
+                    $" Gender: {player.Gender}\n Experience: {player.Experience}\n" +
+                    $" Injury Status: {player.InjuryStatus}  ");
+
+                Console.WriteLine("press any key to contintue");
+                Console.ReadKey();
+                Console.Clear();
+            }
+         }
         public void displayCoach(List<Coaches> coaches)
         {
             foreach (Coaches coach in coaches)

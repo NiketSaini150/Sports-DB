@@ -14,15 +14,18 @@ namespace Sports_DB.model
         public string LastName { get; set; }
         public int Age { get; set; }
         public string Gender { get; set; }
+        
+        public int Experience {  get; set; }
         public string InjuryStatus { get; set; }
 
 
-        public  Player (int playerID, int sportsID, string firstName, string lastName, int age, string gender, string injuryStatus)
+        public  Player (int playerID, int sportsID, string firstName, string lastName, int age, string gender, string injuryStatus, int experience)
         {
             PlayersID = playerID;   
-            PlayersID = sportsID;
+            SportsID = sportsID;
             FirstName = firstName;
             LastName = lastName;
+            Experience = experience;
             Age = age;
             Gender = gender;
             InjuryStatus = injuryStatus;

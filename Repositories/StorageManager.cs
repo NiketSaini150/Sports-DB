@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Numerics;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
@@ -94,6 +95,32 @@ internal class Storagemanager
         return sports;
 
     }
+
+    public List<Player> GetALLPlayers()
+    {
+        List<Player> players = new List<Player>();
+        using (SqlCommand cmd = new SqlCommand("SELECT* FROM Tbl_Players;", conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int playerid = Convert.ToInt32(reader["Player_ID"]);
+                    string Firstname = reader["First_Name"].ToString();
+                    int SportsID = reader["Sports_ID"] != DBNull.Value ? Convert.ToInt32(reader["Sports_ID"]) : 0;
+                    string lastname = reader["Last_Name"].ToString();
+                    int age = Convert.ToInt32(reader["Age"]);
+                    string Gender = reader["Gender"].ToString();
+                    string Injury_Status = reader["Injury_Status"].ToString();
+                    int Experience = Convert.ToInt32(reader["Experience"]);
+                    players.Add(new Player(0, SportsID, Firstname, lastname, age, Gender, Injury_Status, Experience));
+                }
+
+            }
+            return players;
+        }
+            
+    }
   
     public int register(User user)
     {
@@ -142,7 +169,7 @@ internal class Storagemanager
     public int InsertNewCoach(Coaches coaches)
     {
         using (SqlCommand cmd = new SqlCommand($"INSERT INTO Tbl_Coaches (First_Name,Last_Name, Experience, Coach_Type_ID)" +
-            $"Values (@First_Name, @Last_Name, @Experience,@Coach_Type_ID);" +
+            "Values (@First_Name, @Last_Name, @Experience,@Coach_Type_ID);" +
             $"SELECT SCOPE_IDENTITY();", conn))
         {
 
@@ -172,6 +199,30 @@ internal class Storagemanager
         }
 
          
+    }
+
+    public int InsertPlayer(Player player)
+    {
+        using (SqlCommand cmd = new SqlCommand("INSERT INTO Tbl_Players (Sports_ID, First_Name,Last_Name,Age,Gender,Experience,Injury_Status)" +
+            "VALUES (@Sports_ID,@First_Name,@Last_Name,@Age,@Gender,@Experience,@Injury_Status);" +
+                 $"SELECT SCOPE_IDENTITY();", conn))
+        {
+            cmd.Parameters.AddWithValue("@Sports_ID", player.SportsID);
+            cmd.Parameters.AddWithValue("@First_Name", player.FirstName);
+            cmd.Parameters.AddWithValue("@Last_Name", player.LastName);
+            cmd.Parameters.AddWithValue("@Age", player.Age);
+            cmd.Parameters.AddWithValue("@Gender", player.Gender);
+            cmd.Parameters.AddWithValue("@Experience", player.Experience);
+            cmd.Parameters.AddWithValue("@Injury_Status", player.InjuryStatus);
+
+            object rowsAffected = cmd.ExecuteScalar();
+            return Convert.ToInt32(rowsAffected);
+        }
+        
+        
+
+        
+      
     }
 
     public int DeleteCoachByID(int coachID)
