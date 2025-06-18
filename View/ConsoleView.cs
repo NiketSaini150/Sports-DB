@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.IdentityModel.Tokens;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 
 namespace Sports_DB.model
@@ -159,12 +161,63 @@ namespace Sports_DB.model
 
         public string GetInput()
         {
+            string input;
+            bool loop = true;
+            do
+            {
+                Console.WriteLine("please enter your input ");
+                input = Console.ReadLine();
+                if (input.IsNullOrEmpty())
+                {
+                    loop = true;
+                    Console.WriteLine("please enter a valid input");
+
+                }
+                else
+                {
+                    loop = false;
+                }
+            }
+            while (loop);
+            
+            return input;
+
             return Console.ReadLine();
         }
 
         public int GetIntInput()
         {
-            return int.Parse(Console.ReadLine());
+            bool loop = true;
+            string input;
+            int intInput = 0;
+            bool ContainsInt;
+            do
+            {
+                Console.WriteLine("yes");
+                input = Console.ReadLine();
+                ContainsInt = getoutput("s");
+                if (input.IsNullOrEmpty() | ContainsInt == false)
+                {
+                    loop = true;
+                }
+                else
+                {
+                    intInput = Convert.ToInt32(input);
+                    loop = false;
+                }
+            } while (loop);
+            return intInput;
         }
+       
+        public bool getoutput(string s)
+        {
+            foreach(char c in s)
+            {
+                if (!char.IsDigit(c))
+                    return false;
+            }
+            return true;
+        }
+       
     }
 }
