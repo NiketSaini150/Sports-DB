@@ -200,6 +200,19 @@ internal class Storagemanager
 
          
     }
+    public int DeleteCoachByID(int coachID)
+    {
+        using (SqlCommand cmd = new SqlCommand($"DELETE FROM dbo.Tbl_Coaches WHERE Coach_ID = @Coach_Id", conn))
+
+        {
+            cmd.Parameters.AddWithValue("@Coach_ID", coachID);
+            int rowsAffected = cmd.ExecuteNonQuery();
+            return rowsAffected;
+
+
+        }
+    }
+
 
     public int InsertPlayer(Player player)
     {
@@ -217,27 +230,55 @@ internal class Storagemanager
 
             object rowsAffected = cmd.ExecuteScalar();
             return Convert.ToInt32(rowsAffected);
-        }
-        
-        
-
-        
+        } 
       
     }
 
-    public int DeleteCoachByID(int coachID)
+    public int UpdatePlayer(Player player)
     {
-        using (SqlCommand cmd = new SqlCommand($"DELETE FROM dbo.Tbl_Coaches WHERE Coach_ID = @Coach_Id", conn))
-
+         using (SqlCommand cmd = new SqlCommand("UPDATE", conn))
         {
-            cmd.Parameters.AddWithValue("@Coach_ID", coachID);
+            cmd.Parameters.AddWithValue("@Sports_ID", player.SportsID);
+            cmd.Parameters.AddWithValue("@First_Name", player.FirstName);
+            cmd.Parameters.AddWithValue("@Last_Name", player.LastName);
+            cmd.Parameters.AddWithValue("@Age", player.Age);
+            cmd.Parameters.AddWithValue("@Gender", player.Gender);
+            cmd.Parameters.AddWithValue("@Experience", player.Experience);
+            cmd.Parameters.AddWithValue("@Injury_Status", player.InjuryStatus);
+            return cmd.ExecuteNonQuery();
+        } 
+      
+    }
+
+    public int DeletePlayerByID(int Player_ID)
+    {
+        using (SqlCommand cmd = new SqlCommand("Delete ", conn))
+        {
+            cmd.Parameters.AddWithValue("@Player_ID", Player_ID);
             int rowsAffected = cmd.ExecuteNonQuery();
             return rowsAffected;
-           
-            
         }
     }
- 
+
+    public int InserCoachType(Coach_Type CoachType)
+    {
+        using (SqlCommand cmd = new SqlCommand("INSERT INTO Tbl_Players (Sports_ID, First_Name,Last_Name,Age,Gender,Experience,Injury_Status)" +
+           "VALUES (@Sports_ID,@First_Name,@Last_Name,@Age,@Gender,@Experience,@Injury_Status);" +
+                $"SELECT SCOPE_IDENTITY();", conn))
+        {
+            cmd.Parameters.AddWithValue("@Sports_ID", player.SportsID);
+            cmd.Parameters.AddWithValue("@First_Name", player.FirstName);
+            cmd.Parameters.AddWithValue("@Last_Name", player.LastName);
+            cmd.Parameters.AddWithValue("@Age", player.Age);
+            cmd.Parameters.AddWithValue("@Gender", player.Gender);
+            cmd.Parameters.AddWithValue("@Experience", player.Experience);
+            cmd.Parameters.AddWithValue("@Injury_Status", player.InjuryStatus);
+
+            object rowsAffected = cmd.ExecuteScalar();
+            return Convert.ToInt32(rowsAffected);
+        }
+    }
+   
    
     public User Login(string username, string passwordHash)
     {
