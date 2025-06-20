@@ -62,12 +62,12 @@ namespace Sports_DB.model
         public string ClubPlayerMenu()
         {
             Console.Clear();
+            Console.WriteLine("--------------------------");
             Console.WriteLine("== Player Menu ==");
-            Console.WriteLine("A. Insert a new Player");
-            Console.WriteLine("B. Delete a Player");
+            Console.WriteLine("A. View all players");
+            Console.WriteLine("B. Insert a new Player");
             Console.WriteLine("C. Update a Player");
-            Console.WriteLine("D. View all players");
-            Console.WriteLine("e. Return to Main Menu");
+            Console.WriteLine("D. Return to Main Menu");
             Console.WriteLine("--------------------------");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();

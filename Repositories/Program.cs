@@ -160,11 +160,13 @@ namespace Sports_DB.Repositories
                     switch (adminplayer)
                     {
                         case "A":
-                            InsertPlayer();
-                            Console.ReadKey();
+                            List<Player> plauers = storagemanager.GetALLPlayers();
+                            view.displayPlayer(plauers);
+                            
                             break;
                         case "B":
-
+                            InsertPlayer();
+                            Console.ReadKey();
                             break;
                         case "C":
                             UpdatePlayer();
@@ -172,13 +174,10 @@ namespace Sports_DB.Repositories
                             break;
 
                         case "D":
-                            List<Player> plauers = storagemanager.GetALLPlayers();
-                            view.displayPlayer(plauers);
-                            break;
-
-                        case "E":
                             AdminPlayer = false;
                             break;
+
+                        
                     }
                 }
             }
