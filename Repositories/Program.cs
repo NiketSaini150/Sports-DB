@@ -164,7 +164,7 @@ namespace Sports_DB.Repositories
                             Console.ReadKey();
                             break;
                         case "B":
-                            DeletePlayer();
+
                             break;
                         case "C":
                             UpdatePlayer();
@@ -240,12 +240,12 @@ namespace Sports_DB.Repositories
                             break;
 
                         case "C":
-                            DeleteSportByName();
+                            UpdateSportsName();
                             Console.ReadKey();
                             break;
 
                         case "D":
-                            UpdateSportsName();
+                            DeleteSportByName();
                             Console.ReadKey();
                             break;
 
@@ -267,15 +267,14 @@ namespace Sports_DB.Repositories
                     switch (subCoaches)
                     {
                         case "A":
-                            InsertNewCoach();
-                            Console.ReadKey();
+                            List<Coaches> coaches = storagemanager.GetAllCoaches();
+                            view.displayCoach(coaches);
                             break;
 
                         case "B":
-                            DeleteCoach();
+                            InsertNewCoach();
                             Console.ReadKey();
                             break;
-
 
                         case "C":
                             UpdateCoach();
@@ -283,8 +282,8 @@ namespace Sports_DB.Repositories
                             break;
 
                         case "D":
-                            List<Coaches> coaches = storagemanager.GetAllCoaches();
-                            view.displayCoach(coaches);
+                            DeleteCoach();
+                            Console.ReadKey();
                             break;
 
                         case "E":
@@ -546,7 +545,7 @@ namespace Sports_DB.Repositories
             view.DisplayMessage("Enter New Player Injury Status: ");
             string Injurystatus = view.GetInput();
 
-            Player player = new Player(playerId, sportsId, FirstName, LastName, Age, Gender, Experience, Injurystatus);
+            Player player = new Player(playerId, sportsId, FirstName, LastName, Age, Gender, Injurystatus, Experience);
             int rows = storagemanager.UpdatePlayer(player);
             view.DisplayMessage($"Rows Updated: {rows}");
         }
@@ -567,12 +566,12 @@ namespace Sports_DB.Repositories
             view.DisplayMessage($"End Time (hh:mm): ");
             TimeSpan End = TimeSpan.Parse(view.GetInput());
 
-            Training training = new Training(0, coachid, SportsID, date, start, End);
+            Training training = new Training(0, coachid, SportsID, start, End, date);
             int generatedid = storagemanager.InsertTrainings(training);
             view.DisplayMessage($"Training added with ID: {generatedid}");
         }
 
-       private static void UpdateTraining()
+        private static void UpdateTraining()
         {
             view.DisplayMessage($"Enter Trainings ID to update: ");
             int trainingID = view.GetIntInput();
@@ -593,13 +592,14 @@ namespace Sports_DB.Repositories
             TimeSpan End = TimeSpan.Parse(view.GetInput());
 
 
-            Training training = new Training(trainingID, coachid, SportsID, date, start, End);
+            Training training = new Training(trainingID, coachid, SportsID, start, End, date);
             int rows = storagemanager.UpdateTrainings(training);
             view.DisplayMessage($" Rows Affected: {rows}");
 
         }
 
-     
+
+    }
 }
 
 

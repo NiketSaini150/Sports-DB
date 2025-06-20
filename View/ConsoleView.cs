@@ -35,8 +35,8 @@ namespace Sports_DB.model
             Console.WriteLine("== Sports Menu ==");
             Console.WriteLine("A. List all Records in Table Sports ");
             Console.WriteLine("B. Insert a new Sport");
-            Console.WriteLine("C. Delete a Sport by Sport Name");
-            Console.WriteLine("D. Update a Sport name by Sports_ID");
+            Console.WriteLine("C. Update a Sport name by Sports_ID");
+            Console.WriteLine("D. Delete a Sport by Sport Name");
             Console.WriteLine("E. Return to Main Menu");
             Console.WriteLine("---------------------------------------");
             Console.WriteLine("Input your choice: ");
@@ -49,11 +49,11 @@ namespace Sports_DB.model
         {
             Console.Clear();
             Console.WriteLine("== Coach Menu ==");
-            Console.WriteLine("A. Insert a new Coach");
-            Console.WriteLine("B. Delete a Coach by Coach Name");
-            Console.WriteLine("C. Update a Coach by Coach ID");
-            Console.WriteLine("D. List all records in Table Coach");
-            Console.WriteLine("E. Logout ");
+            Console.WriteLine("A. List all records in Table Coach");
+            Console.WriteLine("B. Insert a new Coach");
+            Console.WriteLine("B. Update a Coach by Coach ID");
+            Console.WriteLine("C. Delete a Coach by Coach Name");
+            Console.WriteLine("E. Return to Main Menu ");
             Console.WriteLine("------------------------------------");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();

@@ -11,10 +11,10 @@ namespace Sports_DB.model
         public int TrainingID { get; set; }
         public int CoachID { get; set; }
         public int SportsID { get; set; }
-        public DateTime StartTime { get; set; }
-        public DateTime EndTime { get; set; }
-        public DateOnly Date { get; set; }
-        public Training(int trainingID, int coachID, int sportsID, DateTime startTime, DateTime endTime, DateOnly date)
+        public TimeSpan StartTime { get; set; }
+        public TimeSpan EndTime { get; set; }
+        public DateTime Date { get; set; }
+        public Training(int trainingID, int coachID, int sportsID, TimeSpan startTime, TimeSpan endTime, DateTime date)
         {
             TrainingID = trainingID;
             CoachID = coachID;
