@@ -29,6 +29,12 @@ namespace Sports_DB.model
             return Console.ReadLine().ToUpper();
             
         }
+        public string showquaries()
+        {
+            Console.Clear();
+            Console.WriteLine("");
+            return Console.ReadLine().ToUpper();
+        }
 
         public string ShowSportsMenu()
         {
@@ -81,7 +87,7 @@ namespace Sports_DB.model
             Console.WriteLine("--------------------------");
             Console.WriteLine("== Player Menu ==");
             Console.WriteLine("A your information");
-            Console.WriteLine("D. Logout");
+            Console.WriteLine("C. Logout");
             Console.WriteLine("--------------------------");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();

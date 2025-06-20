@@ -311,7 +311,7 @@ namespace Sports_DB.Repositories
                             Console.ReadKey();
                             break;
 
-                        case "D":
+                        case "C":
                             PlayerSubMenu = false;
                             break;
                     }
