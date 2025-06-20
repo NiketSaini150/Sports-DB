@@ -14,6 +14,7 @@ namespace Sports_DB.model
         {
 
         Console.Clear();
+            Console.WriteLine("--------------------------");
             Console.WriteLine("== Main Menu ==");
             Console.WriteLine("1. Table Sports");
             Console.WriteLine("2. Table Coaches");
@@ -32,6 +33,7 @@ namespace Sports_DB.model
         public string ShowSportsMenu()
         {
             Console.Clear();
+            Console.WriteLine("---------------------------------------");
             Console.WriteLine("== Sports Menu ==");
             Console.WriteLine("A. List all Records in Table Sports ");
             Console.WriteLine("B. Insert a new Sport");
@@ -48,6 +50,7 @@ namespace Sports_DB.model
         public string ShowCoachMenu()
         {
             Console.Clear();
+            Console.WriteLine("-------------------------------------");
             Console.WriteLine("== Coach Menu ==");
             Console.WriteLine("A. List all records in Table Coach");
             Console.WriteLine("B. Insert a new Coach");
@@ -75,6 +78,7 @@ namespace Sports_DB.model
         public string ShowPlayerMenu()
         {
             Console.Clear();
+            Console.WriteLine("--------------------------");
             Console.WriteLine("== Player Menu ==");
             Console.WriteLine("A your information");
             Console.WriteLine("D. Logout");
@@ -87,6 +91,7 @@ namespace Sports_DB.model
         public string ShowCoachTypeMenu()
         {
             Console.Clear();
+            Console.WriteLine("--------------------------");
             Console.WriteLine("== Coach Type ==");
             Console.WriteLine("A. Insert New Coach Type");
             Console.WriteLine("B. Update New Coach Type");
@@ -100,6 +105,7 @@ namespace Sports_DB.model
         public string ShowTrainingsMenu()
         {
             Console.Clear();
+            Console.WriteLine("--------------------------");
             Console.WriteLine("== Trainings Menu == ");
             Console.WriteLine("A. view all trainings ");
             Console.WriteLine("B. Insert new Training:  ");
