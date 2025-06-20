@@ -92,7 +92,26 @@ namespace Sports_DB.Repositories
                 }
 
 
+                static void Quaries()
+                {
+                    bool exit = false;
+                    while(!exit)
+                    {
+                        string choice = view.showquaries();
 
+                        switch (choice)
+                        {
+                            case "A":
+                                //qry1;
+                                break;
+
+                            default:
+                                Console.WriteLine("Invalid option. Please try again");
+                                break;
+
+                        }
+                    }
+                }
 
 
 
@@ -597,6 +616,10 @@ namespace Sports_DB.Repositories
 
         }
 
+        private static void qry1()
+        {
+
+        }
 
     }
 }

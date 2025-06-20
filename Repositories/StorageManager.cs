@@ -123,24 +123,9 @@ internal class Storagemanager
         }
             
     }
-  
-    public int register(User user)
-    {
-        using (SqlCommand cmd = new SqlCommand($"INSERT INTO Tbl_Users (Username,PasswordHash, Role, Coach_ID, Player_ID)" +
-            "Values (@Username, @PasswordHash, @Role,@Coach_ID,@Player_ID);" +
-            " SELECT Cast(SCOPE_IDENTITY () AS int);", conn))
-        {
-            cmd.Parameters.AddWithValue("@Username", user.UserName);
-            cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
-            cmd.Parameters.AddWithValue("@Role", user.Role);
-            cmd.Parameters.AddWithValue("@Coach_ID", user.CoachID== 0 ? DBNull.Value:(object)user.CoachID);
-            cmd.Parameters.AddWithValue("@Player_ID", user.PlayerID == 0 ? DBNull.Value:(Object)user.PlayerID);
-            return Convert.ToInt32(cmd.ExecuteScalar());
-
             
-
-        }
-    }
+   
+ 
     public int InsertNewSport(Sport Sportstemp)
     {
         using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Sports (Sports_Name) VALUES (@SportName); SELECT SCOPE_IDENTITY();", conn))
@@ -305,6 +290,13 @@ internal class Storagemanager
         }
     }
    
+     public int qry1()
+    {
+        using (SqlCommand cmd = new SqlCommand("", conn))
+        {
+            return Convert.ToInt32(cmd.ExecuteScalar());
+        }
+    }
     public int UpdateTrainings (Training training)
     {
         using (SqlCommand cmd = new SqlCommand("UPDATE Tbl_Trainings SET  Coach_ID =@Coach_ID, Sports_ID =@Sports_ID," +
@@ -354,7 +346,25 @@ internal class Storagemanager
         return null;
     }
 
-        public void closeconnecton()
+    public int register(User user)
+    {
+        using (SqlCommand cmd = new SqlCommand($"INSERT INTO Tbl_Users (Username,PasswordHash, Role, Coach_ID, Player_ID)" +
+            "Values (@Username, @PasswordHash, @Role,@Coach_ID,@Player_ID);" +
+            " SELECT Cast(SCOPE_IDENTITY () AS int);", conn))
+        {
+            cmd.Parameters.AddWithValue("@Username", user.UserName);
+            cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
+            cmd.Parameters.AddWithValue("@Role", user.Role);
+            cmd.Parameters.AddWithValue("@Coach_ID", user.CoachID == 0 ? DBNull.Value : (object)user.CoachID);
+            cmd.Parameters.AddWithValue("@Player_ID", user.PlayerID == 0 ? DBNull.Value : (Object)user.PlayerID);
+            return Convert.ToInt32(cmd.ExecuteScalar());
+
+
+
+        }
+    }
+
+    public void closeconnecton()
         {
             if (conn != null && conn.State == ConnectionState.Open)
             {
