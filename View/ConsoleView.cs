@@ -180,9 +180,9 @@ namespace Sports_DB.model
             bool loop = true;
             do
             {
-                Console.WriteLine("please enter your input ");
+                Console.WriteLine("please enter your input: ");
                 input = Console.ReadLine();
-                if (input.IsNullOrEmpty())
+                if (string.IsNullOrEmpty(input ))
                 {
                     loop = true;
                     Console.WriteLine("please enter a valid input");
@@ -202,37 +202,24 @@ namespace Sports_DB.model
 
         public int GetIntInput()
         {
-            bool loop = true;
-            string input;
-            int intInput = 0;
-            bool ContainsInt;
-            do
+
+            int intInput;
+            while (true)
             {
-                Console.WriteLine("yes");
-                input = Console.ReadLine();
-                ContainsInt = getoutput("s");
-                if (input.IsNullOrEmpty() | ContainsInt == false)
+                Console.WriteLine("Please enter a number: ");
+                string input = Console.ReadLine();
+                if (int.TryParse(input, out intInput))
                 {
-                    loop = true;
+                    return intInput;
                 }
-                else
+
+                else 
                 {
-                    intInput = Convert.ToInt32(input);
-                    loop = false;
+                    Console.WriteLine("Invalid input. Please enter a Valid integer.");
                 }
-            } while (loop);
-            return intInput;
-        }
-       
-        public bool getoutput(string s)
-        {
-            foreach(char c in s)
-            {
-                if (!char.IsDigit(c))
-                    return false;
             }
-            return true;
         }
+    
        
     }
 }

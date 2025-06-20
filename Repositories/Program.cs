@@ -459,8 +459,24 @@ namespace Sports_DB.Repositories
 
         private static void UpdateCoach()
         {
+            view.DisplayMessage("Coach ID: ");
+            int coachid= view.GetIntInput();
 
-            
+            view.DisplayMessage("First Name: ");
+            string FirstName = view.GetInput();
+
+            view.DisplayMessage("Last Name: ");
+            string LastName = view.GetInput();
+
+            view.DisplayMessage("Experience: ");
+            int Experience = view.GetIntInput();
+
+            view.DisplayMessage("Coach Type ID: ");
+            int typeid = view.GetIntInput();
+
+            Coaches coach = new Coaches(coachid, FirstName, LastName, Experience, typeid);
+            int RowsUpdated = storagemanager.UpdateCoach(coach);
+            view.DisplayMessage($"Rows Updated: {RowsUpdated}");
         }
         private static void DeleteCoach()
         {
@@ -478,7 +494,7 @@ namespace Sports_DB.Repositories
         private static void InsertPlayer()
         {
             view.DisplayMessage($"Enter New sports ID: ");
-            string SportsID = view.GetInput();
+            int SportsID = view.GetIntInput();
 
             view.DisplayMessage($"Enter New First Name: ");
             string FirstName = view.GetInput();
@@ -498,20 +514,65 @@ namespace Sports_DB.Repositories
             view.DisplayMessage("Enter New Injury Status: : ");
             string InjuryStatus = view.GetInput();
 
-            Player player = new Player(0,0,FirstName,LastName,Age, Gender, InjuryStatus,Experience);
+            Player player = new Player(0,SportsID,FirstName,LastName,Age, Gender, InjuryStatus,Experience);
             int generatedid = storagemanager.InsertPlayer(player);
             view.DisplayMessage($"New Player inserted with id: {generatedid}");
         }
 
-        private static void DeletePlayer()
-        {
-
-        }
+    
         private static void UpdatePlayer()
         {
+            view.DisplayMessage("Enter the Player_id to update: ");
+            int playerId = view.GetIntInput();
+
+            view.DisplayMessage("Enter the Sports_id to update: ");
+            int sportsId = view.GetIntInput();
+
+            view.DisplayMessage("Enter New Player First Name: ");
+            string FirstName = view.GetInput();
+
+            view.DisplayMessage("Enter New Player Last Name: ");
+            string LastName = view.GetInput();
+
+            view.DisplayMessage("Enter New Age: ");
+            int Age = view.GetIntInput();
+
+            view.DisplayMessage("Enter New gender: ");
+            string Gender = view.GetInput();
+
+            view.DisplayMessage("Enter New Player Experience: ");
+            int Experience = view.GetIntInput();
+
+            view.DisplayMessage("Enter New Player Injury Status: ");
+            string Injurystatus = view.GetInput();
+
+            Player player = new Player(playerId, sportsId, FirstName, LastName, Age, Gender, Experience, Injurystatus);
+            int rows = storagemanager.UpdatePlayer(player);
+            view.DisplayMessage($"Rows Updated: {rows}");
+        }
+        private static void  InsertTraining()
+        {
+            view.DisplayMessage($"Enter New sports ID: ");
+            int SportsID = view.GetIntInput();
+
+            view.DisplayMessage($"Enter New Coach ID: ");
+            int coachid = view.GetIntInput();
+
+            view.DisplayMessage($"Date (yyy-mm-dd): ");
+            DateTime date = DateTime.Parse(view.GetInput());
+
+            view.DisplayMessage($"Start Time (hh:mm): ");
+            TimeSpan start = TimeSpan.Parse(view.GetInput());
+
 
         }
+
+
     }
+
+
 }
+
+
 
 
