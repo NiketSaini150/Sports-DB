@@ -20,7 +20,7 @@ namespace Sports_DB.Repositories
             storagemanager = new Storagemanager(connectionString);
             view = new Consoleview();
 
-        
+
             int attempts = 4;
             bool Loggedout = false;
             User loggedinuser = null;
@@ -185,8 +185,8 @@ namespace Sports_DB.Repositories
             static void AdminCoachMenu()
             {
                 bool AdminCoach = true;
-                
-               while (AdminCoach)
+
+                while (AdminCoach)
                 {
                     string admincoach = view.ShowCoachMenu();
 
@@ -219,8 +219,8 @@ namespace Sports_DB.Repositories
                     }
                 }
             }
-           
-             static void SportsMenu()
+
+            static void SportsMenu()
             {
                 bool SportsSubMenu = true;
 
@@ -254,60 +254,60 @@ namespace Sports_DB.Repositories
                             SportsSubMenu = false; // back to the main menu
                             break;
 
-                        
+
                     }
                 }
-             }
-                static void CoachMenu(User Coach)
+            }
+            static void CoachMenu(User Coach)
+            {
+                bool CoachSubMenu = true;
+                while (CoachSubMenu)
                 {
-                    bool CoachSubMenu = true;
-                    while (CoachSubMenu)
+                    string subCoaches = view.ShowCoachMenu();
+                    switch (subCoaches)
                     {
-                        string subCoaches = view.ShowCoachMenu();
-                        switch (subCoaches)
-                        {
-                            case "A":
-                                InsertNewCoach();
-                                Console.ReadKey();
-                                break;
-                            
-                            case "B":
-                                DeleteCoach();
-                                Console.ReadKey();
-                                break;
+                        case "A":
+                            InsertNewCoach();
+                            Console.ReadKey();
+                            break;
+
+                        case "B":
+                            DeleteCoach();
+                            Console.ReadKey();
+                            break;
 
 
-                            case "C":
-                                UpdateCoach();
-                                Console.ReadKey();
-                                break;
+                        case "C":
+                            UpdateCoach();
+                            Console.ReadKey();
+                            break;
 
-                             case "D":
-                                 List<Coaches> coaches = storagemanager.GetAllCoaches();
-                                 view.displayCoach(coaches);
-                                 break;
+                        case "D":
+                            List<Coaches> coaches = storagemanager.GetAllCoaches();
+                            view.displayCoach(coaches);
+                            break;
 
-                             case "E":
-                                 CoachSubMenu = false;
-                                 break;
-                                
-                        }
+                        case "E":
+                            CoachSubMenu = false;
+                            break;
+
                     }
                 }
+            }
 
-                static void PlayerMenu(User player)
+            static void PlayerMenu(User player)
+            {
+                bool PlayerSubMenu = true;
+
+                while (PlayerSubMenu)
                 {
-                    bool PlayerSubMenu = true;
-
-                    while (PlayerSubMenu)
+                    string SubPlayer = view.ShowPlayerMenu();
+                    switch (SubPlayer)
                     {
-                        string SubPlayer = view.ShowPlayerMenu();
-                        switch (SubPlayer)
-                        {
-                            case "A":
-                                InsertPlayer();
-                                Console.ReadKey();
-                                break;
+                        case "A":
+                            InsertPlayer();
+                            Console.ReadKey();
+                            break;
                         case "B":
                             UpdatePlayer();
                             Console.ReadKey();
@@ -316,22 +316,22 @@ namespace Sports_DB.Repositories
                         case "D":
                             PlayerSubMenu = false;
                             break;
-                        }
                     }
                 }
-             
+            }
 
-                static void CoachTypeMenu()
+
+            static void CoachTypeMenu()
+            {
+                bool CoachTypeSubMenu = true;
+
+                while (CoachTypeSubMenu)
                 {
-                      bool CoachTypeSubMenu = true;
-
-                     while (CoachTypeSubMenu)
-                     {
-                         string SubCoach = view.ShowCoachTypeMenu();
-                        switch (SubCoach)
-                        {
-                            case "A":
-                         //   InsertNewCoachType();
+                    string SubCoach = view.ShowCoachTypeMenu();
+                    switch (SubCoach)
+                    {
+                        case "A":
+                            //   InsertNewCoachType();
                             Console.ReadKey();
                             break;
 
@@ -341,29 +341,29 @@ namespace Sports_DB.Repositories
                         case "C":
                             CoachTypeSubMenu = false;
                             break;
-                        }
-                     }
+                    }
                 }
+            }
 
-                static void TrainingsMenu()
+            static void TrainingsMenu()
+            {
+                bool TrainingsSubMenu = true;
+
+                while (TrainingsSubMenu)
                 {
-                     bool TrainingsSubMenu = true;
-
-                     while (TrainingsSubMenu)
-                     {
-                           string SubTraining = view.ShowTrainingsMenu();
-                        switch (SubTraining)
-                        {
-                            case "A":
+                    string SubTraining = view.ShowTrainingsMenu();
+                    switch (SubTraining)
+                    {
+                        case "A":
                             //  InsertNewPlayer();
                             Console.ReadKey();
                             break;
-                            case "B":
+                        case "B":
                             TrainingsSubMenu = false;
                             break;
                     }
-                        }
                 }
+            }
 
 
         }
@@ -384,13 +384,13 @@ namespace Sports_DB.Repositories
             view.DisplayMessage($"Enter the player id (enter 0 if not a player) : ");
             int playerid = view.GetIntInput();
 
-            
+
 
 
             view.DisplayMessage("Enter a new role");
             string role = view.GetInput();
 
-            User user1 = new User (0, role , coachid,playerid, username, password);
+            User user1 = new User(0, role, coachid, playerid, username, password);
 
             try
             {
@@ -431,7 +431,7 @@ namespace Sports_DB.Repositories
         {
             view.DisplayMessage("Enter the sport name to delete: ");
             string SportName = view.GetInput();
-             int sportId = 0;
+            int sportId = 0;
             Sport sport2 = new Sport(sportId, SportName);
             int rowsaffected = storagemanager.DeleteSportByName(SportName);
             view.DisplayMessage($"Rows affected: {rowsaffected} ");
@@ -443,7 +443,7 @@ namespace Sports_DB.Repositories
             string FirstName = view.GetInput();
 
             view.DisplayMessage("Enter New Last Name: ");
-           string LastName = view.GetInput();
+            string LastName = view.GetInput();
 
             view.DisplayMessage("Enter New Coach Experience: ");
             int Experience = view.GetIntInput();
@@ -460,7 +460,7 @@ namespace Sports_DB.Repositories
         private static void UpdateCoach()
         {
             view.DisplayMessage("Coach ID: ");
-            int coachid= view.GetIntInput();
+            int coachid = view.GetIntInput();
 
             view.DisplayMessage("First Name: ");
             string FirstName = view.GetInput();
@@ -489,7 +489,7 @@ namespace Sports_DB.Repositories
 
         }
 
-       
+
 
         private static void InsertPlayer()
         {
@@ -514,12 +514,12 @@ namespace Sports_DB.Repositories
             view.DisplayMessage("Enter New Injury Status: : ");
             string InjuryStatus = view.GetInput();
 
-            Player player = new Player(0,SportsID,FirstName,LastName,Age, Gender, InjuryStatus,Experience);
+            Player player = new Player(0, SportsID, FirstName, LastName, Age, Gender, InjuryStatus, Experience);
             int generatedid = storagemanager.InsertPlayer(player);
             view.DisplayMessage($"New Player inserted with id: {generatedid}");
         }
 
-    
+
         private static void UpdatePlayer()
         {
             view.DisplayMessage("Enter the Player_id to update: ");
@@ -550,7 +550,7 @@ namespace Sports_DB.Repositories
             int rows = storagemanager.UpdatePlayer(player);
             view.DisplayMessage($"Rows Updated: {rows}");
         }
-        private static void  InsertTraining()
+        private static void InsertTraining()
         {
             view.DisplayMessage($"Enter New sports ID: ");
             int SportsID = view.GetIntInput();
@@ -564,13 +564,42 @@ namespace Sports_DB.Repositories
             view.DisplayMessage($"Start Time (hh:mm): ");
             TimeSpan start = TimeSpan.Parse(view.GetInput());
 
+            view.DisplayMessage($"End Time (hh:mm): ");
+            TimeSpan End = TimeSpan.Parse(view.GetInput());
+
+            Training training = new Training(0, coachid, SportsID, date, start, End);
+            int generatedid = storagemanager.InsertTrainings(training);
+            view.DisplayMessage($"Training added with ID: {generatedid}");
+        }
+
+       private static void UpdateTraining()
+        {
+            view.DisplayMessage($"Enter Trainings ID to update: ");
+            int trainingID = view.GetIntInput();
+
+            view.DisplayMessage($"Enter sports ID to update: ");
+            int SportsID = view.GetIntInput();
+
+            view.DisplayMessage($"Enter Coach ID to Update: ");
+            int coachid = view.GetIntInput();
+
+            view.DisplayMessage($"Date (yyy-mm-dd): ");
+            DateTime date = DateTime.Parse(view.GetInput());
+
+            view.DisplayMessage($"Start Time (hh:mm): ");
+            TimeSpan start = TimeSpan.Parse(view.GetInput());
+
+            view.DisplayMessage($"End Time (hh:mm): ");
+            TimeSpan End = TimeSpan.Parse(view.GetInput());
+
+
+            Training training = new Training(trainingID, coachid, SportsID, date, start, End);
+            int rows = storagemanager.UpdateTrainings(training);
+            view.DisplayMessage($" Rows Affected: {rows}");
 
         }
 
-
-    }
-
-
+     
 }
 
 
