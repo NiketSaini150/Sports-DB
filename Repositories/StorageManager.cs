@@ -262,23 +262,60 @@ internal class Storagemanager
 
     public int InserCoachType(Coach_Type CoachType)
     {
-        using (SqlCommand cmd = new SqlCommand("INSERT INTO Tbl_Players (Sports_ID, First_Name,Last_Name,Age,Gender,Experience,Injury_Status)" +
-           "VALUES (@Sports_ID,@First_Name,@Last_Name,@Age,@Gender,@Experience,@Injury_Status);" +
-                $"SELECT SCOPE_IDENTITY();", conn))
+        using (SqlCommand cmd = new SqlCommand("INSERT INTO Tbl_Coach_Type (Coach_Type_Name) VALUES (@Coach_Type_Name); SELECT SCOPE_IDENTITY();", conn))
         {
-            cmd.Parameters.AddWithValue("@Sports_ID", player.SportsID);
-            cmd.Parameters.AddWithValue("@First_Name", player.FirstName);
-            cmd.Parameters.AddWithValue("@Last_Name", player.LastName);
-            cmd.Parameters.AddWithValue("@Age", player.Age);
-            cmd.Parameters.AddWithValue("@Gender", player.Gender);
-            cmd.Parameters.AddWithValue("@Experience", player.Experience);
-            cmd.Parameters.AddWithValue("@Injury_Status", player.InjuryStatus);
+            
+            cmd.Parameters.AddWithValue("@Coach_Type_Name", CoachType.Coach_Type_Name);
+            return Convert.ToInt32(cmd.ExecuteScalar);
+        }
+    }
 
-            object rowsAffected = cmd.ExecuteScalar();
-            return Convert.ToInt32(rowsAffected);
+    public int UpdateCoachType(Coach_Type CoachType)
+    {
+        using (SqlCommand cmd = new SqlCommand("UPDATE Tbl_Coach_Type SET Coach_Type_Name = @Coach_Type_Name WHERE Coach-Type_ID = @Coach_Type_ID;", conn))
+        {
+
+            cmd.Parameters.AddWithValue("@Coach_Type_ID", CoachType.Coach_Type_ID);
+            cmd.Parameters.AddWithValue("@Coach_Type_Name", CoachType.Coach_Type_Name);
+           
+            return cmd.ExecuteNonQuery();
+
+        }
+    }
+
+  
+
+    public int InsertTrainings(Training training)
+    {
+        using (SqlCommand cmd = new SqlCommand("INSERT INTO Tbl_Trainings (Trainings_ID,Coach_ID,Sports_ID, Training_Date,Start_Time,End_Time) VALUES (@Trainings_ID,@Coach_ID,Sports_ID, @Trainings_Date,@Start_Time,@End_Time); @SELECT SCOPE_IDENTITY();", conn))
+        {
+
+            cmd.Parameters.AddWithValue("@Coach_ID", training.CoachID);
+            cmd.Parameters.AddWithValue("@Sports_ID",training.SportsID);
+            cmd.Parameters.AddWithValue("@Training_Date",training.Date);
+            cmd.Parameters.AddWithValue("@Start_Time",training.StartTime);
+            cmd.Parameters.AddWithValue("@End_Time",training.EndTime);
+            return Convert.ToInt32(cmd.ExecuteScalar);
         }
     }
    
+    public int UpdateTrainings (Training training)
+    {
+        using (SqlCommand cmd = new SqlCommand("UPDATE Tbl_Trainings SET (Coach_ID,Sports_ID,Trainings_Date, Start_Time,End_Time) Coach_ID =@Coach_ID, Sports_ID =@Sports_ID, Training_Date =@Training_Date,Start_Time=@Start_Time,End_Time = @End_Time WHERE Trainings_ID = @Trainings_ID;", conn))
+        {
+
+            cmd.Parameters.AddWithValue("@Coach_ID", training.CoachID);
+            cmd.Parameters.AddWithValue("@Sports_ID", training.SportsID);
+            cmd.Parameters.AddWithValue("@Training_Date", training.Date);
+            cmd.Parameters.AddWithValue("@Start_Time", training.StartTime);
+            cmd.Parameters.AddWithValue("@End_Time", training.EndTime);
+
+            return cmd.ExecuteNonQuery();
+        }
+
+    }
+    
+  
    
     public User Login(string username, string passwordHash)
     {

@@ -23,6 +23,7 @@ namespace Sports_DB.model
             Console.WriteLine("6. Register a new Club");
             Console.WriteLine("7. View all users");
             Console.WriteLine("8. Exit");
+            Console.WriteLine("--------------------------");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
             
@@ -37,6 +38,7 @@ namespace Sports_DB.model
             Console.WriteLine("C. Delete a Sport by Sport Name");
             Console.WriteLine("D. Update a Sport name by Sports_ID");
             Console.WriteLine("E. Return to Main Menu");
+            Console.WriteLine("---------------------------------------");
             Console.WriteLine("Input your choice: ");
 
             return Console.ReadLine().ToUpper();
@@ -52,6 +54,7 @@ namespace Sports_DB.model
             Console.WriteLine("C. Update a Coach by Coach ID");
             Console.WriteLine("D. List all records in Table Coach");
             Console.WriteLine("E. Logout ");
+            Console.WriteLine("------------------------------------");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
         }
@@ -65,6 +68,7 @@ namespace Sports_DB.model
             Console.WriteLine("C. Update a Player");
             Console.WriteLine("D. View all players");
             Console.WriteLine("e. Return to Main Menu");
+            Console.WriteLine("--------------------------");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
         }
@@ -72,10 +76,9 @@ namespace Sports_DB.model
         {
             Console.Clear();
             Console.WriteLine("== Player Menu ==");
-            Console.WriteLine("A. Insert a new Player");
-            Console.WriteLine("B. Delete a Player");
-            Console.WriteLine("C. Update a Player");
+            Console.WriteLine("A your information");
             Console.WriteLine("D. Logout");
+            Console.WriteLine("--------------------------");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
 
@@ -83,15 +86,27 @@ namespace Sports_DB.model
 
         public string ShowCoachTypeMenu()
         {
+            Console.Clear();
+            Console.WriteLine("== Coach Type ==");
             Console.WriteLine("A. Insert New Coach Type");
             Console.WriteLine("B. Update New Coach Type");
+            Console.WriteLine("C. Return to home page");
+            Console.WriteLine("--------------------------");
+            Console.WriteLine("Input your choice: ");
 
             return Console.ReadLine().ToUpper();
         }
 
         public string ShowTrainingsMenu()
         {
-            Console.WriteLine("A. Insert ");
+            Console.Clear();
+            Console.WriteLine("== Trainings Menu == ");
+            Console.WriteLine("A. view all trainings ");
+            Console.WriteLine("B. Insert new Training:  ");
+            Console.WriteLine("C. Update a Training ");
+            Console.WriteLine("D. Return to homepage");
+            Console.WriteLine("--------------------------");
+            Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
         }
         
