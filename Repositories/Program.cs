@@ -211,13 +211,14 @@ namespace Sports_DB.Repositories
                     switch (admincoach)
                     {
                         case "A":
-                            InsertNewCoach();
-                            Console.ReadKey();
+                            List<Coaches> coaches = storagemanager.GetAllCoaches();
+                            view.displayCoach(coaches);
                             break;
 
                         case "B":
-                            DeleteCoach();
+                            InsertNewCoach();
                             Console.ReadKey();
+                            
                             break;
 
 
@@ -227,8 +228,9 @@ namespace Sports_DB.Repositories
                             break;
 
                         case "D":
-                            List<Coaches> coaches = storagemanager.GetAllCoaches();
-                            view.displayCoach(coaches);
+                            DeleteCoach();
+                            Console.ReadKey();
+
                             break;
 
                         case "E":
@@ -372,10 +374,13 @@ namespace Sports_DB.Repositories
                     switch (SubTraining)
                     {
                         case "A":
-                            //  InsertNewPlayer();
+                           // List<Training> coaches = storagemanager();
+                           // view.displayCoach(coaches);
+                            InsertTraining();
                             Console.ReadKey();
                             break;
                         case "B":
+                            UpdateTraining();
                             TrainingsSubMenu = false;
                             break;
                     }

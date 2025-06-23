@@ -7,6 +7,7 @@ using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Data.SqlClient;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace Sports_DB.model;
@@ -30,7 +31,27 @@ internal class Storagemanager
             Console.WriteLine(E.Message);
         }
     }
-
+    /*
+    public List <Training> GetAllTrainings()
+    {
+        List <Training> training = new List<Training>();
+        using (SqlCommand cmd = new SqlCommand("SELECT * FROM Tbl_Trainings",conn)) 
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int trainingID = Convert.ToInt32(reader["Training_ID"]);
+                    int coachID = Convert.ToInt32(reader["Coach_ID"]);
+                    int sportsID= Convert.ToInt32(reader["Sports_ID"]);
+                    TimeSpan startTime = reader ["First_Name"]();
+                    TimeSpan endTime
+                    DateTime date
+                }
+            }
+        }
+    }
+    */
     public List<Coaches> GetAllCoaches()
     {
         List <Coaches> coaches = new List<Coaches>();
@@ -136,10 +157,10 @@ internal class Storagemanager
     }
     public int UpdateSportsName(int SportsID, string SportsName)
     {
-        using (SqlCommand cmd = new SqlCommand($"update Tbl_Sports SET Sports_Name = @SportsName WHERE SPORTS_ID = @SportsID", conn))
+        using (SqlCommand cmd = new SqlCommand($"UPDATE Tbl_Sports SET Sports_Name = @SportsName WHERE Sports_ID = @SportsID", conn))
         {
-            cmd.Parameters.AddWithValue("SportName", SportsName);
-            cmd.Parameters.AddWithValue("SportsID", SportsID);
+            cmd.Parameters.AddWithValue("@SportName", SportsName);
+            cmd.Parameters.AddWithValue("@SportsID", SportsID);
             return cmd.ExecuteNonQuery();
         }
     }
@@ -356,7 +377,7 @@ internal class Storagemanager
             cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
             cmd.Parameters.AddWithValue("@Role", user.Role);
             cmd.Parameters.AddWithValue("@Coach_ID", user.CoachID == 0 ? DBNull.Value : (object)user.CoachID);
-            cmd.Parameters.AddWithValue("@Player_ID", user.PlayerID == 0 ? DBNull.Value : (Object)user.PlayerID);
+            cmd.Parameters.AddWithValue("@Player_ID", user.PlayerID == 0 ? DBNull.Value : (object)user.PlayerID);
             return Convert.ToInt32(cmd.ExecuteScalar());
 
 

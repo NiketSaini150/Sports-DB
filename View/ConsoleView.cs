@@ -60,8 +60,8 @@ namespace Sports_DB.model
             Console.WriteLine("== Coach Menu ==");
             Console.WriteLine("A. List all records in Table Coach");
             Console.WriteLine("B. Insert a new Coach");
-            Console.WriteLine("B. Update a Coach by Coach ID");
-            Console.WriteLine("C. Delete a Coach by Coach Name");
+            Console.WriteLine("C. Update a Coach by Coach ID");
+            Console.WriteLine("D. Delete a Coach by Coach Name");
             Console.WriteLine("E. Return to Main Menu ");
             Console.WriteLine("------------------------------------");
             Console.WriteLine("Input your choice: ");
@@ -126,7 +126,7 @@ namespace Sports_DB.model
         {
             foreach (User user in users)
             {
-                Console.WriteLine($"-----------------\nUsername:  {user.UserName}\n Password: {user.PasswordHash}\n Role {user.Role}\n CoachID: {user.CoachID}\n PlayerID: {user.PlayerID}\n ");
+                Console.WriteLine($"----------------------------\nUsername:  {user.UserName}\n Password: {user.PasswordHash}\n Role {user.Role}\n CoachID: {user.CoachID}\n PlayerID: {user.PlayerID}\n ");
             }
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
@@ -137,7 +137,7 @@ namespace Sports_DB.model
         {
             foreach (Sport sport in sports)
             {
-                Console.WriteLine($"----------------\nSports id: {sport.SportsID}\n Sports name: {sport.SportsName}");
+                Console.WriteLine($"-----------------------------------------\nSports id: {sport.SportsID}\nSports name: {sport.SportsName}");
             }
 
             Console.WriteLine("Press any key to continue");
@@ -164,7 +164,7 @@ namespace Sports_DB.model
         {
             foreach (Coaches coach in coaches)
             {
-                Console.WriteLine($"{coach.Coach_ID},{coach.Coach_Type_ID},{coach.First_Name},{coach.Last_Name},{coach.Experience}");
+                Console.WriteLine($"Coach iD:{coach.Coach_ID}\n Coach Type:{coach.Coach_Type_ID}\n First Name:{coach.First_Name}\n Last Name:{coach.Last_Name}\n Experience:{coach.Experience}");
             }
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
@@ -192,7 +192,7 @@ namespace Sports_DB.model
             bool loop = true;
             do
             {
-                Console.WriteLine("please enter your input: ");
+                Console.WriteLine("");
                 input = Console.ReadLine();
                 if (string.IsNullOrEmpty(input ))
                 {
