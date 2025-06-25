@@ -92,27 +92,7 @@ namespace Sports_DB.Repositories
                 }
 
 
-                static void Quaries()
-                {
-                    bool exit = false;
-                    while(!exit)
-                    {
-                        string choice = view.showquaries();
-
-                        switch (choice)
-                        {
-                            case "A":
-                                //qry1;
-                                break;
-
-                            default:
-                                Console.WriteLine("Invalid option. Please try again");
-                                break;
-
-                        }
-                    }
-                }
-
+           
 
 
 
@@ -148,15 +128,19 @@ namespace Sports_DB.Repositories
                                 break;
 
                             case "6":
-                                register();
+                                Reports();
                                 break;
 
                             case "7":
+                                register();
+                                break;
+
+                            case "8":
                                 List<User> users = storagemanager.GetAllUser();
                                 view.DisplayUsers(users);
                                 break;
 
-                            case "8":
+                            case "9":
                                 Exit = true;
                                 break;
 
@@ -167,6 +151,36 @@ namespace Sports_DB.Repositories
                     }
 
                     storagemanager.closeconnecton();
+                }
+            }
+
+            static void Reports()
+            {
+                bool Reports = true;
+
+                while (Reports) 
+                {
+                    string report = view.ShowReports();
+
+                    switch (report)
+                    {
+                        case "A":
+                            List<Sport> sports = storagemanager.GetALLSports();
+                            view.DisplaySport(sports);
+                            break;
+
+                        case "B":
+                          List <Coaches> coaches = storagemanager.SimpleQry2();
+                            view.displayCoach(coaches);
+                            break;
+                        case "C":
+                            Reports = false;
+                            break;
+
+                        default:
+                            Console.WriteLine("Invalid option. Please try again");
+                            break;
+                    }
                 }
             }
             static void AdminPlayerMenu()
@@ -543,10 +557,7 @@ namespace Sports_DB.Repositories
             int rowsAffected = storagemanager.DeleteCoachByID(coachId);
             view.DisplayMessage($"Rows affected: {rowsAffected}");
 
-
         }
-
-
 
         private static void InsertPlayer()
         {
@@ -656,10 +667,7 @@ namespace Sports_DB.Repositories
 
         }
 
-        private static void qry1()
-        {
-
-        }
+        
 
     }
 }

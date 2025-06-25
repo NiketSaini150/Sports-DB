@@ -77,6 +77,29 @@ internal class Storagemanager
          return coaches;
     }
 
+    public List<Coaches> SimpleQry2()
+    {
+        List<Coaches> coaches = new List<Coaches>();
+        string sqlstring = "SELECT * FROM Tbl_Coaches WHERE Experience>5; ";
+        using (SqlCommand cmd = new SqlCommand(sqlstring, conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int CoachID = Convert.ToInt32(reader["Coach_ID"]);
+                    int Experience = Convert.ToInt32(reader["Experience"]);
+                    int Coach_Type_ID = Convert.ToInt32(reader["Coach_Type_ID"]);
+                    string First_Name = reader["First_Name"].ToString();
+                    string Last_Name = reader["Last_Name"].ToString();
+                    coaches.Add(new Coaches(CoachID, First_Name, Last_Name, Experience, Coach_Type_ID));
+                }
+            }
+        }
+        return coaches;
+    }
+
+
     public List<User> GetAllUser()
     {
         List<User> users = new List<User>();
@@ -314,13 +337,8 @@ internal class Storagemanager
         }
     }
    
-     public int qry1()
-    {
-        using (SqlCommand cmd = new SqlCommand("", conn))
-        {
-            return Convert.ToInt32(cmd.ExecuteScalar());
-        }
-    }
+ 
+
     public int UpdateTrainings (Training training)
     {
         using (SqlCommand cmd = new SqlCommand("UPDATE Tbl_Trainings SET  Coach_ID =@Coach_ID, Sports_ID =@Sports_ID," +
@@ -397,7 +415,5 @@ internal class Storagemanager
             }
         }
 
-
-    
 }
 

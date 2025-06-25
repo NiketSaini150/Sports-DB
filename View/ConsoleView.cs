@@ -21,18 +21,23 @@ namespace Sports_DB.model
             Console.WriteLine("3. Table Player ");
             Console.WriteLine("4. Table Coach Type");
             Console.WriteLine("5. Table Trainings");
-            Console.WriteLine("6. Register a new Club");
-            Console.WriteLine("7. View all users");
-            Console.WriteLine("8. Exit");
+            Console.WriteLine("6. View Reports");
+            Console.WriteLine("7. Register a new Club");
+            Console.WriteLine("8. View all users");
+            Console.WriteLine("9. Exit");
             Console.WriteLine("--------------------------");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
             
         }
-        public string showquaries()
+
+     
+        public string ShowReports()
         {
             Console.Clear();
-            Console.WriteLine("");
+            Console.WriteLine("A. Simple Qry1: ");
+            Console.WriteLine("B. Simple qry2:");
+            Console.WriteLine("C. Return to Main menu:");
             return Console.ReadLine().ToUpper();
         }
 
@@ -186,7 +191,7 @@ namespace Sports_DB.model
         {
             foreach (Training training1 in training)
             {
-                Console.WriteLine($"----------------------\n Trainings ID: {training1.TrainingID}\n Coach ID: {training1.CoachID}\n Sports ID: {training1.SportsID}\n Start Time: {training1.StartTime}\n End Time: {training1.EndTime} Date:{training1.Date}");
+                Console.WriteLine($"----------------------\n Trainings ID: {training1.TrainingID}\n Coach ID: {training1.CoachID}\n Sports ID: {training1.SportsID}\n Start Time: {training1.StartTime}\n End Time: {training1.EndTime}\n Date:{training1.Date}");
             }
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
