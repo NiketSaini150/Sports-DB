@@ -164,7 +164,7 @@ namespace Sports_DB.model
         {
             foreach (Coaches coach in coaches)
             {
-                Console.WriteLine($"Coach iD:{coach.Coach_ID}\n Coach Type:{coach.Coach_Type_ID}\n First Name:{coach.First_Name}\n Last Name:{coach.Last_Name}\n Experience:{coach.Experience}");
+                Console.WriteLine($"-----------------------------------\n Coach iD: {coach.Coach_ID}\n Coach Type: {coach.Coach_Type_ID}\n First Name: {coach.First_Name}\n Last Name: {coach.Last_Name}\n Experience: {coach.Experience}\n------------------");
             }
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();

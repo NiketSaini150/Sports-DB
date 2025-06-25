@@ -31,7 +31,7 @@ internal class Storagemanager
             Console.WriteLine(E.Message);
         }
     }
-    /*
+    
     public List <Training> GetAllTrainings()
     {
         List <Training> training = new List<Training>();
@@ -44,14 +44,17 @@ internal class Storagemanager
                     int trainingID = Convert.ToInt32(reader["Training_ID"]);
                     int coachID = Convert.ToInt32(reader["Coach_ID"]);
                     int sportsID= Convert.ToInt32(reader["Sports_ID"]);
-                    TimeSpan startTime = reader ["First_Name"]();
-                    TimeSpan endTime
-                    DateTime date
+                    TimeSpan startTime = (TimeSpan) reader ["First_Name"];
+                    TimeSpan endTime = (TimeSpan) reader ["End_Time"];
+                    DateOnly date = DateOnly.FromDateTime(Convert.ToDateTime(reader["Date"]));
+                    training.Add(new Training(trainingID, coachID, sportsID, startTime, endTime, date));
+
                 }
             }
         }
+        return training;
     }
-    */
+    
     public List<Coaches> GetAllCoaches()
     {
         List <Coaches> coaches = new List<Coaches>();

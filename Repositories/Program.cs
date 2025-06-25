@@ -374,8 +374,8 @@ namespace Sports_DB.Repositories
                     switch (SubTraining)
                     {
                         case "A":
-                           // List<Training> coaches = storagemanager();
-                           // view.displayCoach(coaches);
+                            List<Training> coaches = storagemanager.();
+                            view.displayCoach(coaches);
                             InsertTraining();
                             Console.ReadKey();
                             break;
