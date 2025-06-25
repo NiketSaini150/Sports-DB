@@ -188,6 +188,9 @@ namespace Sports_DB.model
             {
                 Console.WriteLine($"----------------------\n Trainings ID: {training1.TrainingID}\n Coach ID: {training1.CoachID}\n Sports ID: {training1.SportsID}\n Start Time: {training1.StartTime}\n End Time: {training1.EndTime} Date:{training1.Date}");
             }
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
+            Console.Clear();
         }
         public void DisplayMessage(string message)
         {
