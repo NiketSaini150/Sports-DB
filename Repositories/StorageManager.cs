@@ -41,12 +41,12 @@ internal class Storagemanager
             {
                 while (reader.Read())
                 {
-                    int trainingID = Convert.ToInt32(reader["Training_ID"]);
+                    int trainingID = Convert.ToInt32(reader["Trainings_ID"]);
                     int coachID = Convert.ToInt32(reader["Coach_ID"]);
                     int sportsID= Convert.ToInt32(reader["Sports_ID"]);
-                    TimeSpan startTime = (TimeSpan) reader ["First_Name"];
+                    TimeSpan startTime = (TimeSpan) reader ["Start_Time"];
                     TimeSpan endTime = (TimeSpan) reader ["End_Time"];
-                    DateOnly date = DateOnly.FromDateTime(Convert.ToDateTime(reader["Date"]));
+                    DateOnly date = DateOnly.FromDateTime(Convert.ToDateTime(reader["Training_Date"]));
                     training.Add(new Training(trainingID, coachID, sportsID, startTime, endTime, date));
 
                 }

@@ -155,7 +155,7 @@ namespace Sports_DB.model
                     $" Gender: {player.Gender}\n Experience: {player.Experience}\n" +
                     $" Injury Status: {player.InjuryStatus}  ");
 
-                Console.WriteLine("press any key to contintue");
+                Console.WriteLine("press any key to continue");
                 Console.ReadKey();
                 Console.Clear();
             }
@@ -174,12 +174,20 @@ namespace Sports_DB.model
         {
             foreach (Coach_Type Coach_type in coach_type)
             {
-                Console.WriteLine($"{Coach_type.Coach_Type_ID},{Coach_type.Coach_Type_Name}");
+                Console.WriteLine($"------------------\n Coach Type: {Coach_type.Coach_Type_ID}\n Coach Type Name: {Coach_type.Coach_Type_Name}\n------------------");
             }
             Console.WriteLine("Press any key to continue");
             Console.ReadKey();
             Console.Clear();
 
+        }
+
+        public void DisplayTrainings(List <Training> training)
+        {
+            foreach (Training training1 in training)
+            {
+                Console.WriteLine($"----------------------\n Trainings ID: {training1.TrainingID}\n Coach ID: {training1.CoachID}\n Sports ID: {training1.SportsID}\n Start Time: {training1.StartTime}\n End Time: {training1.EndTime} Date:{training1.Date}");
+            }
         }
         public void DisplayMessage(string message)
         {

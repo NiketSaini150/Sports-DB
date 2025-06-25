@@ -196,7 +196,10 @@ namespace Sports_DB.Repositories
                             AdminPlayer = false;
                             break;
 
-                        
+                        default:
+                            Console.WriteLine("Invalid option. Please try again");
+                            break;
+
                     }
                 }
             }
@@ -236,6 +239,9 @@ namespace Sports_DB.Repositories
                         case "E":
                             AdminCoach = false;
                             break;
+                        default:
+                            Console.WriteLine("Invalid option. Please try again");
+                            break;
                     }
                 }
             }
@@ -274,6 +280,10 @@ namespace Sports_DB.Repositories
                             SportsSubMenu = false; // back to the main menu
                             break;
 
+                        default:
+                            Console.WriteLine("Invalid option. Please try again");
+                            break;
+
 
                     }
                 }
@@ -310,6 +320,10 @@ namespace Sports_DB.Repositories
                             CoachSubMenu = false;
                             break;
 
+                        default:
+                            Console.WriteLine("Invalid option. Please try again");
+                            break;
+
                     }
                 }
             }
@@ -335,6 +349,10 @@ namespace Sports_DB.Repositories
                         case "C":
                             PlayerSubMenu = false;
                             break;
+
+                        default:
+                            Console.WriteLine("Invalid option. Please try again");
+                            break;
                     }
                 }
             }
@@ -357,8 +375,13 @@ namespace Sports_DB.Repositories
                         case "B":
                             UpdateCoach();
                             break;
+
                         case "C":
                             CoachTypeSubMenu = false;
+                            break;
+
+                        default:
+                            Console.WriteLine("Invalid option. Please try again");
                             break;
                     }
                 }
@@ -374,14 +397,26 @@ namespace Sports_DB.Repositories
                     switch (SubTraining)
                     {
                         case "A":
-                            List<Training> coaches = storagemanager.();
-                            view.displayCoach(coaches);
+                            List<Training> training = storagemanager.GetAllTrainings();
+                            view.DisplayTrainings(training);
+                            break;
+                        
+                            
+                        case "B":
                             InsertTraining();
                             Console.ReadKey();
                             break;
-                        case "B":
+                          
+
+                        case "C":
                             UpdateTraining();
-                            TrainingsSubMenu = false;
+                            break;
+
+                    case "D": TrainingsSubMenu = false;
+                            break;
+
+                        default:
+                            Console.WriteLine("Invalid option. Please try again");
                             break;
                     }
                 }
@@ -581,7 +616,7 @@ namespace Sports_DB.Repositories
             int coachid = view.GetIntInput();
 
             view.DisplayMessage($"Date (yyy-mm-dd): ");
-            DateTime date = DateTime.Parse(view.GetInput());
+            DateOnly date = DateOnly.Parse(view.GetInput());
 
             view.DisplayMessage($"Start Time (hh:mm): ");
             TimeSpan start = TimeSpan.Parse(view.GetInput());
@@ -606,7 +641,7 @@ namespace Sports_DB.Repositories
             int coachid = view.GetIntInput();
 
             view.DisplayMessage($"Date (yyy-mm-dd): ");
-            DateTime date = DateTime.Parse(view.GetInput());
+            DateOnly date = DateOnly.Parse(view.GetInput());
 
             view.DisplayMessage($"Start Time (hh:mm): ");
             TimeSpan start = TimeSpan.Parse(view.GetInput());
