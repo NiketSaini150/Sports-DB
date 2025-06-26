@@ -92,7 +92,7 @@ namespace Sports_DB.Repositories
                 }
 
 
-           
+
 
 
 
@@ -158,7 +158,7 @@ namespace Sports_DB.Repositories
             {
                 bool Reports = true;
 
-                while (Reports) 
+                while (Reports)
                 {
                     string report = view.ShowReports();
 
@@ -170,7 +170,7 @@ namespace Sports_DB.Repositories
                             break;
 
                         case "B":
-                          List <Coaches> coaches = storagemanager.SimpleQry2();
+                            List<Coaches> coaches = storagemanager.SimpleQry2();
                             view.displayCoach(coaches);
                             break;
                         case "C":
@@ -195,7 +195,7 @@ namespace Sports_DB.Repositories
                         case "A":
                             List<Player> players = storagemanager.GetALLPlayers();
                             view.displayPlayer(players);
-                            
+
                             break;
                         case "B":
                             InsertPlayer();
@@ -240,7 +240,7 @@ namespace Sports_DB.Repositories
                         case "B":
                             InsertNewCoach();
                             Console.ReadKey();
-                            
+
                             break;
 
 
@@ -387,15 +387,19 @@ namespace Sports_DB.Repositories
                     switch (SubCoach)
                     {
                         case "A":
-                            //   InsertNewCoachType();
+                            InsertCoachType();
                             Console.ReadKey();
                             break;
 
                         case "B":
-                            UpdateCoach();
+                            UpdateCoachType();
                             break;
 
                         case "C":
+                            DeleteCoachType();
+                            break;
+
+                        case "D":
                             CoachTypeSubMenu = false;
                             break;
 
@@ -419,19 +423,20 @@ namespace Sports_DB.Repositories
                             List<Training> training = storagemanager.GetAllTrainings();
                             view.DisplayTrainings(training);
                             break;
-                        
-                            
+
+
                         case "B":
                             InsertTraining();
                             Console.ReadKey();
                             break;
-                          
+
 
                         case "C":
                             UpdateTraining();
+                            Console.ReadKey();
                             break;
 
-                    case "D": TrainingsSubMenu = false;
+                        case "D": TrainingsSubMenu = false;
                             break;
 
                         default:
@@ -566,7 +571,7 @@ namespace Sports_DB.Repositories
 
         private static void InsertPlayer()
         {
-      
+
 
             view.DisplayMessage($"Enter New sports ID: ");
             int SportsID = view.GetIntInput();
@@ -678,9 +683,23 @@ namespace Sports_DB.Repositories
 
         }
 
-        
+        private static void InsertCoachType()
+        {
 
-    }
+        }
+
+        private static void UpdateCoachType()
+        {
+
+        }
+
+        private static void DeleteCoachType()
+        {
+
+         }
+
+}
+    
 }
 
 
