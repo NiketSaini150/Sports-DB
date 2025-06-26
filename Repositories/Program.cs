@@ -193,8 +193,8 @@ namespace Sports_DB.Repositories
                     switch (adminplayer)
                     {
                         case "A":
-                            List<Player> plauers = storagemanager.GetALLPlayers();
-                            view.displayPlayer(plauers);
+                            List<Player> players = storagemanager.GetALLPlayers();
+                            view.displayPlayer(players);
                             
                             break;
                         case "B":
@@ -207,6 +207,11 @@ namespace Sports_DB.Repositories
                             break;
 
                         case "D":
+                            DeleteSportByName();
+                            Console.ReadKey();
+                            break;
+
+                        case "E":
                             AdminPlayer = false;
                             break;
 
@@ -560,15 +565,21 @@ namespace Sports_DB.Repositories
         }
 
         private static void InsertPlayer()
-        { 
+        {
+      
+
             view.DisplayMessage($"Enter New sports ID: ");
             int SportsID = view.GetIntInput();
+
             view.DisplayMessage($"Enter New First Name: ");
             string FirstName = view.GetInput();
+
             view.DisplayMessage("Enter New Last Name: ");
             string LastName = view.GetInput();
+
             view.DisplayMessage("Enter New Age: ");
             int Age = view.GetIntInput();
+
             view.DisplayMessage("Enter New Gender: ");
             string Gender = view.GetInput();
 

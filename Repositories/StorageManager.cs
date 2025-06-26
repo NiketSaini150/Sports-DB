@@ -111,8 +111,8 @@ internal class Storagemanager
                 {
                     int userID = Convert.ToInt32(reader["User_ID"]);
                     string role = reader["Role"].ToString();
-                    int coachID = reader ["Coach_ID"] !=DBNull.Value ? Convert.ToInt32(reader["Coach_ID"]):0;
-                    int playerID = reader["Player_ID"]!=DBNull.Value ? Convert.ToInt32(reader["Player_ID"]):0;
+                    int coachID = Convert.ToInt32(reader["Coach_ID"]);
+                    int playerID = Convert.ToInt32(reader["Player_ID"]);
                     string username= reader["Username"].ToString();
                     string password= reader["PasswordHash"].ToString();
 
@@ -156,13 +156,13 @@ internal class Storagemanager
                 {
                     int playerid = Convert.ToInt32(reader["Player_ID"]);
                     string Firstname = reader["First_Name"].ToString();
-                    int SportsID = reader["Sports_ID"] != DBNull.Value ? Convert.ToInt32(reader["Sports_ID"]) : 0;
+                    int SportsID = Convert.ToInt32(reader["Sports_ID"]);
                     string lastname = reader["Last_Name"].ToString();
                     int age = Convert.ToInt32(reader["Age"]);
                     string Gender = reader["Gender"].ToString();
                     string Injury_Status = reader["Injury_Status"].ToString();
                     int Experience = Convert.ToInt32(reader["Experience"]);
-                    players.Add(new Player(0, SportsID, Firstname, lastname, age, Gender, Injury_Status, Experience));
+                    players.Add(new Player(playerid, SportsID, Firstname, lastname, age, Gender, Injury_Status, Experience));
                 }
 
             }
