@@ -560,19 +560,15 @@ namespace Sports_DB.Repositories
         }
 
         private static void InsertPlayer()
-        {
+        { 
             view.DisplayMessage($"Enter New sports ID: ");
             int SportsID = view.GetIntInput();
-
             view.DisplayMessage($"Enter New First Name: ");
             string FirstName = view.GetInput();
-
             view.DisplayMessage("Enter New Last Name: ");
             string LastName = view.GetInput();
-
             view.DisplayMessage("Enter New Age: ");
             int Age = view.GetIntInput();
-
             view.DisplayMessage("Enter New Gender: ");
             string Gender = view.GetInput();
 
@@ -590,8 +586,12 @@ namespace Sports_DB.Repositories
 
         private static void UpdatePlayer()
         {
-            view.DisplayMessage("Enter the Player_id to update: ");
-            int playerId = view.GetIntInput();
+            int playerid = view.GetIntInput();
+            if (playerid <= 0)
+            {
+                view.DisplayMessage("Invalid Player ID. Must be a positive number");
+                return;
+            }
 
             view.DisplayMessage("Enter the Sports_id to update: ");
             int sportsId = view.GetIntInput();
@@ -614,7 +614,7 @@ namespace Sports_DB.Repositories
             view.DisplayMessage("Enter New Player Injury Status: ");
             string Injurystatus = view.GetInput();
 
-            Player player = new Player(playerId, sportsId, FirstName, LastName, Age, Gender, Injurystatus, Experience);
+            Player player = new Player(playerid, sportsId, FirstName, LastName, Age, Gender, Injurystatus, Experience);
             int rows = storagemanager.UpdatePlayer(player);
             view.DisplayMessage($"Rows Updated: {rows}");
         }

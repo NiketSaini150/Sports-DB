@@ -185,10 +185,10 @@ internal class Storagemanager
     {
         using (SqlCommand cmd = new SqlCommand($"UPDATE Tbl_Sports SET Sports_Name = @SportsName WHERE Sports_ID = @SportsID", conn))
         {
-            cmd.Parameters.AddWithValue("@SportName", SportsName);
+            cmd.Parameters.AddWithValue("@SportsName", SportsName);
             cmd.Parameters.AddWithValue("@SportsID", SportsID);
-            return Convert.ToInt32(cmd.ExecuteScalar());
-            //return cmd.ExecuteNonQuery();
+            
+            return cmd.ExecuteNonQuery();
         }
     }
 
@@ -273,10 +273,10 @@ internal class Storagemanager
     public int UpdatePlayer(Player player)
     {
          using (SqlCommand cmd = new SqlCommand("UPDATE Tbl_Players SET Sports_ID =@Sports_ID,First_Name =@First_Name,Last_Name=@Last_Name," +
-             "Age =@Age, Gender = @Gender,Experience =@Experience, Injury_Status =@Injury_Status" +
+             "Age =@Age, Gender = @Gender,Experience =@Experience, Injury_Status =@Injury_Status " +
              "WHERE Player_ID = @Player_ID", conn))
         {
-            cmd.Parameters.AddWithValue("Player_ID", player.PlayersID);
+            cmd.Parameters.AddWithValue("@Player_ID", player.PlayersID);
             cmd.Parameters.AddWithValue("@Sports_ID", player.SportsID);
             cmd.Parameters.AddWithValue("@First_Name", player.FirstName);
             cmd.Parameters.AddWithValue("@Last_Name", player.LastName);
@@ -289,15 +289,7 @@ internal class Storagemanager
       
     }
 
-    public int DeletePlayerByID(int Player_ID)
-    {
-        using (SqlCommand cmd = new SqlCommand(" ", conn))
-        {
-            cmd.Parameters.AddWithValue("@Player_ID", Player_ID);
-            int rowsAffected = cmd.ExecuteNonQuery();
-            return rowsAffected;
-        }
-    }
+  
 
     public int InserCoachType(Coach_Type CoachType)
     {
