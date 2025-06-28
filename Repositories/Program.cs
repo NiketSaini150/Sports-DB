@@ -392,14 +392,17 @@ namespace Sports_DB.Repositories
                             break;
                         case "B":
                             InsertCoachType();
+                            Console.ReadKey();
                             break;
 
                         case "C":
                             UpdateCoachType();
+                            Console.ReadKey();
                             break;
 
                         case "D":
                             DeleteCoachType();
+                            Console.ReadKey();
                             break;
 
                         case "E":

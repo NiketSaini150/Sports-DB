@@ -104,9 +104,11 @@ namespace Sports_DB.model
             Console.Clear();
             Console.WriteLine("--------------------------");
             Console.WriteLine("== Coach Type ==");
-            Console.WriteLine("A. Insert New Coach Type");
-            Console.WriteLine("B. Update New Coach Type");
-            Console.WriteLine("C. Return to home page");
+            Console.WriteLine("A. View all coachtypes");
+            Console.WriteLine("B. Insert New Coach Type");
+            Console.WriteLine("C. Update New Coach Type");
+            Console.WriteLine("D. Delete coach type by id ");
+            Console.WriteLine("E. Return to home page");
             Console.WriteLine("--------------------------");
             Console.WriteLine("Input your choice: ");
 
