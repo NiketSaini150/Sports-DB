@@ -692,12 +692,22 @@ namespace Sports_DB.Repositories
             string Coachtypename = view.GetInput();
 
             Coach_Type coachtype = new Coach_Type(0,Coachtypename);
-            int rows = storagemanager.InserCoachType(coachtype);
-            view.DisplayMessage($"Rows affected: {rows}");
+            int generatedid = storagemanager.InserCoachType(coachtype);
+            view.DisplayMessage($" New coach type name added with ID: {generatedid}");
         }
 
         private static void UpdateCoachType()
         {
+            view.DisplayMessage("Enter the coach id to update: ");
+            int Coachtypeid = view.GetIntInput();
+
+            view.DisplayMessage("Enter coach type name: ");
+            string coachtype = view.GetInput();
+
+            Coach_Type Coachtype = new Coach_Type(Coachtypeid, coachtype);
+            int rows = storagemanager.InserCoachType(Coachtype);
+            view.DisplayMessage($" Rows Affected: {rows}");
+
 
         }
 
