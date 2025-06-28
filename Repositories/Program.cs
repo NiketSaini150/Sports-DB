@@ -387,19 +387,22 @@ namespace Sports_DB.Repositories
                     switch (SubCoach)
                     {
                         case "A":
-                            InsertCoachType();
-                            Console.ReadKey();
+                           // List<Coach_Type> coachtype = storagemanager;
+                           // view.displayCoach(coaches);
                             break;
-
                         case "B":
-                            UpdateCoachType();
+                            InsertCoachType();
                             break;
 
                         case "C":
-                            DeleteCoachType();
+                            UpdateCoachType();
                             break;
 
                         case "D":
+                            DeleteCoachType();
+                            break;
+
+                        case "E":
                             CoachTypeSubMenu = false;
                             break;
 
@@ -685,7 +688,12 @@ namespace Sports_DB.Repositories
 
         private static void InsertCoachType()
         {
+            view.DisplayMessage("Enter New Coach Type Name: ");
+            string Coachtypename = view.GetInput();
 
+            Coach_Type coachtype = new Coach_Type(0,Coachtypename);
+            int rows = storagemanager.InserCoachType(coachtype);
+            view.DisplayMessage($"Rows affected: {rows}");
         }
 
         private static void UpdateCoachType()

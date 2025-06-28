@@ -314,7 +314,7 @@ internal class Storagemanager
         }
     }
 
-    
+    c
 
     public int InsertTrainings(Training training)
     {
