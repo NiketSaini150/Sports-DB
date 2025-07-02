@@ -38,7 +38,8 @@ namespace Sports_DB.model
             Console.WriteLine("A. Simple Qry1: ");
             Console.WriteLine("B. Simple qry2: ");
             Console.WriteLine("C. Simple qry3: ");
-            Console.WriteLine("D. Return to home page");
+            Console.WriteLine("D. Simple qry4: ");
+            Console.WriteLine("E. Return to home page");
 
             return Console.ReadLine().ToUpper();
         }
@@ -201,6 +202,7 @@ namespace Sports_DB.model
             Console.ReadKey();
             Console.Clear();
         }
+
 
         public void DisplayTrainings(List <Training> training)
         {

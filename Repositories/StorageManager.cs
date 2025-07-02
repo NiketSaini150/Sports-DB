@@ -6,6 +6,7 @@ using System.Numerics;
 using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
+using System.Transactions;
 using Microsoft.Data.SqlClient;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -115,6 +116,32 @@ internal class Storagemanager
             }
         }
         return players;
+    }
+
+    public List<Player> SimpleQry4()
+    {
+        List<Player> players = new List<Player>();
+        using (SqlCommand cmd = new SqlCommand("SELECT* FROM Tbl_Players WHERE Injury_Status ='healthy';", conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int playerid = Convert.ToInt32(reader["Player_ID"]);
+                    string Firstname = reader["First_Name"].ToString();
+                    int SportsID = Convert.ToInt32(reader["Sports_ID"]);
+                    string lastname = reader["Last_Name"].ToString();
+                    int age = Convert.ToInt32(reader["Age"]);
+                    string Gender = reader["Gender"].ToString();
+                    string Injury_Status = reader["Injury_Status"].ToString();
+                    int Experience = Convert.ToInt32(reader["Experience"]);
+                    players.Add(new Player(playerid, SportsID, Firstname, lastname, age, Gender, Injury_Status, Experience));
+                }
+
+            }
+            return players;
+        }
+
     }
 
 

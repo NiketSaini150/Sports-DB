@@ -177,7 +177,12 @@ namespace Sports_DB.Repositories
                             List<Player> players = storagemanager.Simpleqry3();
                             view.displayqry3(players);
                             break;
+
                         case "D":
+                            List<Player> players1 = storagemanager.SimpleQry4();
+                            view.displayPlayer(players1);
+                            break;
+                        case "E":
                             Reports = false;
                             break;
 
@@ -462,7 +467,7 @@ namespace Sports_DB.Repositories
         private static void register()
 
         {
-
+            Console.Clear();
             view.DisplayMessage("Enter a new username:");
             string username = view.GetInput();
 
@@ -474,9 +479,6 @@ namespace Sports_DB.Repositories
 
             view.DisplayMessage($"Enter the player id (enter 0 if not a player) : ");
             int playerid = view.GetIntInput();
-
-
-
 
             view.DisplayMessage("Enter a new role");
             string role = view.GetInput();
@@ -493,7 +495,7 @@ namespace Sports_DB.Repositories
             {
                 view.DisplayMessage($"error during registration: {ex.Message}");
             }
-            Console.Clear();
+            
         }
 
         private static void InsertNewSport()
