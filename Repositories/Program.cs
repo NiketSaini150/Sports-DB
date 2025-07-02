@@ -174,6 +174,10 @@ namespace Sports_DB.Repositories
                             view.displayCoach(coaches);
                             break;
                         case "C":
+                            List<Player> players = storagemanager.Simpleqry3();
+                            view.displayqry3(players);
+                            break;
+                        case "D":
                             Reports = false;
                             break;
 

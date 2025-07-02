@@ -36,8 +36,10 @@ namespace Sports_DB.model
         {
             Console.Clear();
             Console.WriteLine("A. Simple Qry1: ");
-            Console.WriteLine("B. Simple qry2:");
-            Console.WriteLine("C. Return to Main menu:");
+            Console.WriteLine("B. Simple qry2: ");
+            Console.WriteLine("C. Simple qry3: ");
+            Console.WriteLine("D. Return to home page");
+
             return Console.ReadLine().ToUpper();
         }
 
@@ -187,6 +189,17 @@ namespace Sports_DB.model
             Console.ReadKey();
             Console.Clear();
 
+        }
+
+        public void displayqry3(List<Player> player)
+        {
+            foreach(Player player1 in player)
+            {
+                Console.WriteLine($"---------------------------\n Sports ID: {player1.SportsID}\n First Name: {player1.FirstName}\n Last Name: {player1.LastName}\n---------------------------");
+            }
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         public void DisplayTrainings(List <Training> training)

@@ -98,6 +98,24 @@ internal class Storagemanager
         }
         return coaches;
     }
+    public List<Player> Simpleqry3()
+    {
+        List<Player> players = new List<Player>();
+        using SqlCommand cmd = new SqlCommand("SELECT First_Name, Last_Name, Sports_ID FROM Tbl_Players WHERE Sports_ID = 1;", conn);
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int Sportsid = Convert.ToInt32(reader["Sports_ID"]);
+                    string Firstname = reader["First_Name"].ToString();
+                    string Lastname = reader["Last_Name"].ToString();
+                    players.Add(new Player(0,Sportsid, Firstname, Lastname,0,"","",0));
+                }
+            }
+        }
+        return players;
+    }
 
 
     public List<User> GetAllUser()
@@ -319,7 +337,7 @@ internal class Storagemanager
     public int InsertTrainings(Training training)
     {
         using (SqlCommand cmd = new SqlCommand("INSERT INTO Tbl_Trainings (Coach_ID,Sports_ID, Training_Date,Start_Time,End_Time)" +
-            " VALUES (@Coach_ID,@Sports_ID, @Trainings_Date,@Start_Time,@End_Time); " +
+            " VALUES (@Coach_ID,@Sports_ID, @Training_Date,@Start_Time,@End_Time); " +
             "SELECT SCOPE_IDENTITY();", conn))
         {
 
