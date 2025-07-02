@@ -705,7 +705,7 @@ namespace Sports_DB.Repositories
 
         private static void UpdateCoachType()
         {
-            view.DisplayMessage("Enter the coach id to update: ");
+            view.DisplayMessage("Enter the coach Type id to update: ");
             int Coachtypeid = view.GetIntInput();
 
             view.DisplayMessage("Enter coach type name: ");
