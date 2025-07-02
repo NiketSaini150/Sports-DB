@@ -391,8 +391,8 @@ namespace Sports_DB.Repositories
                     switch (SubCoach)
                     {
                         case "A":
-                           // List<Coach_Type> coachtype = storagemanager;
-                           // view.displayCoach(coaches);
+                           List<Coach_Type> coachtype = storagemanager.GetAllCoachTypes();
+                            view.displayCoachType(coachtype);
                             break;
                         case "B":
                             InsertCoachType();
