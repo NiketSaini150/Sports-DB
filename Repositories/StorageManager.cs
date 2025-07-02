@@ -129,8 +129,8 @@ internal class Storagemanager
                 {
                     int userID = Convert.ToInt32(reader["User_ID"]);
                     string role = reader["Role"].ToString();
-                    int coachID = Convert.ToInt32(reader["Coach_ID"]);
-                    int playerID = Convert.ToInt32(reader["Player_ID"]);
+                    int coachID = reader["Coach_ID"] == DBNull.Value? 0: Convert.ToInt32 (reader["Coach_ID"]);
+                    int playerID = reader["Player_ID"] == DBNull.Value? 0: Convert.ToInt32(reader["Player_ID"]);
                     string username= reader["Username"].ToString();
                     string password= reader["PasswordHash"].ToString();
 
