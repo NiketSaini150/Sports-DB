@@ -720,10 +720,15 @@ namespace Sports_DB.Repositories
 
         private static void DeleteCoachType()
         {
+            view.DisplayMessage("Enter the coach Type ID to delete:");
+            int coachType = view.GetIntInput();
+            
+            int rowsaffected = storagemanager.DeleteCoachTypeById(coachType);
+            view.DisplayMessage($"Rows affected: {rowsaffected} ");
 
-         }
+        }
 
-}
+    }
     
 }
 

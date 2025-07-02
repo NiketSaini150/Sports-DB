@@ -346,7 +346,14 @@ internal class Storagemanager
 
         }
     }
-
+    public int DeleteCoachTypeById(int coachTypeID)
+    {
+        using (SqlCommand cmd = new SqlCommand("DELETE FROM Tbl_Coach_Type WHERE Coach_Type_ID =@Coach_Type_ID", conn))
+        {
+            cmd.Parameters.AddWithValue("@Coach_Type_ID",coachTypeID );
+            return cmd.ExecuteNonQuery();
+        }
+    }
     
 
     public int InsertTrainings(Training training)
