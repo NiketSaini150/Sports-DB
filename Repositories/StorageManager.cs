@@ -330,7 +330,7 @@ public void AdvancedQry1()
         {
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                Console.WriteLine("Player Name\tLast Name\tInjury Status\tSports Name");
+                Console.WriteLine("Player Name\tLast Name\tInjury Status\t Sports Name");
                 Console.WriteLine("----------------------------------------------------------------------------");
 
                 
@@ -341,7 +341,29 @@ public void AdvancedQry1()
                     string Playerlast = reader["Player_Last_Name"].ToString();
                     string injuryStatus = reader["Injury_Status"].ToString();
                     string sportsName = reader["Sports_Name"].ToString();
-                    Console.WriteLine($"{playerName}\t{Playerlast}\t{injuryStatus}\t{sportsName}");
+                    Console.WriteLine($"{playerName}\t\t {Playerlast}\t\t {injuryStatus}\t\t {sportsName}");
+                }
+            }
+        }
+    }
+
+    public void AdvancedQry5()
+    {
+        using (SqlCommand cmd = new SqlCommand("SELECT C.First_Name AS Coach_Name, C.Last_Name as Coach_Last_Name, CT.Coach_Type_Name,C.Experience AS Coach_Experience\r\nFROM Tbl_Coaches C, Tbl_Coach_Type CT\r\nWHERE C.Coach_Type_ID = CT.Coach_Type_ID\r\nORDER BY C.Experience DESC;",conn))
+        {
+            using(SqlDataReader reader = cmd.ExecuteReader())
+            {
+                Console.WriteLine("Coach Name\t Coach Last Name\tCoach Type Name\t Coach Experience");
+                Console.WriteLine("------------------------------------------------------------------------------");
+
+                while (reader.Read())
+                {
+                    string coachName = reader["Coach_Name"].ToString();
+                    string Coachlast = reader["Coach_Last_Name"].ToString();
+                    string coachTypeName = reader["Coach_Type_Name"].ToString();
+                    int experience = Convert.ToInt32(reader["Coach_Experience"]);
+                    Console.WriteLine($"{coachName}\t\t{Coachlast}\t\t\t{coachTypeName}\t\t\t{experience}\t");
+
                 }
             }
         }

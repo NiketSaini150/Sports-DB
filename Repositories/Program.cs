@@ -211,6 +211,11 @@ namespace Sports_DB.Repositories
                             Console.ReadKey();
                             break;
                         case "J":
+                            storagemanager.AdvancedQry5();
+                            Console.WriteLine("Press any key to exit ");
+                            Console.ReadKey();
+                            break;
+                        case "K":
                             Reports = false;
                             break;
 
