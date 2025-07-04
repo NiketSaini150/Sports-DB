@@ -368,6 +368,82 @@ public void AdvancedQry1()
             }
         }
     }
+    public void ComplexQry1()
+    {
+        using (SqlCommand cmd = new SqlCommand("SELECT COUNT (P.Player_ID) AS Player_Count, S.Sports_Name\r\nFROM Tbl_Players P,  Tbl_Sports S, Tbl_Player_Sports PS\r\nWHERE P.Player_ID = PS.Player_ID \r\nAND S.Sports_ID = PS.Sports_ID\r\nGROUP BY S.Sports_Name\r\nORDER by Player_Count DESC;", conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                Console.WriteLine();
+
+                while (reader.Read())
+                {
+
+                }
+            }
+        }
+    }
+
+    public void ComplexQry2()
+    {
+        using (SqlCommand cmd = new SqlCommand("SELECT TOP 5 T.Trainings_ID AS Training_ID, COUNT (P.Player_ID) AS Player_Count \r\nFROM Tbl_Trainings T,Tbl_Player_Trainings PT, Tbl_Players P\r\nWHERE T.Trainings_ID = PT.Trainings_ID\r\nAND P.Player_ID = PT.Player_ID\r\nGROUP BY T.Trainings_ID\r\nORDER BY Training_ID ASC;", conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                Console.WriteLine();
+
+                while (reader.Read())
+                {
+
+                }
+            }
+        }
+    }
+    public void ComplexQry3()
+    {
+        using (SqlCommand cmd = new SqlCommand("SELECT C.First_Name AS Coach_Name,S.Sports_Name,Count(P.Player_ID) AS Player_Count\r\nFROM Tbl_Coaches C, Tbl_Players P,Tbl_Coach_Sports CS, Tbl_Sports S, Tbl_Player_Sports  PS\r\nWHERE C.Coach_ID = CS.Coach_ID\r\nAND   PS.Sports_ID = S.Sports_ID\r\nAND   P.Player_ID = PS.Player_ID\r\nGROUP BY C.First_Name,S.Sports_Name\r\nORDER BY Player_Count desc;", conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                Console.WriteLine();
+
+                while (reader.Read())
+                {
+
+                }
+            }
+        }
+    }
+    public void ComplexQry4()
+    {
+        using (SqlCommand cmd = new SqlCommand("SELECT S.Sports_Name, COUNT (P.Player_ID) AS Player_Count,\r\nAVG(P.Experience) AS Average_Experience\r\nFROM Tbl_Sports S,Tbl_Player_Sports PS, Tbl_Players P \r\nWHERE S.Sports_ID = PS.Sports_ID\r\nAND PS.Player_ID= P.Player_ID\r\nGROUP BY S.Sports_Name\r\nORDER BY Average_Experience DESC;", conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                Console.WriteLine();
+
+                while (reader.Read())
+                {
+
+                }
+            }
+        }
+    }
+    public void ComplexQry5()
+    {
+        using (SqlCommand cmd = new SqlCommand("SELECT C.First_Name AS Coach_Name, T.Training_Date, COUNT(PT.Player_Trainings_ID)AS Player_Count\r\nFROM Tbl_Coaches C, Tbl_Trainings T, Tbl_Player_Trainings PT\r\nWHERE C.Coach_ID = T.Coach_ID\r\nAND T.Trainings_ID = PT.Trainings_ID\r\nGROUP BY C.First_Name, T.Training_Date\r\nORDER BY Player_Count DESC;", conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                Console.WriteLine();
+
+                while (reader.Read())
+                {
+
+                }
+            }
+        }
+    }
     public int InsertNewSport(Sport Sportstemp)
     {
         using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Sports (Sports_Name) VALUES (@SportName); SELECT SCOPE_IDENTITY();", conn))
