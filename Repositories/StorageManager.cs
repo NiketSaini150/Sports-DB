@@ -288,13 +288,13 @@ public void AdvancedQry1()
         {
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                Console.WriteLine("Coach Name\t| Sports Name");
+                Console.WriteLine(" {0, -20} | {1,-20}", "Coach Name", "Sports Name");
                 Console.WriteLine("-----------------------------------");
                 while (reader.Read())
                 {
                     string coachName = reader["Coach_Name"].ToString();
                     string sportsName = reader["Sports_Name"].ToString();
-                    Console.WriteLine($"{coachName}\t|{sportsName}");
+                    Console.WriteLine("{0,-20} | {1,-20}", coachName, sportsName);
                 }
             }
         }
