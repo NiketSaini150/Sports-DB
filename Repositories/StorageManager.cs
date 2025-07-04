@@ -145,6 +145,30 @@ internal class Storagemanager
     }
 
 
+    public List<Coaches> SimpleQry5()
+    {
+        List<Coaches> coaches = new List<Coaches>();
+        string sqlstring = "SELECT * FROM Tbl_Coaches WHERE Coach_Type_ID = 2; ";
+        using (SqlCommand cmd = new SqlCommand(sqlstring, conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int CoachID = Convert.ToInt32(reader["Coach_ID"]);
+                    int Experience = Convert.ToInt32(reader["Experience"]);
+                    int Coach_Type_ID = Convert.ToInt32(reader["Coach_Type_ID"]);
+                    string First_Name = reader["First_Name"].ToString();
+                    string Last_Name = reader["Last_Name"].ToString();
+                    coaches.Add(new Coaches(CoachID, First_Name, Last_Name, Experience, Coach_Type_ID));
+                }
+            }
+        }
+        return coaches;
+    }
+
+
+
     public List<User> GetAllUser()
     {
         List<User> users = new List<User>();
@@ -230,9 +254,50 @@ internal class Storagemanager
         }
             
     }
-            
-   
- 
+
+
+public void AdvancedQry1()
+    {
+        using (SqlCommand cmd = new SqlCommand("SELECT P.First_Name AS Player_Name, S.Sports_Name " +
+            " FROM Tbl_Players P, Tbl_Sports S, Tbl_Player_Sports ps " +
+            "WHERE P.Player_ID = ps.Player_ID " +
+            "AND S.Sports_ID = ps.Sports_ID " +
+            "ORDER by P.First_Name;", conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                Console.WriteLine("Player Name\t| Sports Name");
+                Console.WriteLine("-------------------------------");
+
+                while (reader.Read())
+                {
+                    string playerName = reader["Player_Name"].ToString();
+                    string sportsName = reader["Sports_Name"].ToString();
+                    Console.WriteLine($"{playerName}\t| {sportsName}");
+                   
+                }
+            }
+        }
+    }
+
+    public void AdvancedQry2()
+    {
+        using (SqlCommand cmd = new SqlCommand("SELECT c.First_Name As Coach_Name,  S.Sports_Name\r\nFROM Tbl_Coaches c, Tbl_Sports S, Tbl_Coach_Sports cs \r\nWHERE c.Coach_ID = cs.Coach_ID\r\nAND s.Sports_ID = cs.Sports_ID;", conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                Console.WriteLine("Coach Name\t| Sports Name");
+                Console.WriteLine("-----------------------------------");
+                while (reader.Read())
+                {
+                    string coachName = reader["Coach_Name"].ToString();
+                    string sportsName = reader["Sports_Name"].ToString();
+                    Console.WriteLine($"{coachName}\t|{sportsName}");
+                }
+            }
+        }
+
+    }
     public int InsertNewSport(Sport Sportstemp)
     {
         using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Sports (Sports_Name) VALUES (@SportName); SELECT SCOPE_IDENTITY();", conn))

@@ -36,10 +36,11 @@ namespace Sports_DB.model
         {
             Console.Clear();
             Console.WriteLine("A. Simple Qry1: ");
-            Console.WriteLine("B. Simple qry2: ");
-            Console.WriteLine("C. Simple qry3: ");
-            Console.WriteLine("D. Simple qry4: ");
-            Console.WriteLine("E. Return to home page");
+            Console.WriteLine("B. Simple Qry2: ");
+            Console.WriteLine("C. Simple Qry3: ");
+            Console.WriteLine("D. Simple Qry4: ");
+            Console.WriteLine("E. Simple Qry5:");
+            Console.WriteLine(". Return to home page");
 
             return Console.ReadLine().ToUpper();
         }

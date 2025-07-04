@@ -172,17 +172,41 @@ namespace Sports_DB.Repositories
                         case "B":
                             List<Coaches> coaches = storagemanager.SimpleQry2();
                             view.displayCoach(coaches);
+                            Console.WriteLine("Press any key to exit ");
+                            Console.ReadKey();
                             break;
                         case "C":
                             List<Player> players = storagemanager.Simpleqry3();
                             view.displayqry3(players);
+                            Console.WriteLine("Press any key to exit ");
+                            Console.ReadKey();
                             break;
 
                         case "D":
                             List<Player> players1 = storagemanager.SimpleQry4();
                             view.displayPlayer(players1);
+                            Console.WriteLine("Press any key to exit ");
+                            Console.ReadKey();
                             break;
                         case "E":
+                            List<Coaches> coaches1 = storagemanager.SimpleQry5();
+                            view.displayCoach(coaches1);
+                            Console.WriteLine("Press any key to exit ");
+                            Console.ReadKey();
+                            break;
+
+                        case "F":
+                            storagemanager.AdvancedQry1();
+                            Console.WriteLine("Press any key to exit ");
+                            Console.ReadKey();
+                            break;
+                           
+                        case "G":
+                            storagemanager.AdvancedQry2();
+                            Console.WriteLine("Press any key to exit ");
+                            Console.ReadKey();
+                            break;
+                        case "H":
                             Reports = false;
                             break;
 
