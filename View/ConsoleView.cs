@@ -40,6 +40,10 @@ namespace Sports_DB.model
             Console.WriteLine("C. Simple Qry3: ");
             Console.WriteLine("D. Simple Qry4: ");
             Console.WriteLine("E. Simple Qry5:");
+            Console.WriteLine("F. Advanced Qry1: ");
+            Console.WriteLine("G. Advanced Qry2: ");
+            Console.WriteLine("H. Advanced Qry3: ");
+            Console.WriteLine("I. Advanced Qry3: ");
             Console.WriteLine(". Return to home page");
 
             return Console.ReadLine().ToUpper();

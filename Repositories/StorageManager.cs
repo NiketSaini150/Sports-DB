@@ -7,6 +7,7 @@ using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 using System.Transactions;
+using System.Xml.Serialization;
 using Microsoft.Data.SqlClient;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -297,6 +298,28 @@ public void AdvancedQry1()
             }
         }
 
+    }
+
+    public void AdvancedQry3()
+    {
+        using (SqlCommand cmd = new SqlCommand("SELECT p.First_Name AS Player_Name,P.Last_Name AS Player_Last_Name,T.Training_Date AS Training_Date, C.First_Name AS Coach_Name, C.Last_Name AS Coach_Last_Name\r\nFROM Tbl_Players P, Tbl_Trainings T, Tbl_Coaches C, Tbl_Player_Trainings PT\r\nWHERE P.player_ID = PT.Player_ID \r\nAND T.Trainings_ID = PT.Trainings_ID\r\nAND C.Coach_ID = T.Coach_ID;\r\n", conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                Console.WriteLine("Player\t\tCoach\t\tTraining Date");
+                Console.WriteLine("-----------------------------------------------------------------");
+
+                while (reader.Read())
+                {
+                    string playerName = reader["Player_Name"].ToString();
+                    string Playerlast= reader["Player_Last_Name"].ToString();
+                    string coachName = reader["Coach_Name"].ToString();
+                    string Coachlast = reader["Coach_Last_Name"].ToString();
+                    DateTime date = Convert.ToDateTime(reader["Training_Date"]);
+                    Console.WriteLine($"{Playerlast}\t{coachName} {Coachlast}\t{date.ToShortDateString()}");
+                }
+            }
+        }
     }
     public int InsertNewSport(Sport Sportstemp)
     {
