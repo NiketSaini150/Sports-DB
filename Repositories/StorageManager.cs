@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Transactions;
 using System.Xml.Serialization;
 using Microsoft.Data.SqlClient;
+using Microsoft.Identity.Client;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
@@ -317,6 +318,30 @@ public void AdvancedQry1()
                     string Coachlast = reader["Coach_Last_Name"].ToString();
                     DateTime date = Convert.ToDateTime(reader["Training_Date"]);
                     Console.WriteLine($"{Playerlast}\t{coachName} {Coachlast}\t{date.ToShortDateString()}");
+                }
+            }
+        }
+
+    }
+
+    public void AdvancedQry4()
+    {
+        using (SqlCommand cmd = new SqlCommand("SELECT p.First_Name AS Player_Name,P.Last_Name AS Player_Last_Name,P.Injury_Status,S.Sports_Name\r\nFROM Tbl_Players P, Tbl_Sports S, Tbl_Player_Sports PS\r\nWHERE P.Player_ID = PS.Player_ID \r\nAND S.Sports_ID = PS.Sports_ID;", conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                Console.WriteLine("Player Name\tLast Name\tInjury Status\tSports Name");
+                Console.WriteLine("----------------------------------------------------------------------------");
+
+                
+
+                while (reader.Read())
+                {
+                    string playerName = reader["Player_Name"].ToString();
+                    string Playerlast = reader["Player_Last_Name"].ToString();
+                    string injuryStatus = reader["Injury_Status"].ToString();
+                    string sportsName = reader["Sports_Name"].ToString();
+                    Console.WriteLine($"{playerName}\t{Playerlast}\t{injuryStatus}\t{sportsName}");
                 }
             }
         }
