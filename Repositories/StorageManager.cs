@@ -268,15 +268,15 @@ public void AdvancedQry1()
         {
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                Console.WriteLine("Player Name\t| Sports Name");
+                Console.WriteLine("{0,-20} | {1,-20}", "Player Name", "Sports Name");
                 Console.WriteLine("-------------------------------");
 
                 while (reader.Read())
                 {
                     string playerName = reader["Player_Name"].ToString();
                     string sportsName = reader["Sports_Name"].ToString();
-                    Console.WriteLine($"{playerName}\t| {sportsName}");
-                   
+                    Console.WriteLine("{0,-20} | {1,-20}", playerName, sportsName);
+
                 }
             }
         }
@@ -374,11 +374,14 @@ public void AdvancedQry1()
         {
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                Console.WriteLine();
+                Console.WriteLine("Player Count\t Sports Name");
+                Console.WriteLine("----------------------------------");
 
                 while (reader.Read())
                 {
-
+                    int Playerid = Convert.ToInt32(reader["Player_Count"]);
+                    string Sportsname = reader["Sports_Name"].ToString();
+                    Console.WriteLine($"{Playerid}\t {Sportsname}");
                 }
             }
         }
@@ -390,11 +393,13 @@ public void AdvancedQry1()
         {
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                Console.WriteLine();
+                Console.WriteLine("Training ID\t Player Count ");
 
                 while (reader.Read())
                 {
-
+                    int trainingid = Convert.ToInt32(reader["Training_ID"]);
+                    string playerCount = reader["Player_Count"].ToString();
+                    Console.WriteLine($"{trainingid}\t {playerCount}");
                 }
             }
         }
@@ -405,7 +410,7 @@ public void AdvancedQry1()
         {
             using (SqlDataReader reader = cmd.ExecuteReader())
             {
-                Console.WriteLine();
+                Console.WriteLine("Coach Name ");
 
                 while (reader.Read())
                 {
