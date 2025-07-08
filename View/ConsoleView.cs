@@ -72,7 +72,7 @@ namespace Sports_DB.model
            
         }
 
-        public string ShowCoachMenu()
+        public string ClubCoachMenu()
         {
             Console.Clear();
             Console.WriteLine("-------------------------------------");
@@ -80,13 +80,24 @@ namespace Sports_DB.model
             Console.WriteLine("A. List all records in Table Coach");
             Console.WriteLine("B. Insert a new Coach");
             Console.WriteLine("C. Update a Coach by Coach ID");
-            Console.WriteLine("D. Delete a Coach by Coach Name");
-            Console.WriteLine("E. Return to Main Menu ");
+            Console.WriteLine("D. Return to Main Menu ");
             Console.WriteLine("------------------------------------");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
         }
 
+        public string ShowCoachMenu()
+        {
+            Console.WriteLine("------------------------------------");
+            Console.WriteLine("== Coach Menu ==");
+            Console.WriteLine("A. View all players");
+            Console.WriteLine("B. View all trainings");
+            Console.WriteLine("C. Insert a player ");
+            Console.WriteLine("D. Update a Player ");
+            Console.WriteLine("-------------------------------------");
+            Console.WriteLine("Input your choice: ");
+            return Console.ReadLine().ToUpper();
+        }
         public string ClubPlayerMenu()
         {
             Console.Clear();
@@ -105,7 +116,8 @@ namespace Sports_DB.model
             Console.Clear();
             Console.WriteLine("--------------------------");
             Console.WriteLine("== Player Menu ==");
-            Console.WriteLine("A your information");
+            Console.WriteLine("A.View all Trainings");
+            Console.WriteLine("B. View your information");
             Console.WriteLine("C. Logout");
             Console.WriteLine("--------------------------");
             Console.WriteLine("Input your choice: ");

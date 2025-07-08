@@ -525,18 +525,7 @@ public void AdvancedQry1()
 
          
     }
-    public int DeleteCoachByID(int coachID)
-    {
-        using (SqlCommand cmd = new SqlCommand($"DELETE FROM dbo.Tbl_Coaches WHERE Coach_ID = @Coach_Id", conn))
 
-        {
-            cmd.Parameters.AddWithValue("@Coach_ID", coachID);
-            int rowsAffected = cmd.ExecuteNonQuery();
-            return rowsAffected;
-
-
-        }
-    }
 
 
     public int InsertPlayer(Player player)

@@ -302,7 +302,7 @@ namespace Sports_DB.Repositories
 
                 while (AdminCoach)
                 {
-                    string admincoach = view.ShowCoachMenu();
+                    string admincoach = view.ClubCoachMenu();
 
                     switch (admincoach)
                     {
@@ -324,14 +324,10 @@ namespace Sports_DB.Repositories
                             break;
 
                         case "D":
-                            DeleteCoach();
-                            Console.ReadKey();
 
-                            break;
-
-                        case "E":
                             AdminCoach = false;
                             break;
+
                         default:
                             Console.WriteLine("Invalid option. Please try again");
                             break;
@@ -390,22 +386,21 @@ namespace Sports_DB.Repositories
                     switch (subCoaches)
                     {
                         case "A":
-                            List<Coaches> coaches = storagemanager.GetAllCoaches();
-                            view.displayCoach(coaches);
+                            List<Player> players = storagemanager.GetALLPlayers();
+                            view.displayPlayer(players);
                             break;
-
                         case "B":
-                            InsertNewCoach();
-                            Console.ReadKey();
+                            List<Training> training = storagemanager.GetAllTrainings();
+                            view.DisplayTrainings(training);
                             break;
 
                         case "C":
-                            UpdateCoach();
+                            InsertPlayer();
                             Console.ReadKey();
                             break;
 
                         case "D":
-                            DeleteCoach();
+                            UpdatePlayer();
                             Console.ReadKey();
                             break;
 
@@ -431,17 +426,16 @@ namespace Sports_DB.Repositories
                     switch (SubPlayer)
                     {
                         case "A":
-                            InsertPlayer();
-                            Console.ReadKey();
-                            break;
-                        case "B":
-                            UpdatePlayer();
-                            Console.ReadKey();
+                            List<Training> training = storagemanager.GetAllTrainings();
+                            view.DisplayTrainings(training);
                             break;
 
-                        case "C":
+                            
+                        case "B":
                             PlayerSubMenu = false;
                             break;
+
+                       
 
                         default:
                             Console.WriteLine("Invalid option. Please try again");
@@ -636,15 +630,7 @@ namespace Sports_DB.Repositories
             int RowsUpdated = storagemanager.UpdateCoach(coach);
             view.DisplayMessage($"Rows Updated: {RowsUpdated}");
         }
-        private static void DeleteCoach()
-        {
-            view.DisplayMessage("Enter the coach ID to delete:");
-            int coachId = view.GetIntInput();
-
-            int rowsAffected = storagemanager.DeleteCoachByID(coachId);
-            view.DisplayMessage($"Rows affected: {rowsAffected}");
-
-        }
+      
 
         private static void InsertPlayer()
         {
