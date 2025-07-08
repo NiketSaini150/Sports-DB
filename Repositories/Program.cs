@@ -299,11 +299,6 @@ namespace Sports_DB.Repositories
                             break;
 
                         case "D":
-                            DeleteSportByName();
-                            Console.ReadKey();
-                            break;
-
-                        case "E":
                             AdminPlayer = false;
                             break;
 
