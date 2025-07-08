@@ -88,6 +88,7 @@ namespace Sports_DB.model
 
         public string ShowCoachMenu()
         {
+            Console.Clear();
             Console.WriteLine("------------------------------------");
             Console.WriteLine("== Coach Menu ==");
             Console.WriteLine("A. View all players");
@@ -182,17 +183,17 @@ namespace Sports_DB.model
         {
             foreach (Player player in players)
             {
+
                 Console.WriteLine($"--------------------------\n Player ID: {player.PlayersID}\n" +
                     $" Sports ID: {player.SportsID}\n First Name: {player.FirstName}\n" +
                     $" Last Name: {player.LastName}\n Age: {player.Age}\n" +
                     $" Gender: {player.Gender}\n Experience: {player.Experience}\n" +
                     $" Injury Status: {player.InjuryStatus}  ");
-
-                Console.WriteLine("press any key to continue");
-                Console.ReadKey();
-                Console.Clear();
             }
-         }
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
+            Console.Clear();
+        }
         public void displayCoach(List<Coaches> coaches)
         {
             foreach (Coaches coach in coaches)

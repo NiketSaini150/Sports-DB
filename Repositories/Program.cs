@@ -36,6 +36,15 @@ namespace Sports_DB.Repositories
                 Console.WriteLine("Password: ");
                 string password = Console.ReadLine();
 
+                // validate empty inputs before calling login
+                if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
+                {
+                    Console.Clear();
+                    Console.WriteLine("Username and password cannot be empty.");
+                    continue; // doesnt wase an attempt
+
+                }
+                // only try login if inputs are not empty 
                 loggedinuser = storagemanager.Login(username, password);
 
                 if (loggedinuser == null)
@@ -55,6 +64,7 @@ namespace Sports_DB.Repositories
                     Console.Clear();
                 }
 
+          
 
                 else
                 {
@@ -103,6 +113,12 @@ namespace Sports_DB.Repositories
                     while (!Exit)
                     {
                         string choice = view.ShowMenu();
+                        if (choice != "1" && choice != "2" && choice != "3" && choice != "4" &&
+                            choice != "5" && choice != "6" && choice != "7" && choice != "8" && choice != "9")
+                        {
+                            Console.WriteLine("invalid choice. please select a valid menu number 1-9.");
+                            continue;
+                        }
 
                         switch (choice)
                         {
@@ -185,6 +201,7 @@ namespace Sports_DB.Repositories
                         case "E":
                             List<Coaches> coaches1 = storagemanager.SimpleQry5();
                             view.displayCoach(coaches1);
+
 
                             break;
 
@@ -269,6 +286,7 @@ namespace Sports_DB.Repositories
                         case "A":
                             List<Player> players = storagemanager.GetALLPlayers();
                             view.displayPlayer(players);
+                    
 
                             break;
                         case "B":
@@ -309,6 +327,7 @@ namespace Sports_DB.Repositories
                         case "A":
                             List<Coaches> coaches = storagemanager.GetAllCoaches();
                             view.displayCoach(coaches);
+                         
                             break;
 
                         case "B":
@@ -388,10 +407,14 @@ namespace Sports_DB.Repositories
                         case "A":
                             List<Player> players = storagemanager.GetALLPlayers();
                             view.displayPlayer(players);
+                            Console.WriteLine("Press any key to exit ");
+                            Console.ReadKey();
                             break;
                         case "B":
                             List<Training> training = storagemanager.GetAllTrainings();
                             view.DisplayTrainings(training);
+                            Console.WriteLine("Press any key to exit ");
+                            Console.ReadKey(); 
                             break;
 
                         case "C":
@@ -428,6 +451,7 @@ namespace Sports_DB.Repositories
                         case "A":
                             List<Training> training = storagemanager.GetAllTrainings();
                             view.DisplayTrainings(training);
+                        
                             break;
 
                             
@@ -554,7 +578,8 @@ namespace Sports_DB.Repositories
             {
                 view.DisplayMessage($"error during registration: {ex.Message}");
             }
-            
+            Console.WriteLine("Press any key to exit ");
+            Console.ReadKey();
         }
 
         private static void InsertNewSport()
@@ -660,6 +685,12 @@ namespace Sports_DB.Repositories
             Player player = new Player(0, SportsID, FirstName, LastName, Age, Gender, InjuryStatus, Experience);
             int generatedid = storagemanager.InsertPlayer(player);
             view.DisplayMessage($"New Player inserted with id: {generatedid}");
+
+            if (Age < 2 || Age > 100)
+            {
+                Console.WriteLine("Age must be between 5 and 100.");
+                return;
+            }
         }
 
 
@@ -672,6 +703,7 @@ namespace Sports_DB.Repositories
                 return;
             }
 
+        
             view.DisplayMessage("Enter the Sports_id to update: ");
             int sportsId = view.GetIntInput();
 
@@ -696,6 +728,13 @@ namespace Sports_DB.Repositories
             Player player = new Player(playerid, sportsId, FirstName, LastName, Age, Gender, Injurystatus, Experience);
             int rows = storagemanager.UpdatePlayer(player);
             view.DisplayMessage($"Rows Updated: {rows}");
+            if (Age < 2 || Age > 100)
+            {
+                Console.WriteLine("Age must be between 5 and 100.");
+                return;
+            }
+
+
         }
         private static void InsertTraining()
         {
@@ -705,7 +744,7 @@ namespace Sports_DB.Repositories
             view.DisplayMessage($"Enter New Coach ID: ");
             int coachid = view.GetIntInput();
 
-            view.DisplayMessage($"Date (yyy-mm-dd): ");
+            view.DisplayMessage($"Date (yyyy-mm-dd): ");
             DateOnly date = DateOnly.Parse(view.GetInput());
 
             view.DisplayMessage($"Start Time (hh:mm): ");
@@ -717,7 +756,25 @@ namespace Sports_DB.Repositories
             Training training = new Training(0, coachid, SportsID, start, End, date);
             int generatedid = storagemanager.InsertTrainings(training);
             view.DisplayMessage($"Training added with ID: {generatedid}");
+
+            try
+            {
+                DateOnly Date = DateOnly.Parse(view.GetInput());
+            }
+
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid date format. use YYYY-MM-DD");
+                return;
+            }
+
+            if (End <= start)
+            {
+                Console.WriteLine("End time must be later than start time.");
+                return;
+            }
         }
+
 
         private static void UpdateTraining()
         {
@@ -743,6 +800,22 @@ namespace Sports_DB.Repositories
             Training training = new Training(trainingID, coachid, SportsID, start, End, date);
             int rows = storagemanager.UpdateTrainings(training);
             view.DisplayMessage($" Rows Affected: {rows}");
+
+            try
+            {
+                DateOnly Date = DateOnly.Parse(view.GetInput());
+            }
+
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid date format. use YYYY-MM-DD");
+                return;
+            }
+            if (End <= start)
+            {
+                Console.WriteLine("End time must be later than start time.");
+                return;
+            }
 
         }
 
