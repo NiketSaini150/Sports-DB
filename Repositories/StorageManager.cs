@@ -14,11 +14,12 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 
 namespace Sports_DB.model;
-
+// manages all the interactions with the sql server database
 internal class Storagemanager
 {
     private SqlConnection conn;
 
+    // constructor connects to the database
     public Storagemanager(string connectionString)
     {
         try
@@ -35,6 +36,7 @@ internal class Storagemanager
         }
     }
     
+    // gets all trainings records form the database
     public List <Training> GetAllTrainings()
     {
         List <Training> training = new List<Training>();
@@ -58,6 +60,7 @@ internal class Storagemanager
         return training;
     }
     
+    // gets all the coaches records from the database 
     public List<Coaches> GetAllCoaches()
     {
         List <Coaches> coaches = new List<Coaches>();
@@ -80,6 +83,98 @@ internal class Storagemanager
          return coaches;
     }
 
+
+    // gets all the user records from the database
+    public List<User> GetAllUser()
+    {
+        List<User> users = new List<User>();
+        using (SqlCommand cmd = new SqlCommand("SELECT * FROM Tbl_Users", conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int userID = Convert.ToInt32(reader["User_ID"]);
+                    string role = reader["Role"].ToString();
+                    int coachID = reader["Coach_ID"] == DBNull.Value ? 0 : Convert.ToInt32(reader["Coach_ID"]);
+                    int playerID = reader["Player_ID"] == DBNull.Value ? 0 : Convert.ToInt32(reader["Player_ID"]);
+                    string username = reader["Username"].ToString();
+                    string password = reader["PasswordHash"].ToString();
+
+                    users.Add(new User(userID, role, coachID, playerID, username, password));
+                }
+            }
+        }
+        return users;
+    }
+
+    // gets all the sports records form the data base
+    public List<Sport> GetALLSports()
+    {
+        List<Sport> sports = new List<Sport>();
+        string sqlString = "SELECT * FROM dbo.Tbl_Sports";
+        using (SqlCommand cmd = new SqlCommand(sqlString, conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int sportsID = Convert.ToInt32(reader["sports_ID"]);
+                    string sportsname = reader["Sports_Name"].ToString();
+                    sports.Add(new Sport(sportsID, sportsname));
+                }
+            }
+        }
+        return sports;
+
+    }
+
+    //gets all the coach type records from the database 
+    public List<Coach_Type> GetAllCoachTypes()
+    {
+        List<Coach_Type> coach_Types = new List<Coach_Type>();
+        using (SqlCommand cmd = new SqlCommand("SELECT* FROM Tbl_Coach_Type;", conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int CoachTypeId = Convert.ToInt32(reader["Coach_Type_ID"]);
+                    string CoachTypeName = reader["Coach_Type_Name"].ToString();
+                    coach_Types.Add(new Coach_Type(CoachTypeId, CoachTypeName));
+                }
+            }
+        }
+        return coach_Types;
+    }
+
+    // gets all the player records from the database 
+    public List<Player> GetALLPlayers()
+    {
+        List<Player> players = new List<Player>();
+        using (SqlCommand cmd = new SqlCommand("SELECT* FROM Tbl_Players;", conn))
+        {
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    int playerid = Convert.ToInt32(reader["Player_ID"]);
+                    string Firstname = reader["First_Name"].ToString();
+                    int SportsID = Convert.ToInt32(reader["Sports_ID"]);
+                    string lastname = reader["Last_Name"].ToString();
+                    int age = Convert.ToInt32(reader["Age"]);
+                    string Gender = reader["Gender"].ToString();
+                    string Injury_Status = reader["Injury_Status"].ToString();
+                    int Experience = Convert.ToInt32(reader["Experience"]);
+                    players.Add(new Player(playerid, SportsID, Firstname, lastname, age, Gender, Injury_Status, Experience));
+                }
+
+            }
+            return players;
+        }
+
+    }
+    // gets all coaches with more than 5 years of experience
     public List<Coaches> SimpleQry2()
     {
         List<Coaches> coaches = new List<Coaches>();
@@ -101,6 +196,8 @@ internal class Storagemanager
         }
         return coaches;
     }
+
+    // gets players with the sports id 1
     public List<Player> Simpleqry3()
     {
         List<Player> players = new List<Player>();
@@ -120,6 +217,7 @@ internal class Storagemanager
         return players;
     }
 
+    //gets players with the injury status healthy
     public List<Player> SimpleQry4()
     {
         List<Player> players = new List<Player>();
@@ -146,7 +244,7 @@ internal class Storagemanager
 
     }
 
-
+    //gets coaches with the coach type id 2
     public List<Coaches> SimpleQry5()
     {
         List<Coaches> coaches = new List<Coaches>();
@@ -168,96 +266,7 @@ internal class Storagemanager
         }
         return coaches;
     }
-
-
-
-    public List<User> GetAllUser()
-    {
-        List<User> users = new List<User>();
-        using (SqlCommand cmd = new SqlCommand("SELECT * FROM Tbl_Users",conn))
-        {
-            using (SqlDataReader reader = cmd.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    int userID = Convert.ToInt32(reader["User_ID"]);
-                    string role = reader["Role"].ToString();
-                    int coachID = reader["Coach_ID"] == DBNull.Value? 0: Convert.ToInt32 (reader["Coach_ID"]);
-                    int playerID = reader["Player_ID"] == DBNull.Value? 0: Convert.ToInt32(reader["Player_ID"]);
-                    string username= reader["Username"].ToString();
-                    string password= reader["PasswordHash"].ToString();
-
-                    users.Add(new User(userID, role, coachID, playerID,username,password));
-                }
-            }
-        }
-        return users;
-    }
-
-    public List<Sport> GetALLSports()
-    {
-        List<Sport> sports = new List<Sport>();
-        string sqlString = "SELECT * FROM dbo.Tbl_Sports";
-        using (SqlCommand cmd = new SqlCommand(sqlString, conn))
-        {
-            using (SqlDataReader reader = cmd.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    int sportsID = Convert.ToInt32(reader["sports_ID"]);
-                    string sportsname = reader["Sports_Name"].ToString();
-                    sports.Add(new Sport(sportsID, sportsname));
-                }
-            }
-        }
-        return sports;
-
-    }
-
-   public List<Coach_Type> GetAllCoachTypes()
-    {
-     List<Coach_Type> coach_Types = new List<Coach_Type>();
-        using (SqlCommand cmd = new SqlCommand("SELECT* FROM Tbl_Coach_Type;",conn)) 
-        { 
-            using (SqlDataReader reader = cmd.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    int CoachTypeId = Convert.ToInt32(reader["Coach_Type_ID"]);
-                    string CoachTypeName = reader["Coach_Type_Name"].ToString();
-                    coach_Types.Add(new Coach_Type(CoachTypeId, CoachTypeName));
-                }
-            }
-        }
-        return coach_Types;
-    }   
-    public List<Player> GetALLPlayers()
-    {
-        List<Player> players = new List<Player>();
-        using (SqlCommand cmd = new SqlCommand("SELECT* FROM Tbl_Players;", conn))
-        {
-            using (SqlDataReader reader = cmd.ExecuteReader())
-            {
-                while (reader.Read())
-                {
-                    int playerid = Convert.ToInt32(reader["Player_ID"]);
-                    string Firstname = reader["First_Name"].ToString();
-                    int SportsID = Convert.ToInt32(reader["Sports_ID"]);
-                    string lastname = reader["Last_Name"].ToString();
-                    int age = Convert.ToInt32(reader["Age"]);
-                    string Gender = reader["Gender"].ToString();
-                    string Injury_Status = reader["Injury_Status"].ToString();
-                    int Experience = Convert.ToInt32(reader["Experience"]);
-                    players.Add(new Player(playerid, SportsID, Firstname, lastname, age, Gender, Injury_Status, Experience));
-                }
-
-            }
-            return players;
-        }
-            
-    }
-
-
+    // displays each player and the sports they are assigned to 
 public void AdvancedQry1()
     {
         using (SqlCommand cmd = new SqlCommand("SELECT P.First_Name AS Player_Name, S.Sports_Name " +
@@ -281,7 +290,7 @@ public void AdvancedQry1()
             }
         }
     }
-
+    // displays each coach and the sports they coach 
     public void AdvancedQry2()
     {
         using (SqlCommand cmd = new SqlCommand("SELECT c.First_Name As Coach_Name,  S.Sports_Name\r\nFROM Tbl_Coaches c, Tbl_Sports S, Tbl_Coach_Sports cs \r\nWHERE c.Coach_ID = cs.Coach_ID\r\nAND s.Sports_ID = cs.Sports_ID;", conn))
@@ -300,7 +309,7 @@ public void AdvancedQry1()
         }
 
     }
-
+    //displays which player attended which training and who coached them
     public void AdvancedQry3()
     {
         using (SqlCommand cmd = new SqlCommand("SELECT p.First_Name AS Player_Name,P.Last_Name AS Player_Last_Name,T.Training_Date AS Training_Date, C.First_Name AS Coach_Name, C.Last_Name AS Coach_Last_Name\r\nFROM Tbl_Players P, Tbl_Trainings T, Tbl_Coaches C, Tbl_Player_Trainings PT\r\nWHERE P.player_ID = PT.Player_ID \r\nAND T.Trainings_ID = PT.Trainings_ID\r\nAND C.Coach_ID = T.Coach_ID;\r\n", conn))
@@ -323,7 +332,7 @@ public void AdvancedQry1()
         }
 
     }
-
+    //displays player injury status and the sport they play 
     public void AdvancedQry4()
     {
         using (SqlCommand cmd = new SqlCommand("SELECT p.First_Name AS Player_Name,P.Last_Name AS Player_Last_Name,P.Injury_Status,S.Sports_Name\r\nFROM Tbl_Players P, Tbl_Sports S, Tbl_Player_Sports PS\r\nWHERE P.Player_ID = PS.Player_ID \r\nAND S.Sports_ID = PS.Sports_ID;", conn))
@@ -346,7 +355,7 @@ public void AdvancedQry1()
             }
         }
     }
-
+    // displays each coach with thir coach type and experience, sorted by experience
     public void AdvancedQry5()
     {
         using (SqlCommand cmd = new SqlCommand("SELECT C.First_Name AS Coach_Name, C.Last_Name as Coach_Last_Name, CT.Coach_Type_Name,C.Experience AS Coach_Experience\r\nFROM Tbl_Coaches C, Tbl_Coach_Type CT\r\nWHERE C.Coach_Type_ID = CT.Coach_Type_ID\r\nORDER BY C.Experience DESC;",conn))
@@ -368,6 +377,7 @@ public void AdvancedQry1()
             }
         }
     }
+    // displays the number of players in each sport 
     public void ComplexQry1()
     {
         using (SqlCommand cmd = new SqlCommand("SELECT COUNT (P.Player_ID) AS Player_Count, S.Sports_Name\r\nFROM Tbl_Players P,  Tbl_Sports S, Tbl_Player_Sports PS\r\nWHERE P.Player_ID = PS.Player_ID \r\nAND S.Sports_ID = PS.Sports_ID\r\nGROUP BY S.Sports_Name\r\nORDER by Player_Count DESC;", conn))
@@ -386,7 +396,7 @@ public void AdvancedQry1()
             }
         }
     }
-
+    // displays top 5 training sessions with the highest player attendance
     public void ComplexQry2()
     {
         using (SqlCommand cmd = new SqlCommand("SELECT TOP 5 T.Trainings_ID AS Training_ID, COUNT (P.Player_ID) AS Player_Count \r\nFROM Tbl_Trainings T,Tbl_Player_Trainings PT, Tbl_Players P\r\nWHERE T.Trainings_ID = PT.Trainings_ID\r\nAND P.Player_ID = PT.Player_ID\r\nGROUP BY T.Trainings_ID\r\nORDER BY Training_ID ASC;", conn))
@@ -404,6 +414,7 @@ public void AdvancedQry1()
             }
         }
     }
+    //displays player count by coach and sport
     public void ComplexQry3()
     {
         using (SqlCommand cmd = new SqlCommand("SELECT C.First_Name AS Coach_Name,S.Sports_Name,Count(P.Player_ID) AS Player_Count\r\nFROM Tbl_Coaches C, Tbl_Players P,Tbl_Coach_Sports CS, Tbl_Sports S, Tbl_Player_Sports  PS\r\nWHERE C.Coach_ID = CS.Coach_ID\r\nAND   PS.Sports_ID = S.Sports_ID\r\nAND   P.Player_ID = PS.Player_ID\r\nGROUP BY C.First_Name,S.Sports_Name\r\nORDER BY Player_Count desc;", conn))
@@ -424,6 +435,7 @@ public void AdvancedQry1()
             }
         }
     }
+    // displays average player experience per sport
     public void ComplexQry4()
     {
         using (SqlCommand cmd = new SqlCommand("SELECT S.Sports_Name, COUNT (P.Player_ID) AS Player_Count,\r\nAVG(P.Experience) AS Average_Experience\r\nFROM Tbl_Sports S,Tbl_Player_Sports PS, Tbl_Players P \r\nWHERE S.Sports_ID = PS.Sports_ID\r\nAND PS.Player_ID= P.Player_ID\r\nGROUP BY S.Sports_Name\r\nORDER BY Average_Experience DESC;", conn))
@@ -445,6 +457,7 @@ public void AdvancedQry1()
             }
         }
     }
+    // displays how many players attended each coach's training session
     public void ComplexQry5()
     {
         using (SqlCommand cmd = new SqlCommand("SELECT C.First_Name AS Coach_Name, T.Training_Date, COUNT(PT.Player_Trainings_ID)AS Player_Count\r\nFROM Tbl_Coaches C, Tbl_Trainings T, Tbl_Player_Trainings PT\r\nWHERE C.Coach_ID = T.Coach_ID\r\nAND T.Trainings_ID = PT.Trainings_ID\r\nGROUP BY C.First_Name, T.Training_Date\r\nORDER BY Player_Count DESC;", conn))
@@ -456,13 +469,15 @@ public void AdvancedQry1()
                 while (reader.Read())
                 {
                     string coachName = reader["Coach_Name"].ToString();
-                    string date = Convert.ToDateTime(reader["Training_Date"]).ToString("dd/mm/yyyy");
+                    string date = Convert.ToDateTime(reader["Training_Date"]).ToString("dd/MM/yyyy");
                     int playerCount = Convert.ToInt32(reader["Player_Count"]);
                     Console.WriteLine("{0,-15} | {1,-12} | {2,14} ", coachName, date, playerCount);
                 }
             }
         }
     }
+
+    // inserts a new sport 
     public int InsertNewSport(Sport Sportstemp)
     {
         using (SqlCommand cmd = new SqlCommand($"INSERT INTO dbo.Tbl_Sports (Sports_Name) VALUES (@SportName); SELECT SCOPE_IDENTITY();", conn))
@@ -471,6 +486,8 @@ public void AdvancedQry1()
             return Convert.ToInt32(cmd.ExecuteScalar());
         }
     }
+
+    // updates the sport 
     public int UpdateSportsName(int SportsID, string SportsName)
     {
         using (SqlCommand cmd = new SqlCommand($"UPDATE Tbl_Sports SET Sports_Name = @SportsName WHERE Sports_ID = @SportsID", conn))
@@ -482,6 +499,7 @@ public void AdvancedQry1()
         }
     }
 
+    // deletes the sport by sports name 
     public int DeleteSportByName(string SportsName)
     {
         using (SqlCommand cmd = new SqlCommand($"DELETE FROM dbo.Tbl_Sports WHERE Sports_Name =@SportsName", conn))
@@ -491,6 +509,7 @@ public void AdvancedQry1()
         }
     }
 
+    // inserts a new coach 
     public int InsertNewCoach(Coaches coaches)
     {
         using (SqlCommand cmd = new SqlCommand($"INSERT INTO Tbl_Coaches (First_Name,Last_Name, Experience, Coach_Type_ID)" +
@@ -509,6 +528,7 @@ public void AdvancedQry1()
         }
     }
 
+    // updates the coach 
     public int UpdateCoach(Coaches coaches)
     {
         using (SqlCommand cmd = new SqlCommand("UPDATE Tbl_Coaches SET First_Name=@First_Name, Last_Name=@Last_Name,Experience=@Experience,Coach_Type_ID =@Coach_Type_ID Where Coach_ID =@Coach_ID;", conn))
@@ -526,8 +546,7 @@ public void AdvancedQry1()
          
     }
 
-
-
+// inserts a new player 
     public int InsertPlayer(Player player)
     {
         using (SqlCommand cmd = new SqlCommand("INSERT INTO Tbl_Players (Sports_ID, First_Name,Last_Name,Age,Gender,Experience,Injury_Status)" +
@@ -549,6 +568,7 @@ public void AdvancedQry1()
       
     }
 
+    //updates the player 
     public int UpdatePlayer(Player player)
     {
          using (SqlCommand cmd = new SqlCommand("UPDATE Tbl_Players SET Sports_ID =@Sports_ID,First_Name =@First_Name,Last_Name=@Last_Name," +
@@ -568,8 +588,7 @@ public void AdvancedQry1()
       
     }
 
-  
-
+  // inserts a coach type 
     public int InserCoachType(Coach_Type CoachType)
     {
         using (SqlCommand cmd = new SqlCommand("INSERT INTO Tbl_Coach_Type (Coach_Type_Name) VALUES (@Coach_Type_Name); SELECT SCOPE_IDENTITY();", conn))
@@ -579,7 +598,7 @@ public void AdvancedQry1()
             return Convert.ToInt32(cmd.ExecuteScalar());
         }
     }
-
+    // updates a coach type 
     public int UpdateCoachType(Coach_Type CoachType)
     {
         using (SqlCommand cmd = new SqlCommand("UPDATE Tbl_Coach_Type SET Coach_Type_Name = @Coach_Type_Name WHERE Coach-Type_ID = @Coach_Type_ID;", conn))
@@ -592,6 +611,7 @@ public void AdvancedQry1()
 
         }
     }
+    //deletes the coach type by id 
     public int DeleteCoachTypeById(int coachTypeID)
     {
         using (SqlCommand cmd = new SqlCommand("DELETE FROM Tbl_Coach_Type WHERE Coach_Type_ID =@Coach_Type_ID", conn))
@@ -601,7 +621,7 @@ public void AdvancedQry1()
         }
     }
     
-
+    // inserts a new training session into the database 
     public int InsertTrainings(Training training)
     {
         using (SqlCommand cmd = new SqlCommand("INSERT INTO Tbl_Trainings (Coach_ID,Sports_ID, Training_Date,Start_Time,End_Time)" +
@@ -617,9 +637,7 @@ public void AdvancedQry1()
             return Convert.ToInt32(cmd.ExecuteScalar());
         }
     }
-   
- 
-
+   //updates an existing training session based on id 
     public int UpdateTrainings (Training training)
     {
         using (SqlCommand cmd = new SqlCommand("UPDATE Tbl_Trainings SET  Coach_ID =@Coach_ID, Sports_ID =@Sports_ID," +
@@ -637,9 +655,7 @@ public void AdvancedQry1()
         }
 
     }
-    
-  
-   
+    // matches the users username and password to the records stored in the database
     public User Login(string username, string passwordHash)
     {
         string sql = "SELECT * FROM dbo.Tbl_Users WHERE Username = @Username";
@@ -669,6 +685,7 @@ public void AdvancedQry1()
         return null;
     }
 
+    //registers a new user into the system with the details given and returns the user's id 
     public int register(User user)
     {
         using (SqlCommand cmd = new SqlCommand($"INSERT INTO Tbl_Users (Username,PasswordHash, Role, Coach_ID, Player_ID)" +
@@ -679,6 +696,8 @@ public void AdvancedQry1()
             cmd.Parameters.AddWithValue("@PasswordHash", user.PasswordHash);
             cmd.Parameters.AddWithValue("@Role", user.Role);
             cmd.Parameters.AddWithValue("@Coach_ID", user.CoachID == 0 ? DBNull.Value : (object)user.CoachID);
+            //if the coach id is 0, it means that no coachid was inputed, so the db null parameter stores a sql null value in the database to show the absence of a coach id.
+            //otherwise, adds the coach id as teh parameter value.
             cmd.Parameters.AddWithValue("@Player_ID", user.PlayerID == 0 ? DBNull.Value : (object)user.PlayerID);
             return Convert.ToInt32(cmd.ExecuteScalar());
 
@@ -687,6 +706,7 @@ public void AdvancedQry1()
         }
     }
 
+    //closes the database connection
     public void closeconnecton()
         {
             if (conn != null && conn.State == ConnectionState.Open)

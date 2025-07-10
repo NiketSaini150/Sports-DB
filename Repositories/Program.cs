@@ -14,19 +14,19 @@ namespace Sports_DB.Repositories
         private static Consoleview view;
         static void Main(string[] args)
         {
-
+            // database connection string connected to the local .mdf file in oneDrive
             string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\niket\\OneDrive - Avondale College\\Sports DB\\SportsPLSWORK.mdf\";Integrated Security=True;Connect Timeout=30";
 
             storagemanager = new Storagemanager(connectionString);
             view = new Consoleview();
 
 
-            int attempts = 4;
-            bool Loggedout = false;
-            User loggedinuser = null;
+            int attempts = 5; // max login attempts 
+            bool Loggedout = false; // prevents the user from re logging into the database 
+            User loggedinuser = null; // stores the currently logged in user 
 
 
-
+            // login loop, ends when the user logs in, logs out, or fails too many login attempts.
             while (attempts > 0 && loggedinuser == null && !Loggedout)
             {
 
@@ -36,20 +36,21 @@ namespace Sports_DB.Repositories
                 Console.WriteLine("Password: ");
                 string password = Console.ReadLine();
 
-                // validate empty inputs before calling login
+                // prevents blank inputs to cause an crash 
                 if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
                 {
                     Console.Clear();
                     Console.WriteLine("Username and password cannot be empty.");
-                    continue; // doesnt wase an attempt
+                    continue; // doesn't waste an attempt
 
                 }
-                // only try login if inputs are not empty 
+                // checks the entered username and password against the database.
+                // if the username and password match a record in table users, it will log the user in.
                 loggedinuser = storagemanager.Login(username, password);
 
                 if (loggedinuser == null)
                 {
-                    attempts--;
+                    attempts--; // if a login is failed the attempts minus. 
 
                     Console.WriteLine($"Login Failed. Attempts remaining: {attempts}");
 
@@ -68,7 +69,7 @@ namespace Sports_DB.Repositories
 
                 else
                 {
-
+                    // successful login, takes the user to the menu based on the role
                     Console.Clear();
                     Console.WriteLine($"Login successful, role: {loggedinuser.Role} ");
 
@@ -93,33 +94,29 @@ namespace Sports_DB.Repositories
                             Console.WriteLine("Unknown role");
                             break;
                     }
-
+                    
                     Console.WriteLine("logging out");
                     Console.ReadKey();
                     Loggedout = true;
                     break;
 
                 }
-
-
-
-
-
-
+                // club role gets to see this menu and has access to all the tables 
                 static void ClubMenu(User Manager)
                 {
-
+                    // main menu loop until user chooses to exit
                     bool Exit = false;
                     while (!Exit)
                     {
                         string choice = view.ShowMenu();
+                        // has an error messege for if the user enters something other than the valid options 
                         if (choice != "1" && choice != "2" && choice != "3" && choice != "4" &&
                             choice != "5" && choice != "6" && choice != "7" && choice != "8" && choice != "9")
                         {
                             Console.WriteLine("invalid choice. please select a valid menu number 1-9.");
                             continue;
                         }
-
+                        // menu options for each table, and within the table options it has the option to insert update view or delete some records.
                         switch (choice)
                         {
                             case "1":
@@ -157,7 +154,7 @@ namespace Sports_DB.Repositories
                                 break;
 
                             case "9":
-                                Exit = true;
+                                Exit = true; // exits the loop 
                                 break;
 
                             default:
@@ -165,11 +162,11 @@ namespace Sports_DB.Repositories
                                 break;
                         }
                     }
-
+                    // closes the connection 
                     storagemanager.closeconnecton();
                 }
             }
-
+            // menu to display all all the reports 
             static void Reports()
             {
                 bool Reports = true;
@@ -274,6 +271,7 @@ namespace Sports_DB.Repositories
                     }
                 }
             }
+            // Admin player menu, so only the club can view this 
             static void AdminPlayerMenu()
             {
                 bool AdminPlayer = true;
@@ -309,6 +307,7 @@ namespace Sports_DB.Repositories
                     }
                 }
             }
+            // Admin coach menu, only the club has access to this 
             static void AdminCoachMenu()
             {
                 bool AdminCoach = true;
@@ -348,7 +347,7 @@ namespace Sports_DB.Repositories
                     }
                 }
             }
-
+            // menu to manage sports records 
             static void SportsMenu()
             {
                 bool SportsSubMenu = true;
@@ -391,6 +390,7 @@ namespace Sports_DB.Repositories
                     }
                 }
             }
+            // menu to manage coach records
             static void CoachMenu(User Coach)
             {
                 bool CoachSubMenu = true;
@@ -433,7 +433,7 @@ namespace Sports_DB.Repositories
                     }
                 }
             }
-
+            // menu to manage player records
             static void PlayerMenu(User player)
             {
                 bool PlayerSubMenu = true;
@@ -463,7 +463,7 @@ namespace Sports_DB.Repositories
                 }
             }
 
-
+            // menu to manage coach type records 
             static void CoachTypeMenu()
             {
                 bool CoachTypeSubMenu = true;
@@ -502,7 +502,7 @@ namespace Sports_DB.Repositories
                     }
                 }
             }
-
+            // menu to manage trainings records 
             static void TrainingsMenu()
             {
                 bool TrainingsSubMenu = true;
@@ -538,9 +538,11 @@ namespace Sports_DB.Repositories
                     }
                 }
             }
-
-
         }
+
+        // register a new user by collecting the users inputs for username, password, coach id, playerid, and role.
+        // creates a user with the data and inserts it into the database through the storagemanager.
+        //after registration is done, it prompts the user to press any key before returning to the main menu
 
         private static void register()
 
@@ -576,7 +578,7 @@ namespace Sports_DB.Repositories
             Console.WriteLine("Press any key to exit ");
             Console.ReadKey();
         }
-
+         // inserts a new sport 
         private static void InsertNewSport()
         {
             view.DisplayMessage("Enter the new Sport name: ");
@@ -586,6 +588,8 @@ namespace Sports_DB.Repositories
             int generated_ID = storagemanager.InsertNewSport(sport1);
             view.DisplayMessage($"New sport inserted with ID: {generated_ID} ");
         }
+
+        // updates a sport by sports name 
         private static void UpdateSportsName()
         {
 
@@ -598,7 +602,7 @@ namespace Sports_DB.Repositories
             int rowsAffected = storagemanager.UpdateSportsName(sportsId, SportsName);
             view.DisplayMessage($"rows affected: {rowsAffected}");
         }
-
+        // deletes a sport by name 
         private static void DeleteSportByName()
         {
             view.DisplayMessage("Enter the sport name to delete: ");
@@ -608,7 +612,7 @@ namespace Sports_DB.Repositories
             int rowsaffected = storagemanager.DeleteSportByName(SportName);
             view.DisplayMessage($"Rows affected: {rowsaffected} ");
         }
-
+         //inserts a new coach 
         private static void InsertNewCoach()
         {
             view.DisplayMessage($"Enter New First Name: ");
@@ -628,7 +632,7 @@ namespace Sports_DB.Repositories
             int generatedID2 = storagemanager.InsertNewCoach(coaches2);
             view.DisplayMessage($" New Coach inserted with ID: {generatedID2}");
         }
-
+        // updates an existing coach 
         private static void UpdateCoach()
         {
             view.DisplayMessage("Coach ID: ");
@@ -650,12 +654,9 @@ namespace Sports_DB.Repositories
             int RowsUpdated = storagemanager.UpdateCoach(coach);
             view.DisplayMessage($"Rows Updated: {RowsUpdated}");
         }
-      
-
+      // inserts a player 
         private static void InsertPlayer()
         {
-
-
             view.DisplayMessage($"Enter New sports ID: ");
             int SportsID = view.GetIntInput();
 
@@ -687,8 +688,7 @@ namespace Sports_DB.Repositories
                 return;
             }
         }
-
-
+        // updates a player 
         private static void UpdatePlayer()
         {
             int playerid = view.GetIntInput();
@@ -728,9 +728,9 @@ namespace Sports_DB.Repositories
                 Console.WriteLine("Age must be between 5 and 100.");
                 return;
             }
-
-
         }
+
+        // inserts a training 
         private static void InsertTraining()
         {
             view.DisplayMessage($"Enter New sports ID: ");
@@ -770,7 +770,7 @@ namespace Sports_DB.Repositories
             }
         }
 
-
+        // updates a training
         private static void UpdateTraining()
         {
             view.DisplayMessage($"Enter Trainings ID to update: ");
@@ -813,7 +813,7 @@ namespace Sports_DB.Repositories
             }
 
         }
-
+        // inserts a coach type 
         private static void InsertCoachType()
         {
             view.DisplayMessage("Enter New Coach Type Name: ");
@@ -823,7 +823,7 @@ namespace Sports_DB.Repositories
             int generatedid = storagemanager.InserCoachType(coachtype);
             view.DisplayMessage($" New coach type name added with ID: {generatedid}");
         }
-
+        // updates a coach type 
         private static void UpdateCoachType()
         {
             view.DisplayMessage("Enter the coach Type id to update: ");
@@ -838,7 +838,7 @@ namespace Sports_DB.Repositories
 
 
         }
-
+        // deletes a coach type by id 
         private static void DeleteCoachType()
         {
             view.DisplayMessage("Enter the coach Type ID to delete:");
