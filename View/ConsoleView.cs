@@ -12,7 +12,7 @@ namespace Sports_DB.model
     {
         public string ShowMenu()
         {
-
+            // Displays the main menu options and returns what ever the user choses
         Console.Clear();
             Console.WriteLine("--------------------------");
             Console.WriteLine("== Main Menu ==");
@@ -34,6 +34,7 @@ namespace Sports_DB.model
      
         public string ShowReports()
         {
+            //display report options for different queries.
             Console.Clear();
             Console.WriteLine("A. Simple Qry1: ");
             Console.WriteLine("B. Simple Qry2: ");
@@ -57,6 +58,7 @@ namespace Sports_DB.model
 
         public string ShowSportsMenu()
         {
+            // menu option for managing the sports table 
             Console.Clear();
             Console.WriteLine("---------------------------------------");
             Console.WriteLine("== Sports Menu ==");
@@ -74,6 +76,7 @@ namespace Sports_DB.model
 
         public string ClubCoachMenu()
         {
+            //  club menu option for managing the coach table
             Console.Clear();
             Console.WriteLine("-------------------------------------");
             Console.WriteLine("== Coach Menu ==");
@@ -88,6 +91,7 @@ namespace Sports_DB.model
 
         public string ShowCoachMenu()
         {
+            // menu for logged in coaches to manage players and trainings
             Console.Clear();
             Console.WriteLine("------------------------------------");
             Console.WriteLine("== Coach Menu ==");
@@ -101,6 +105,7 @@ namespace Sports_DB.model
         }
         public string ClubPlayerMenu()
         {
+            // menu for club users to manage player 
             Console.Clear();
             Console.WriteLine("--------------------------");
             Console.WriteLine("== Player Menu ==");
@@ -114,6 +119,7 @@ namespace Sports_DB.model
         }
         public string ShowPlayerMenu()
         {
+            // menu for users logged in as player 
             Console.Clear();
             Console.WriteLine("--------------------------");
             Console.WriteLine("== Player Menu ==");
@@ -128,6 +134,7 @@ namespace Sports_DB.model
 
         public string ShowCoachTypeMenu()
         {
+            // menu to manage table coach type 
             Console.Clear();
             Console.WriteLine("--------------------------");
             Console.WriteLine("== Coach Type ==");
@@ -144,6 +151,7 @@ namespace Sports_DB.model
 
         public string ShowTrainingsMenu()
         {
+            // menu to manage table trainings 
             Console.Clear();
             Console.WriteLine("--------------------------");
             Console.WriteLine("== Trainings Menu == ");
@@ -156,6 +164,7 @@ namespace Sports_DB.model
             return Console.ReadLine().ToUpper();
         }
         
+        // displays user login information for club admins.
         public void DisplayUsers(List<User> users)
         {
             foreach (User user in users)
@@ -167,6 +176,7 @@ namespace Sports_DB.model
             Console.Clear();
         }
 
+        // displays a list of all Sports
         public void DisplaySport(List<Sport> sports)
         {
             foreach (Sport sport in sports)
@@ -179,6 +189,7 @@ namespace Sports_DB.model
             Console.Clear();
         }
 
+        //displays a list of all players 
         public void displayPlayer(List<Player> players)
         {
             foreach (Player player in players)
@@ -194,6 +205,8 @@ namespace Sports_DB.model
             Console.ReadKey();
             Console.Clear();
         }
+
+        // displays all the coaches
         public void displayCoach(List<Coaches> coaches)
         {
             foreach (Coaches coach in coaches)
@@ -204,6 +217,8 @@ namespace Sports_DB.model
             Console.ReadKey();
             Console.Clear();
         }
+
+        //displays all the coach types
         public void displayCoachType(List<Coach_Type> coach_type)
         {
             foreach (Coach_Type Coach_type in coach_type)
@@ -216,6 +231,7 @@ namespace Sports_DB.model
 
         }
 
+        // displays filtered player information
         public void displayqry3(List<Player> player)
         {
             foreach(Player player1 in player)
@@ -227,7 +243,7 @@ namespace Sports_DB.model
             Console.Clear();
         }
 
-
+        //displays all trainings
         public void DisplayTrainings(List <Training> training)
         {
             foreach (Training training1 in training)
@@ -238,11 +254,14 @@ namespace Sports_DB.model
             Console.ReadKey();
             Console.Clear();
         }
+
+        // displays a single message to the console 
         public void DisplayMessage(string message)
         {
             Console.WriteLine(message);
         }
 
+        // gets string input from the user and validates them 
         public string GetInput()
         {
             string input;
@@ -269,6 +288,7 @@ namespace Sports_DB.model
             return Console.ReadLine();
         }
 
+        //gets integers inputs from the user and validates them 
         public int GetIntInput()
         {
 
