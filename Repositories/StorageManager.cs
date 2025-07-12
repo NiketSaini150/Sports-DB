@@ -601,7 +601,7 @@ public void AdvancedQry1()
     // updates a coach type 
     public int UpdateCoachType(Coach_Type CoachType)
     {
-        using (SqlCommand cmd = new SqlCommand("UPDATE Tbl_Coach_Type SET Coach_Type_Name = @Coach_Type_Name WHERE Coach-Type_ID = @Coach_Type_ID;", conn))
+        using (SqlCommand cmd = new SqlCommand("UPDATE Tbl_Coach_Type SET Coach_Type_Name = @Coach_Type_Name WHERE Coach_Type_ID = @Coach_Type_ID;", conn))
         {
 
             cmd.Parameters.AddWithValue("@Coach_Type_ID", CoachType.Coach_Type_ID);
@@ -644,7 +644,7 @@ public void AdvancedQry1()
             " Training_Date =@Training_Date,Start_Time=@Start_Time,End_Time = @End_Time" +
             " WHERE Trainings_ID = @Trainings_ID;", conn))
         {
-
+            cmd.Parameters.AddWithValue("@Trainings_ID", training.TrainingID);
             cmd.Parameters.AddWithValue("@Coach_ID", training.CoachID);
             cmd.Parameters.AddWithValue("@Sports_ID", training.SportsID);
             cmd.Parameters.AddWithValue("@Training_Date", training.Date);

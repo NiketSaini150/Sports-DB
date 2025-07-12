@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Data;
+using System.Linq.Expressions;
+using System.Net.WebSockets;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
 using System.Xml;
@@ -108,12 +110,15 @@ namespace Sports_DB.Repositories
                     bool Exit = false;
                     while (!Exit)
                     {
+                        Console.Clear();
                         string choice = view.ShowMenu();
                         // has an error messege for if the user enters something other than the valid options 
-                        if (choice != "1" && choice != "2" && choice != "3" && choice != "4" &&
+                        if (string.IsNullOrWhiteSpace (choice) ||choice != "1" && choice != "2" && choice != "3" && choice != "4" &&
                             choice != "5" && choice != "6" && choice != "7" && choice != "8" && choice != "9")
                         {
-                            Console.WriteLine("invalid choice. please select a valid menu number 1-9.");
+                            view.DisplayMessage("invalid choice. please select a valid menu number 1-9.");
+                            Console.WriteLine("Press any key to continue");
+                            Console.ReadKey();
                             continue;
                         }
                         // menu options for each table, and within the table options it has the option to insert update view or delete some records.
@@ -402,14 +407,12 @@ namespace Sports_DB.Repositories
                         case "A":
                             List<Player> players = storagemanager.GetALLPlayers();
                             view.displayPlayer(players);
-                            Console.WriteLine("Press any key to exit ");
-                            Console.ReadKey();
+                       
                             break;
                         case "B":
                             List<Training> training = storagemanager.GetAllTrainings();
                             view.DisplayTrainings(training);
-                            Console.WriteLine("Press any key to exit ");
-                            Console.ReadKey(); 
+                            
                             break;
 
                         case "C":
@@ -682,9 +685,9 @@ namespace Sports_DB.Repositories
             int generatedid = storagemanager.InsertPlayer(player);
             view.DisplayMessage($"New Player inserted with id: {generatedid}");
 
-            if (Age < 2 || Age > 100)
+            if (Age <= 18 || Age >= 58)
             {
-                Console.WriteLine("Age must be between 5 and 100.");
+                view.DisplayMessage("Age must be between 18 and 58.");
                 return;
             }
         }
@@ -720,59 +723,80 @@ namespace Sports_DB.Repositories
             view.DisplayMessage("Enter New Player Injury Status: ");
             string Injurystatus = view.GetInput();
 
+            if (Age <= 18 || Age >= 58)
+            {
+                view.DisplayMessage("Age must be between 18 and 58.");
+                return;
+            }
+
             Player player = new Player(playerid, sportsId, FirstName, LastName, Age, Gender, Injurystatus, Experience);
             int rows = storagemanager.UpdatePlayer(player);
             view.DisplayMessage($"Rows Updated: {rows}");
-            if (Age < 2 || Age > 100)
-            {
-                Console.WriteLine("Age must be between 5 and 100.");
-                return;
-            }
+          
         }
 
         // inserts a training 
         private static void InsertTraining()
         {
+            TimeSpan start, end;
             view.DisplayMessage($"Enter New sports ID: ");
             int SportsID = view.GetIntInput();
 
             view.DisplayMessage($"Enter New Coach ID: ");
             int coachid = view.GetIntInput();
 
-            view.DisplayMessage($"Date (yyyy-mm-dd): ");
-            DateOnly date = DateOnly.Parse(view.GetInput());
+            while (true)
+            {
+                view.DisplayMessage($"Start Time (hh:mm): ");
+                string StartTime = view.GetInput();
+                if (TimeSpan.TryParseExact(StartTime, @"hh\:mm", null, out start))
+                    break;
+                else
+                    Console.WriteLine("Invalid Start time format. use HH:MM");
+                    
+                
+            }
 
-            view.DisplayMessage($"Start Time (hh:mm): ");
-            TimeSpan start = TimeSpan.Parse(view.GetInput());
+            while (true)
+            {
+                view.DisplayMessage($"End Time (hh:mm): ");
+                string EndTime = view.GetInput();
+                if (!TimeSpan.TryParseExact(EndTime, @"hh\:mm", null, out end))
+                {
+                    Console.WriteLine("Invalid End time format. use HH:MM");
+                    continue;
+                }
+                 if (end<= start)
+                {
+                    Console.WriteLine("End Time Must be Later than Start Time");
+                    continue;
+                }
 
-            view.DisplayMessage($"End Time (hh:mm): ");
-            TimeSpan End = TimeSpan.Parse(view.GetInput());
 
-            Training training = new Training(0, coachid, SportsID, start, End, date);
+                break;
+            }
+
+            DateOnly Date;
+            while (true)
+            { 
+                view.DisplayMessage($"Date (yyyy-MM-dd): ");
+              string  date = view.GetInput();
+                if (DateOnly.TryParse(date, null, out Date))
+                    break;
+                else 
+                    Console.WriteLine("Invalid date format. use YYYY-MM-DD");
+            }
+            
+            Training training = new Training(0, coachid, SportsID, start, end, Date);
             int generatedid = storagemanager.InsertTrainings(training);
             view.DisplayMessage($"Training added with ID: {generatedid}");
 
-            try
-            {
-                DateOnly Date = DateOnly.Parse(view.GetInput());
-            }
-
-            catch (FormatException)
-            {
-                Console.WriteLine("Invalid date format. use YYYY-MM-DD");
-                return;
-            }
-
-            if (End <= start)
-            {
-                Console.WriteLine("End time must be later than start time.");
-                return;
-            }
         }
 
         // updates a training
         private static void UpdateTraining()
         {
+            TimeSpan start, end;
             view.DisplayMessage($"Enter Trainings ID to update: ");
             int trainingID = view.GetIntInput();
 
@@ -782,35 +806,56 @@ namespace Sports_DB.Repositories
             view.DisplayMessage($"Enter Coach ID to Update: ");
             int coachid = view.GetIntInput();
 
-            view.DisplayMessage($"Date (yyy-mm-dd): ");
-            DateOnly date = DateOnly.Parse(view.GetInput());
+            while (true)
+            {
+                view.DisplayMessage($"Start Time (hh:mm): ");
+                string StartTime = view.GetInput();
+                if (TimeSpan.TryParseExact(StartTime, @"hh\:mm", null, out start))
+                    break;
+                else
+                    Console.WriteLine("Invalid Start time format. use HH:MM");
 
-            view.DisplayMessage($"Start Time (hh:mm): ");
-            TimeSpan start = TimeSpan.Parse(view.GetInput());
 
-            view.DisplayMessage($"End Time (hh:mm): ");
-            TimeSpan End = TimeSpan.Parse(view.GetInput());
+            }
+
+            while (true)
+            {
+                view.DisplayMessage($"End Time (hh:mm): ");
+                string EndTime = view.GetInput();
+                if (!TimeSpan.TryParseExact(EndTime, @"hh\:mm", null, out end))
+                {
+                    Console.WriteLine("Invalid End time format. use HH:MM");
+                    continue;
+                }
+                if (end <= start)
+                {
+                    Console.WriteLine("End Time Must be Later than Start Time");
+                    continue;
+                }
 
 
-            Training training = new Training(trainingID, coachid, SportsID, start, End, date);
+                break;
+            }
+
+            DateOnly Date;
+            while (true)
+            {
+                view.DisplayMessage($"Date (yyyy-MM-dd): ");
+                string date = view.GetInput();
+                if (DateOnly.TryParse(date, null, out Date))
+                    break;
+                else
+                    Console.WriteLine("Invalid date format. use YYYY-MM-DD");
+            }
+
+
+
+
+            Training training = new Training(trainingID, coachid, SportsID, start, end, Date);
             int rows = storagemanager.UpdateTrainings(training);
             view.DisplayMessage($" Rows Affected: {rows}");
 
-            try
-            {
-                DateOnly Date = DateOnly.Parse(view.GetInput());
-            }
-
-            catch (FormatException)
-            {
-                Console.WriteLine("Invalid date format. use YYYY-MM-DD");
-                return;
-            }
-            if (End <= start)
-            {
-                Console.WriteLine("End time must be later than start time.");
-                return;
-            }
+           
 
         }
         // inserts a coach type 
@@ -833,7 +878,7 @@ namespace Sports_DB.Repositories
             string coachtype = view.GetInput();
 
             Coach_Type Coachtype = new Coach_Type(Coachtypeid, coachtype);
-            int rows = storagemanager.InserCoachType(Coachtype);
+            int rows = storagemanager.UpdateCoachType(Coachtype);
             view.DisplayMessage($" Rows Affected: {rows}");
 
 

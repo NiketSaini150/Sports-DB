@@ -13,7 +13,7 @@ namespace Sports_DB.model
         public string ShowMenu()
         {
             // Displays the main menu options and returns what ever the user choses
-        Console.Clear();
+        
             Console.WriteLine("--------------------------");
             Console.WriteLine("== Main Menu ==");
             Console.WriteLine("1. Table Sports");
@@ -36,21 +36,36 @@ namespace Sports_DB.model
         {
             //display report options for different queries.
             Console.Clear();
-            Console.WriteLine("A. Simple Qry1: ");
-            Console.WriteLine("B. Simple Qry2: ");
-            Console.WriteLine("C. Simple Qry3: ");
-            Console.WriteLine("D. Simple Qry4: ");
-            Console.WriteLine("E. Simple Qry5:");
-            Console.WriteLine("F. Advanced Qry1: ");
-            Console.WriteLine("G. Advanced Qry2: ");
-            Console.WriteLine("H. Advanced Qry3: ");
-            Console.WriteLine("I. Advanced Qry4: ");
-            Console.WriteLine("J. Advanced Qry5:");
-            Console.WriteLine("K. Complex Qry1: ");
-            Console.WriteLine("L. Complex Qry2: ");
-            Console.WriteLine("M. Complex Qry3: ");
-            Console.WriteLine("N. Complex Qry4: ");
-            Console.WriteLine("O. Complex qry5:");
+            Console.WriteLine("A. View all Sports ID and sports ");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("B. View all coaches with above 5 years of experience ");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("C. view player name registered with sports ID: 1 ");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("D. View all player with the injury status: Healthy ");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("E. View all coaches with less than 5 years of experience");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("F. List all players and the sports they play");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("G. Get all coaches and the sports they coach");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("H. List players, their coach, and training date ");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("I. List players, their injury status, and sports they play  ");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("J. List coaches (Descending) and their coach type ");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("K. Player count per sport (Descending) ");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("L. Top 5 training with player count");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("M. Player count grouped by coach and sport  ");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("N. Sports with player counts and average experience ");
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("O. Coaches with training dates and player attendance count");
+            Console.WriteLine("----------------------------------------------------------");
             Console.WriteLine("P. Return to home page");
 
             return Console.ReadLine().ToUpper();
@@ -124,8 +139,7 @@ namespace Sports_DB.model
             Console.WriteLine("--------------------------");
             Console.WriteLine("== Player Menu ==");
             Console.WriteLine("A.View all Trainings");
-            Console.WriteLine("B. View your information");
-            Console.WriteLine("C. Logout");
+            Console.WriteLine("B. Logout");
             Console.WriteLine("--------------------------");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
