@@ -299,7 +299,7 @@ namespace Sports_DB.model
             
             return input;
 
-            return Console.ReadLine();
+           
         }
 
         //gets integers inputs from the user and validates them 
