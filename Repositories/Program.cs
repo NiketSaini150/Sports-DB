@@ -10,12 +10,13 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Sports_DB.Repositories
 {
-    internal class Program
+    public class Program
     {
         private static Storagemanager storagemanager;
         private static Consoleview view;
         static void Main(string[] args)
         {
+             
             // database connection string connected to the local .mdf file in oneDrive
             string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\niket\\OneDrive - Avondale College\\Sports DB\\SportsPLSWORK.mdf\";Integrated Security=True;Connect Timeout=30";
 
@@ -551,14 +552,15 @@ namespace Sports_DB.Repositories
 
         {
             Console.Clear();
-            view.DisplayMessage("Enter a new username:");
-            string username = view.GetInput();
+            
+            string username = view.GetValidInput("Enter a new username:",3,30);
 
-            view.DisplayMessage("Enter a new passoword: ");
-            string password = view.GetInput();
+
+            string password = view.GetValidInput("Enter a new password:", 3, 30);
 
             view.DisplayMessage("Enter the coachid (enter 0 if not a coach): ");
             int coachid = view.GetIntInput();
+            coachid = 0;
 
             view.DisplayMessage($"Enter the player id (enter 0 if not a player) : ");
             int playerid = view.GetIntInput();

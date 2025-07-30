@@ -36,6 +36,7 @@ internal class Storagemanager
         }
     }
     
+
     // gets all trainings records form the database
     public List <Training> GetAllTrainings()
     {
@@ -59,7 +60,10 @@ internal class Storagemanager
         }
         return training;
     }
-    
+     
+
+
+
     // gets all the coaches records from the database 
     public List<Coaches> GetAllCoaches()
     {
@@ -174,6 +178,8 @@ internal class Storagemanager
         }
 
     }
+
+   
     // gets all coaches with more than 5 years of experience
     public List<Coaches> SimpleQry2()
     {
