@@ -348,7 +348,7 @@ namespace Sports_DB.model
 
 
 
-        public static bool IsWithinBoundary(string input, int minLength, int maxLength, out string message)
+        public bool IsWithinBoundary(string input, int minLength, int maxLength, out string message)
 
         {
 

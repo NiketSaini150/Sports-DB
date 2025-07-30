@@ -564,6 +564,7 @@ namespace Sports_DB.Repositories
 
             view.DisplayMessage($"Enter the player id (enter 0 if not a player) : ");
             int playerid = view.GetIntInput();
+            playerid = 0;
 
             view.DisplayMessage("Enter a new role");
             string role = view.GetInput();
@@ -586,8 +587,7 @@ namespace Sports_DB.Repositories
          // inserts a new sport 
         private static void InsertNewSport()
         {
-            view.DisplayMessage("Enter the new Sport name: ");
-            string SportName = view.GetInput();
+          string SportName = view.GetValidInput("Enter New Sports", 1, 50);
             int sportId = 0;
             Sport sport1 = new Sport(sportId, SportName);
             int generated_ID = storagemanager.InsertNewSport(sport1);
@@ -601,8 +601,8 @@ namespace Sports_DB.Repositories
             view.DisplayMessage("Enter the sports_id to update: ");
             int sportsId = view.GetIntInput();
 
-            view.DisplayMessage("Enter the new sport name: ");
-            string SportsName = view.GetInput();
+            
+            string SportsName = view.GetValidInput("Enter sports name to update",3,50);
 
             int rowsAffected = storagemanager.UpdateSportsName(sportsId, SportsName);
             view.DisplayMessage($"rows affected: {rowsAffected}");
@@ -610,8 +610,8 @@ namespace Sports_DB.Repositories
         // deletes a sport by name 
         private static void DeleteSportByName()
         {
-            view.DisplayMessage("Enter the sport name to delete: ");
-            string SportName = view.GetInput();
+            
+            string SportName = view.GetValidInput("enter the sports name to delete",3,50);
             int sportId = 0;
             Sport sport2 = new Sport(sportId, SportName);
             int rowsaffected = storagemanager.DeleteSportByName(SportName);
