@@ -438,7 +438,7 @@ namespace Sports_DB.model
                 message = $"Input is too short. Minimum length is {minLength}, but got {length}";
                 return false;
             }
-            if (length < maxLength)
+            if (length > maxLength)
             {
                 message = $"Input is too long. Maximum length is {maxLength}, but got {length}";
                 return false;
