@@ -445,19 +445,7 @@ namespace Sports_DB.model
             }
             message = "Input is within the valid boundary.";
                 return true;
-        }
-    
-
-      
-        
-         
-
-
-        
-      
-      
-        
-    
+        }    
        
     }
 }
