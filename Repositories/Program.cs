@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Net.WebSockets;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Principal;
+using System.Transactions;
 using System.Xml;
 using Sports_DB.model;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -32,10 +33,11 @@ namespace Sports_DB.Repositories
             // login loop, ends when the user logs in, logs out, or fails too many login attempts.
             while (attempts > 0 && loggedinuser == null && !Loggedout)
             {
-
-                Console.WriteLine("Username: ");
+                
+               Console.WriteLine("Username: ");
                 string username = Console.ReadLine();
 
+                
                 Console.WriteLine("Password: ");
                 string password = Console.ReadLine();
 
@@ -47,9 +49,24 @@ namespace Sports_DB.Repositories
                     continue; // doesn't waste an attempt
 
                 }
-                // checks the entered username and password against the database.
-                // if the username and password match a record in table users, it will log the user in.
-                loggedinuser = storagemanager.Login(username, password);
+                if (username.Length< 3 || username.Length >20 )
+                {
+                    Console.Clear();
+                    Console.WriteLine("Username must be between 3 and 20 characters");
+                    continue;
+                }
+
+                if (password.Length < 3 || password.Length > 20)
+                {
+                    Console.Clear();
+                    Console.WriteLine("password must be between 4 and 20 characters");
+                    continue;
+
+                }
+
+                    // checks the entered username and password against the database.
+                    // if the username and password match a record in table users, it will log the user in.
+                    loggedinuser = storagemanager.Login(username, password);
 
                 if (loggedinuser == null)
                 {
@@ -553,21 +570,20 @@ namespace Sports_DB.Repositories
         {
             Console.Clear();
             
-            string username = view.GetValidInput("Enter a new username:",3,30);
+            string username = view.GetValidStringInput("Enter a new username:",3,30);
 
 
-            string password = view.GetValidInput("Enter a new password:", 3, 30);
+            string password = view.GetValidStringInput("Enter a new password:", 3, 30);
 
             view.DisplayMessage("Enter the coachid (enter 0 if not a coach): ");
-            int coachid = view.GetIntInput();
+            int coachid = view.GetValidIntInput("Enter the coach id (enter 0 if not a coach)",-1,100000);
             coachid = 0;
 
-            view.DisplayMessage($"Enter the player id (enter 0 if not a player) : ");
-            int playerid = view.GetIntInput();
+
+            int playerid = view.GetValidIntInput($"Enter the player id (enter 0 if not a player)",0,100000);
             playerid = 0;
 
-            view.DisplayMessage("Enter a new role");
-            string role = view.GetInput();
+            string role = view.GetValidStringInput("Enter a new role(Club, Player or Coach)",0,15);
 
             User user1 = new User(0, role, coachid, playerid, username, password);
 
@@ -587,7 +603,7 @@ namespace Sports_DB.Repositories
          // inserts a new sport 
         private static void InsertNewSport()
         {
-          string SportName = view.GetValidInput("Enter New Sports", 1, 50);
+          string SportName = view.GetValidStringInput("Enter New Sports", 3, 50);
             int sportId = 0;
             Sport sport1 = new Sport(sportId, SportName);
             int generated_ID = storagemanager.InsertNewSport(sport1);
@@ -599,10 +615,10 @@ namespace Sports_DB.Repositories
         {
 
             view.DisplayMessage("Enter the sports_id to update: ");
-            int sportsId = view.GetIntInput();
+            int sportsId = view.GetValidIntInput("", 0, 10000);
 
             
-            string SportsName = view.GetValidInput("Enter sports name to update",3,50);
+            string SportsName = view.GetValidStringInput("Enter sports name to update",3,50);
 
             int rowsAffected = storagemanager.UpdateSportsName(sportsId, SportsName);
             view.DisplayMessage($"rows affected: {rowsAffected}");
@@ -611,7 +627,7 @@ namespace Sports_DB.Repositories
         private static void DeleteSportByName()
         {
             
-            string SportName = view.GetValidInput("enter the sports name to delete",3,50);
+            string SportName = view.GetValidStringInput("enter the sports name to delete",3,50);
             int sportId = 0;
             Sport sport2 = new Sport(sportId, SportName);
             int rowsaffected = storagemanager.DeleteSportByName(SportName);
@@ -620,17 +636,17 @@ namespace Sports_DB.Repositories
          //inserts a new coach 
         private static void InsertNewCoach()
         {
-            view.DisplayMessage($"Enter New First Name: ");
-            string FirstName = view.GetInput();
+           string FirstName = view.GetValidStringInput($"Enter New First Name: ",1,50);
+            
 
-            view.DisplayMessage("Enter New Last Name: ");
-            string LastName = view.GetInput();
+           string LastName= view.GetValidStringInput("Enter New Last Name: ",1,50);
+          
 
-            view.DisplayMessage("Enter New Coach Experience: ");
-            int Experience = view.GetIntInput();
+ 
+            int Experience = view.GetValidIntInput("Enter New Coach Experience: ",0,50);
 
-            view.DisplayMessage("Enter New Coach Type ID: ");
-            int CoachTypeID = view.GetIntInput();
+            
+            int CoachTypeID = view.GetValidIntInput("Enter New Coach Type ID: ",0,10000);
 
 
             Coaches coaches2 = new Coaches(0, FirstName, LastName, Experience, CoachTypeID);
@@ -640,20 +656,20 @@ namespace Sports_DB.Repositories
         // updates an existing coach 
         private static void UpdateCoach()
         {
-            view.DisplayMessage("Coach ID: ");
-            int coachid = view.GetIntInput();
+            
+            int coachid = view.GetValidIntInput("Coach ID", 0, 100000);
 
-            view.DisplayMessage("First Name: ");
-            string FirstName = view.GetInput();
+          
+            string FirstName = view.GetValidStringInput("First Name: ", 1, 50);
 
-            view.DisplayMessage("Last Name: ");
-            string LastName = view.GetInput();
+            
+            string LastName = view.GetValidStringInput("Last Name: ", 1, 50);
 
             view.DisplayMessage("Experience: ");
-            int Experience = view.GetIntInput();
+            int Experience = view.GetValidIntInput("Experience:", 0, 50);
 
-            view.DisplayMessage("Coach Type ID: ");
-            int typeid = view.GetIntInput();
+          
+            int typeid = view.GetValidIntInput("Coach Type ID: ",0,10000);
 
             Coaches coach = new Coaches(coachid, FirstName, LastName, Experience, typeid);
             int RowsUpdated = storagemanager.UpdateCoach(coach);
@@ -663,67 +679,58 @@ namespace Sports_DB.Repositories
         private static void InsertPlayer()
         {
             view.DisplayMessage($"Enter New sports ID: ");
-            int SportsID = view.GetIntInput();
+            int SportsID = view.GetValidIntInput("",0,10000);
 
-            view.DisplayMessage($"Enter New First Name: ");
-            string FirstName = view.GetInput();
+            string FirstName = view.GetValidStringInput("Enter New First Name ",1,50);
+          
+           string LastName = view.GetValidStringInput("Enter New Last Name: ",1,50);
+            
+            int Age = view.GetValidIntInput("Enter new age: ", 0, 10000);
 
-            view.DisplayMessage("Enter New Last Name: ");
-            string LastName = view.GetInput();
+            string Gender = view.GetValidStringInput("Enter new gender: ",1,50);
 
-            view.DisplayMessage("Enter New Age: ");
-            int Age = view.GetIntInput();
+            int Experience = view.GetValidIntInput("Enter new player Experience: ", 0, 10000); 
 
-            view.DisplayMessage("Enter New Gender: ");
-            string Gender = view.GetInput();
 
-            view.DisplayMessage("Enter New player Experience: ");
-            int Experience = view.GetIntInput();
+            string InjuryStatus = view.GetValidStringInput("Enter new injury Status",2,50);
 
-            view.DisplayMessage("Enter New Injury Status: : ");
-            string InjuryStatus = view.GetInput();
-
-            Player player = new Player(0, SportsID, FirstName, LastName, Age, Gender, InjuryStatus, Experience);
-            int generatedid = storagemanager.InsertPlayer(player);
-            view.DisplayMessage($"New Player inserted with id: {generatedid}");
+        
 
             if (Age <= 18 || Age >= 58)
             {
                 view.DisplayMessage("Age must be between 18 and 58.");
                 return;
             }
+            Player player = new Player(0, SportsID, FirstName, LastName, Age, Gender, InjuryStatus, Experience);
+            int generatedid = storagemanager.InsertPlayer(player);
+            view.DisplayMessage($"New Player inserted with id: {generatedid}");
         }
         // updates a player 
         private static void UpdatePlayer()
         {
-            int playerid = view.GetIntInput();
-            if (playerid <= 0)
-            {
-                view.DisplayMessage("Invalid Player ID. Must be a positive number");
-                return;
-            }
+            int playerid = 0;
+             playerid = view.GetValidIntInput($"player ID: {playerid}",0,10000);
+         
 
         
             view.DisplayMessage("Enter the Sports_id to update: ");
-            int sportsId = view.GetIntInput();
+            int sportsId = view.GetValidIntInput("",0,10000);
 
-            view.DisplayMessage("Enter New Player First Name: ");
-            string FirstName = view.GetInput();
+            string FirstName = view.GetValidStringInput("Enter New First Name: ", 1, 50);
 
-            view.DisplayMessage("Enter New Player Last Name: ");
-            string LastName = view.GetInput();
+            string LastName = view.GetValidStringInput("Enter New Last Name: ", 1, 50);
 
             view.DisplayMessage("Enter New Age: ");
-            int Age = view.GetIntInput();
+            int Age = view.GetValidIntInput("", 0, 10000);
 
-            view.DisplayMessage("Enter New gender: ");
-            string Gender = view.GetInput();
+            string Gender = view.GetValidStringInput("Enter new gender: ", 1, 50);
 
             view.DisplayMessage("Enter New Player Experience: ");
-            int Experience = view.GetIntInput();
+            int Experience = view.GetValidIntInput("", 0, 10000);
 
-            view.DisplayMessage("Enter New Player Injury Status: ");
-            string Injurystatus = view.GetInput();
+            string Injurystatus = view.GetValidStringInput("Enter new injury Status", 2, 50);
+
+
 
             if (Age <= 18 || Age >= 58)
             {
@@ -742,15 +749,15 @@ namespace Sports_DB.Repositories
         {
             TimeSpan start, end;
             view.DisplayMessage($"Enter New sports ID: ");
-            int SportsID = view.GetIntInput();
+            int SportsID = view.GetValidIntInput("", 0, 10000);
 
             view.DisplayMessage($"Enter New Coach ID: ");
-            int coachid = view.GetIntInput();
+            int coachid = view.GetValidIntInput("",0,10000);
 
             while (true)
             {
-                view.DisplayMessage($"Start Time (hh:mm): ");
-                string StartTime = view.GetInput();
+               
+                string StartTime = view.GetValidStringInput("Start Time (hh:mm): ", 0,15);
                 if (TimeSpan.TryParseExact(StartTime, @"hh\:mm", null, out start))
                     break;
                 else
@@ -761,8 +768,8 @@ namespace Sports_DB.Repositories
 
             while (true)
             {
-                view.DisplayMessage($"End Time (hh:mm): ");
-                string EndTime = view.GetInput();
+                
+                string EndTime = view.GetValidStringInput("End Time (hh:mm): ",0,15);
                 if (!TimeSpan.TryParseExact(EndTime, @"hh\:mm", null, out end))
                 {
                     Console.WriteLine("Invalid End time format. use HH:MM");
@@ -781,8 +788,8 @@ namespace Sports_DB.Repositories
             DateOnly Date;
             while (true)
             { 
-                view.DisplayMessage($"Date (yyyy-MM-dd): ");
-              string  date = view.GetInput();
+               
+                string date = view.GetValidStringInput("Date (yyyy-MM-dd):", 0, 15);
                 if (DateOnly.TryParse(date, null, out Date))
                     break;
                 else 
@@ -800,18 +807,18 @@ namespace Sports_DB.Repositories
         {
             TimeSpan start, end;
             view.DisplayMessage($"Enter Trainings ID to update: ");
-            int trainingID = view.GetIntInput();
+            int trainingID = view.GetValidIntInput("", 0, 10000); 
 
             view.DisplayMessage($"Enter sports ID to update: ");
-            int SportsID = view.GetIntInput();
+            int SportsID = view.GetValidIntInput("", 0, 10000);
 
             view.DisplayMessage($"Enter Coach ID to Update: ");
-            int coachid = view.GetIntInput();
+            int coachid = view.GetValidIntInput("", 0, 10000);
 
             while (true)
             {
-                view.DisplayMessage($"Start Time (hh:mm): ");
-                string StartTime = view.GetInput();
+          
+                string StartTime = view.GetValidStringInput("Start Time (hh:mm):", 0,15);
                 if (TimeSpan.TryParseExact(StartTime, @"hh\:mm", null, out start))
                     break;
                 else
@@ -822,8 +829,8 @@ namespace Sports_DB.Repositories
 
             while (true)
             {
-                view.DisplayMessage($"End Time (hh:mm): ");
-                string EndTime = view.GetInput();
+               
+                string EndTime = view.GetValidStringInput("End Time (hh:mm): ", 0, 15);
                 if (!TimeSpan.TryParseExact(EndTime, @"hh\:mm", null, out end))
                 {
                     Console.WriteLine("Invalid End time format. use HH:MM");
@@ -842,8 +849,8 @@ namespace Sports_DB.Repositories
             DateOnly Date;
             while (true)
             {
-                view.DisplayMessage($"Date (yyyy-MM-dd): ");
-                string date = view.GetInput();
+                
+                string date = view.GetValidStringInput("Date (yyyy-MM-dd):", 0, 10);
                 if (DateOnly.TryParse(date, null, out Date))
                     break;
                 else
@@ -863,8 +870,8 @@ namespace Sports_DB.Repositories
         // inserts a coach type 
         private static void InsertCoachType()
         {
-            view.DisplayMessage("Enter New Coach Type Name: ");
-            string Coachtypename = view.GetInput();
+           
+            string Coachtypename = view.GetValidStringInput("Enter new coach type name: ",1,50);
 
             Coach_Type coachtype = new Coach_Type(0,Coachtypename);
             int generatedid = storagemanager.InserCoachType(coachtype);
@@ -874,10 +881,10 @@ namespace Sports_DB.Repositories
         private static void UpdateCoachType()
         {
             view.DisplayMessage("Enter the coach Type id to update: ");
-            int Coachtypeid = view.GetIntInput();
+            int Coachtypeid = view.GetValidIntInput("", 0, 10000);
 
-            view.DisplayMessage("Enter coach type name: ");
-            string coachtype = view.GetInput();
+
+            string coachtype = view.GetValidStringInput("Enter new coach type name: ",1,50);
 
             Coach_Type Coachtype = new Coach_Type(Coachtypeid, coachtype);
             int rows = storagemanager.UpdateCoachType(Coachtype);
@@ -888,10 +895,20 @@ namespace Sports_DB.Repositories
         // deletes a coach type by id 
         private static void DeleteCoachType()
         {
-            view.DisplayMessage("Enter the coach Type ID to delete:");
-            int coachType = view.GetIntInput();
-            
-            int rowsaffected = storagemanager.DeleteCoachTypeById(coachType);
+            List<int> validcoachtypeids = storagemanager.Getallcoachtypeids();
+            int coachtypeid;
+            while (true)
+            {
+                view.DisplayMessage("Enter the coach Type ID to delete:");
+                int coachType = view.GetValidIntInput("", 0, 10000);
+
+                if (validcoachtypeids.Contains(coachType))
+                    break;
+                else
+                    Console.WriteLine("Invalid ID. That Coach Type ID does not exist.");
+            }
+
+            int rowsaffected = storagemanager.DeleteCoachTypeById(coachtypeid);
             view.DisplayMessage($"Rows affected: {rowsaffected} ");
 
         }

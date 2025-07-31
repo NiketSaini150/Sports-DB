@@ -179,6 +179,24 @@ internal class Storagemanager
 
     }
 
+    public List<int> Getallcoachtypeids()
+    {
+        List<int> ids = new List<int>();
+        string sqlstring = "SELECT CoachTypeID FROM Tbl_CoachTypes;";
+        using (SqlCommand cmd = new SqlCommand(sqlstring, conn))
+        {
+           
+            using (SqlDataReader reader = cmd.ExecuteReader())
+            {
+                while (reader.Read())
+                {
+                    ids.Add(reader.GetInt32(0));
+                    
+                }
+            }
+            return ids;
+        }
+    }
    
     // gets all coaches with more than 5 years of experience
     public List<Coaches> SimpleQry2()

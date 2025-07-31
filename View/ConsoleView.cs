@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.AccessControl;
 using System.Text;
 using System.Threading.Channels;
 using System.Threading.Tasks;
@@ -15,7 +16,7 @@ namespace Sports_DB.model
         public string ShowMenu()
         {
             // Displays the main menu options and returns what ever the user choses
-        
+
             Console.WriteLine("--------------------------");
             Console.WriteLine("== Main Menu ==");
             Console.WriteLine("1. Table Sports");
@@ -30,10 +31,10 @@ namespace Sports_DB.model
             Console.WriteLine("--------------------------");
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
-            
+
         }
 
-     
+
         public string ShowReports()
         {
             //display report options for different queries.
@@ -88,7 +89,7 @@ namespace Sports_DB.model
             Console.WriteLine("Input your choice: ");
 
             return Console.ReadLine().ToUpper();
-           
+
         }
 
         public string ClubCoachMenu()
@@ -179,7 +180,7 @@ namespace Sports_DB.model
             Console.WriteLine("Input your choice: ");
             return Console.ReadLine().ToUpper();
         }
-        
+
         // displays user login information for club admins.
         public void DisplayUsers(List<User> users)
         {
@@ -250,7 +251,7 @@ namespace Sports_DB.model
         // displays filtered player information
         public void displayqry3(List<Player> player)
         {
-            foreach(Player player1 in player)
+            foreach (Player player1 in player)
             {
                 Console.WriteLine($"---------------------------\n Sports ID: {player1.SportsID}\n First Name: {player1.FirstName}\n Last Name: {player1.LastName}\n---------------------------");
             }
@@ -260,7 +261,7 @@ namespace Sports_DB.model
         }
 
         //displays all trainings
-        public void DisplayTrainings(List <Training> training)
+        public void DisplayTrainings(List<Training> training)
         {
             foreach (Training training1 in training)
             {
@@ -277,33 +278,8 @@ namespace Sports_DB.model
             Console.WriteLine(message);
         }
 
-        // gets string input from the user and validates them 
-        public string GetInput()
-        {
-            string input;
-            bool loop = true;
-            do
-            {
-                Console.WriteLine("");
-                input = Console.ReadLine();
-                if (string.IsNullOrEmpty(input ))
-                {
-                    loop = true;
-                    Console.WriteLine("please enter a valid input");
 
-                }
-                else
-                {
-                    loop = false;
-                }
-            }
-            while (loop);
-            
-            return input;
-
-           
-        }
-
+        /*
        public  string GetValidInput(string prompt, int minLength, int maxLength)
 
         {
@@ -396,28 +372,91 @@ namespace Sports_DB.model
 
             return true;
 
-        }
-
+        }*/
         //gets integers inputs from the user and validates them 
-        public int GetIntInput()
+        public int GetValidIntInput(string prompt, int min, int max)
         {
-
             int intInput;
-            while (true)
+            bool isValid = false;
+
+            do
             {
-                Console.WriteLine("Please enter a number: ");
+                Console.WriteLine($"{prompt}({min}--{max}:");
                 string input = Console.ReadLine();
+
                 if (int.TryParse(input, out intInput))
                 {
-                    return intInput;
+                    if (intInput >= min && intInput <= max)
+                    {
+                        isValid = true;
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Invalid input. Number must be between {min} and {max}.");
+                    }
                 }
-
-                else 
+                else
                 {
-                    Console.WriteLine("Invalid input. Please enter a Valid integer.");
+                    Console.WriteLine($"Invalid input. Please enter a valid whole Number.");
+                }
+            } while (!isValid);
+            return intInput;
+        }
+        // gets string input from the user and validates them 
+        public string GetValidStringInput(string prompt, int minLength, int maxLength)
+        {
+            string input;
+            string message;
+            bool isValid;
+
+            do
+            {
+                Console.WriteLine($"{prompt}({minLength}--{maxLength} Characters): ");
+                input = Console.ReadLine();
+                isValid = IsWithinBoundary(input, minLength, maxLength, out message);
+
+                if (!isValid)
+                {
+                    Console.WriteLine("Invalid input: " + message);
                 }
             }
+            while (!isValid);
+            return input;
         }
+
+        public static bool IsWithinBoundary(string input, int minLength, int maxLength, out string message)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                message = "Input cannot be empty";
+                return false;
+            }
+            int length = input.Length;
+
+            if (length < minLength)
+            {
+                message = $"Input is too short. Minimum length is {minLength}, but got {length}";
+                return false;
+            }
+            if (length < maxLength)
+            {
+                message = $"Input is too long. Maximum length is {maxLength}, but got {length}";
+                return false;
+            }
+            message = "Input is within the valid boundary.";
+                return true;
+        }
+    
+
+      
+        
+         
+
+
+        
+      
+      
+        
     
        
     }
