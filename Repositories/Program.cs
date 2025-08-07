@@ -19,7 +19,7 @@ namespace Sports_DB.Repositories
         {
 
             // database connection string connected to the local .mdf file in oneDrive
-            //  string connectionString = "Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=\"C:\\Users\\niket\\OneDrive - Avondale College\\Sports DB\\SportsPLSWORK.mdf\";Integrated Security=True;Connect Timeout=30";
+            
             string mdfRelativePath = Path.Combine("mdf files", "SportsPLSWORK.mdf");
             string mdfFullPath = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, mdfRelativePath));
 
