@@ -536,19 +536,31 @@ public void AdvancedQry1()
     // inserts a new coach 
     public int InsertNewCoach(Coaches coaches)
     {
-        using (SqlCommand cmd = new SqlCommand($"INSERT INTO Tbl_Coaches (First_Name,Last_Name, Experience, Coach_Type_ID)" +
-            "Values (@First_Name, @Last_Name, @Experience,@Coach_Type_ID);" +
-            $"SELECT SCOPE_IDENTITY();", conn))
+        try
         {
+            using (SqlCommand cmd = new SqlCommand(
+                "INSERT INTO Tbl_Coaches (First_Name, Last_Name, Experience, Coach_Type_ID) " +
+                "VALUES (@First_Name, @Last_Name, @Experience, @Coach_Type_ID); " +
+                "SELECT SCOPE_IDENTITY();", conn))
+            {
+                cmd.Parameters.AddWithValue("@First_Name", coaches.First_Name);
+                cmd.Parameters.AddWithValue("@Last_Name", coaches.Last_Name);
+                cmd.Parameters.AddWithValue("@Experience", coaches.Experience);
+                cmd.Parameters.AddWithValue("@Coach_Type_ID", coaches.Coach_Type_ID);
 
-            cmd.Parameters.AddWithValue("@First_Name", coaches.First_Name);
-            cmd.Parameters.AddWithValue("@Last_Name", coaches.Last_Name);
-            cmd.Parameters.AddWithValue("@Coach_Type_ID", coaches.Coach_Type_ID);
-            cmd.Parameters.AddWithValue("@Experience", coaches.Experience);
-
-            object result = cmd.ExecuteScalar(); //gets the generated ID
-            return Convert.ToInt32(result);
-
+                object result = cmd.ExecuteScalar();
+                return Convert.ToInt32(result);
+            }
+        }
+        catch (SqlException ex) when (ex.Number == 547) // Foreign key violation error number
+        {
+            Console.WriteLine("Error: Please enter a valid Coach_Type_ID.");
+            return -1;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("An unexpected error occurred: " + ex.Message);
+            return -1;
         }
     }
 
